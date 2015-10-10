@@ -1,7 +1,9 @@
 <template name="__custom_keyboard">
+  <div class="__custom_keyboard">
   {{#each keys}}
-    <div class="__custom_keyboard_key" data-action="play">
-      {{this}}
+    <div class="__custom_keyboard_key {{#if isHalftone}}__custom_keyboard_halftone{{/if}}">
+      <div class="__custom_keyboard_key_inner" data-action="play"></div>
     </div>
   {{/each}}
+  </div>
 </template>

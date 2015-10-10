@@ -7,16 +7,18 @@ Package.describe({
 Package.onUse(function (api) {
   'use strict';
   
-  api.versionsFrom('METEOR@1.0');
+  api.versionsFrom('METEOR@1.2');
   
   api.use([
+    'custom:midijs@0.0.0',
     'templating',
+    'less',
     
   ], 'client');
   
   api.addFiles([
     
-    'keyboard.css',
+    'keyboard.less',
     'keyboard.html',
     'keyboard.js',
     
