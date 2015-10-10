@@ -1,4 +1,4 @@
-SandboxTrackerController = RouteController.extend({
+SandboxTrackerController = SandboxController.extend({
 
   waitOn: function() {
     return [

@@ -1,4 +1,4 @@
-SandboxMidiController = RouteController.extend({
+SandboxMidiController = SandboxController.extend({
 
   waitOn: function() {
     return [
