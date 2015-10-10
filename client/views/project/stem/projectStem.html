@@ -3,7 +3,13 @@
   {{> mMidiView}}
 
   {{#contentFor 'title'}}
-    {{project.name}}
+    <a href="{{pathFor 'project.timeline' projectId=project._id}}" class="bigger">
+      <i class="fa fa-music"></i> &nbsp;
+      {{project.name}}
+    </a>
+    <span class="nota">
+      Piano Roll ({{track.name}})
+    </span>
   {{/contentFor}}
 </template>
 

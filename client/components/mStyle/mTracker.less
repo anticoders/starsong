@@ -1,5 +1,5 @@
 .mTrackerMenu {
-  background:         #333;
+  /*background:         #333;*/
   border-bottom:      1px solid #000;
   text-align:         right;
   height:             20px;
@@ -95,7 +95,7 @@
 
 
 
-  background:         #333;
+  /*background:         #333;*/
   color:              rgba(255,255,255,0.5);
   font-size:          8px;
   
@@ -128,7 +128,7 @@
   }
 
 
-  .mTimeline, .mTimelineHeader {
+  .mTimeline, .mTimelineHeader, .mRuler {
     height:           25px;
     /*background:       #666;*/
   }
@@ -146,9 +146,26 @@
     text-align:       center;
   }
 
+  .mHeaderButton {
+    -webkit-appearance: none;
+    background:         none;
+    border:             1px solid rgba(255, 255, 255, 0);
+    padding:            3px 10px;
+
+    &:hover {
+      border:             1px solid rgba(255, 255, 255, 0.5);
+    }
+  }
+
   .mTimeline {
     width:            100%;
     background:       linear-gradient(to bottom, #111, rgba(16, 16, 16, 0));
+    position:         relative;
+  }
+
+  .mRuler {
+    width:            100%;
+    background:       linear-gradient(to top, #111, rgba(16, 16, 16, 0));
     position:         relative;
   }
 
@@ -162,11 +179,15 @@
   }
 
   .mTrack {
-    border-bottom:    1px solid rgba(255,255,255,0.125);
+    border-bottom:    1px solid rgba(255,255,255,0.064);
 
     position:         relative;
     width:            100%;
     cursor:           copy;
+
+    &:last-child {
+      border-bottom:  none;
+    }
   }
 }
 

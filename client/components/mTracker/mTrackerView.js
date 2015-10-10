@@ -48,6 +48,14 @@ Template.mTrackerView.events({
     });
   },
 
+  'click [data-action=addtrack]': function(e, t) {
+    Tracks.insert({
+      projectId:    t.data.project._id,
+      order:        t.data.project.tracks().count(),
+      name:         'Track ' + t.data.project.tracks().count(),
+    });
+  },
+
 
 });
 

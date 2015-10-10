@@ -7,9 +7,12 @@ ProjectStemController = ApplicationController.extend({
   },
 
   data: function() {
+    var stem = Stems.findOne(this.params.stemId);
+
     var data = {
       project:  Projects.findOne(this.params.projectId),
-      stem:     Stems.findOne(this.params.stemId),
+      track:    Tracks.findOne(stem && stem.trackId),
+      stem:     stem,
     };
 
 
