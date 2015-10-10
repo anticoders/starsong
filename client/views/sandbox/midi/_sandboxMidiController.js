@@ -1,0 +1,5 @@
+SandboxMidiController = RouteController.extend({
+
+});
+
+
