@@ -8,6 +8,14 @@ Template.sandboxMidi.rendered = function() {
 };
 
 
+Template.sandboxMidi.events({
+
+  'input [data-action=zoom]': function(e, t) {
+    Utils.music.pxInSecond.set($(e.currentTarget).val());
+  },
+
+});
+
 
 
 var setBackground = function($div) {
