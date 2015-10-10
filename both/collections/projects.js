@@ -1,1 +1,1 @@
-projects.js
+Projects = new Mongo.Collection('projects');
