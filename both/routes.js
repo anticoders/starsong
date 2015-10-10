@@ -1,11 +1,10 @@
 'use strict';
 
 Router.configure({
-  templateNameConverter:              'camelCase',
-  routeControllerNameConverter:       'upperCamelCase',
-  notFoundTemplate:                   'notFound',
-  loadingTemplate:                    'loading',
-  layoutTemplate:                     'applicationLayout',
+  templateNameConverter:          'camelCase',
+  routeControllerNameConverter:   'upperCamelCase',
+  notFoundTemplate:               'notFound',
+  loadingTemplate:                'loading',
 });
 
 Router.map(function() {
@@ -25,7 +24,8 @@ Router.map(function() {
   this.route('sandbox.player',        {path: '/sandbox/player'});
   this.route('sandbox.recorder',      {path: '/sandbox/recorder'}); 
 
-
+  this.route('signin',           {path: '/signin'}); 
+  this.route('signup',           {path: '/signup'}); 
 });
 
 
