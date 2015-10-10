@@ -16,3 +16,12 @@ Helpers.define('formatElapsedTime', function (ms) {
   var minutes = Math.floor(ms / 60000);
   return (minutes <= 9 ? '0' : '') + minutes + ':' + (seconds <= 9 ? '0' : '') + seconds;
 });
+
+Helpers.define('isIn', function (what) {
+  var last = arguments.length - 1;
+  for(var idx = 1; idx < last; ++idx) {
+    // double equality intentional
+    if(what == arguments[idx]) return true;
+  }
+  return false;
+});
