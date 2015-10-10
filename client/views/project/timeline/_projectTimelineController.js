@@ -9,6 +9,7 @@ ProjectTimelineController = ApplicationController.extend({
     var data = {
       project: Projects.findOne(this.params._id),
     };
+    __data = data;
     return data;
   },
 });

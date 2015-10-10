@@ -123,9 +123,8 @@
 
   .mScroll {
     background-color: #111;
-    width:            6000px;
     background-position: 20px 0px;
-    box-shadow:       18px 0px 0px #111 inset;
+    box-shadow:       18px 0px 0px #111 inset, -18px 0px 0px #111 inset;
   }
 
 
@@ -150,6 +149,16 @@
   .mTimeline {
     width:            100%;
     background:       linear-gradient(to bottom, #111, rgba(16, 16, 16, 0));
+    position:         relative;
+  }
+
+  .mTimeLabel {
+    position:         absolute;
+    top:              0px;
+    bottom:           0px;
+    line-height:      20px;
+    width:            40px;
+    text-align:       center;
   }
 
   .mTrack {
@@ -157,6 +166,7 @@
 
     position:         relative;
     width:            100%;
+    cursor:           copy;
   }
 }
 

@@ -1,4 +1,8 @@
 <template name="projectTimeline">
-  <p>{{project.name}}</p>
-  <p>{{project.description}}</p>
+  
+  {{> mTrackerView}}
+
+  {{#contentFor 'title'}}
+    {{project.name}}
+  {{/contentFor}}
 </template>
