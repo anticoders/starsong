@@ -1,14 +1,49 @@
 .mMidiArea .mNote {
-  /*background:       #6090e0;*/
-  /*height:           10px;*/
-
 
   position:           absolute;
   top:                1px;
   bottom:             1px;
   background:         linear-gradient(to bottom, #10c0e0, #6090e0);
-  /*border-radius:      3px;*/
-  /*box-shadow:         0px 0px 5px 2px #30c060 inset;*/
+  border-radius:      3px;
 
-  
+  .mRightDrag, .mLeftDrag {
+    position:         absolute;
+    display:          none;
+    cursor:           pointer;
+
+    width:            20px;
+    top:              -3px;
+    bottom:           -3px;
+    line-height:      14px;
+
+    color:            rgba(255,255,255, 0.75);
+  }
+
+  .mRightDrag {
+    border-left:      1px solid white;
+    text-align:       left;
+    background:       linear-gradient(to right, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0));
+
+    &:hover {
+      background:       linear-gradient(to right, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
+    }
+  }
+
+  .mLeftDrag {
+    left:             -20px;
+    border-right:     1px solid white;
+    text-align:       right;
+    background:       linear-gradient(to left, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0));
+
+    &:hover {
+      background:       linear-gradient(to left, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
+    }
+  }
+
+
+  &:hover, &.pepActive {
+    .mRightDrag, .mLeftDrag {
+      display:          block;
+    }
+  }  
 }
