@@ -21,10 +21,6 @@ Projects.allow({
 
 
 
-Meteor.publish('projects', function() {
-
-});
-
 Meteor.publish('project', function(project) {
   var project = Projects.findOne(project._id);
   if(!project) return this.ready();
