@@ -11,6 +11,7 @@ Meteor.startup(function(){
 Meteor.methods({
 
   storeFile : function(data){
+    console.log("data",data); 
     var fileId = S3Files.insert(data); 
     var s3Client = new AWS.S3();
     var params = {
