@@ -1,4 +1,4 @@
-SigninController = RouteController.extend({
+SignupController = RouteController.extend({
   layoutTemplate: 'loginLayout',
   onBeforeAction: function () {
     if (Meteor.userId()) {
