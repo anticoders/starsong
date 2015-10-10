@@ -1,7 +1,7 @@
 Stems.allow({
 
   insert: function(userId, doc) {
-    return true;
+    return true; 
   },
 
   update: function(userId, doc) {
