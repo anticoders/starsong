@@ -30,7 +30,7 @@ _.extend(Track.prototype, {
 /*
 
   projectId:        String / id in Projects
-  order:            String
+  order:            Number
 
   lockedUserId:     UserId
 

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+THE_ENV=$1;
+
+if [ -z "$THE_ENV" ]; then
+  THE_ENV="development";
+fi
+
+echo "$(tput setaf 2)$(tput bold)==============================================$(tput sgr0)";
+echo "$(tput setaf 2)$(tput bold) Starting $(tput setaf 3)STAR SONG$(tput setaf 2) in $THE_ENV mode$(tput sgr0)";
+echo "$(tput setaf 2)$(tput bold)==============================================$(tput sgr0)";
+
+case "$THE_ENV" in
+  "development" )
+    export ROOT_URL='http://localhost:3000'
+    FAKE=true meteor run --port 3000
+    ;;
+esac
+
