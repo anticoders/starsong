@@ -1,0 +1,11 @@
+<template name="__custom_collector"> 
+  <button class="ui button" data-action="chooseFile"> Choose file from disc </button>
+  <button class="ui button" data-action="recordFile"> Record wave </button> 
+  <input type="file" accept="audio/wav" style="display:none"> 
+</template>
+
+
+
+<template name="sandboxRecorder">
+  {{>collector}}
+</template>

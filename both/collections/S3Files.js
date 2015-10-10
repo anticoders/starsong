@@ -1,1 +1,1 @@
-S3Files = new Meteor.Collection();
+S3Files = new Meteor.Collection('s3Files');
