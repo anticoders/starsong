@@ -37,15 +37,24 @@ Template.mTrackerView.events({
     // console.log("INSERT", e.offsetX);
     if(e.target !== e.currentTarget) return;
     
-    var x0 = Utils.music.pxToTime(e.offsetX - 20);
 
-    Stems.insert({
-      projectId:    this.projectId,
-      trackId:      this._id,
-      x0:           x0,
-      x1:           x0 + 10 * Utils.music.second,
-      type:         'MIDI',
-    });
+    AntiModals.overlay('newStemModal', {
+      modal: true,
+    }, function(err, res) {
+      console.log('NEW STEM', err, res);
+    })
+
+    // var x0 = Utils.music.pxToTime(e.offsetX - 20);
+
+    // Stems.insert({
+    //   projectId:    this.projectId,
+    //   trackId:      this._id,
+    //   x0:           x0,
+    //   x1:           x0 + 10 * Utils.music.second,
+    //   type:         'MIDI',
+    // });
+
+
   },
 
   'click [data-action=addtrack]': function(e, t) {
