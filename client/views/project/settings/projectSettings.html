@@ -1,0 +1,18 @@
+<template name="projectSettings">
+  <div class="project-settings">
+    <h2>Project settings</h2>
+    <div class="ui two column centered grid">
+      <div class="column">
+        <form class="ui form" data-action="projectSettings">
+          <div class="field">
+            <input type="text" name="name" placeholder="Name" value="{{project.name}}">
+          </div>
+          <div class="field">
+            <textarea name="description" placeholder="Description" value="{{project.description}}"></textarea>
+          </div>
+          <button class="ui button" type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
