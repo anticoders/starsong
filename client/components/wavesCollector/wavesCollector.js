@@ -1,4 +1,5 @@
 WavesCollector = function(options){
+  options = options || {}; 
   var template = new Template('wavesCollector',Template.__custom_collector.renderFunction);
   template.s3Uploader = new S3uploader(); 
   
@@ -8,8 +9,15 @@ WavesCollector = function(options){
     }, 
     'change input[type=file]' : function(e,t){
       var waveFile = e.target.files[0]; 
-      Meteor.call('storeFile',{name : waveFile.name},function(err,res){
-        template.s3Uploader.uploadToS3(waveFile,res.url); 
+      var wavData = {
+        name : waveFile.name, 
+        projectId : options.projectId, 
+      }; 
+      template.s3Uploader.getWavMetadata(waveFile,function(metadata){
+        _.extend(wavData,metadata); 
+        Meteor.call('storeFile',wavData,function(err,res){
+          template.s3Uploader.uploadToS3(waveFile,res.url); 
+        }); 
       }); 
     }, 
   }); 
