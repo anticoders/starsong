@@ -29,6 +29,10 @@ Template.mMidiView.helpers({
     return pianoKeys;
   },
 
+  notesInKey: function() {
+    // var stem = Template.closestData('thisIs')
+    return [];
+  },
 
 });
 
