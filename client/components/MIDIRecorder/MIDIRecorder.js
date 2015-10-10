@@ -39,14 +39,14 @@ Components.MIDIRecorder = function (options) {
     
     this.notesListener = postal.subscribe({
       channel: 'notes',
-      topic: 'note.*',
+      topic: '*',
       callback: function (data, envelope) {
         if (!isRecording) {
           return;
         }
-        if (envelope.topic === 'note.start') {
+        if (envelope.topic === 'start') {
           notes[data.note] = Date.now();
-        } else if (envelope.topic === 'note.stop') {
+        } else if (envelope.topic === 'stop') {
           if (!notes[data.note]) {
             // strange ... this should not happen ...
           } else {

@@ -27,28 +27,24 @@ Components.Keyboard = function () {
     }
   });
   
+  function publishNote (topic, data) {
+    postal.publish({
+      channel: 'notes',
+      topic: topic,
+      data: data
+    });
+  }  
+  
   template.events({
     'mousedown [data-action=play]': function () {
-      postal.publish({
-        channel: 'notes',
-        topic: 'note.start',
-        data: this
-      });
+      publishNote('start', this);
     },
     'mouseup [data-action=play]': function () {
-      postal.publish({
-        channel: 'notes',
-        topic: 'note.stop',
-        data: this
-      });
+      publishNote('stop', this);
     },
-    'mouseleave [data-action=play]': function () {
-      postal.publish({
-        channel: 'notes',
-        topic: 'note.stop',
-        data: this
-      });
-    }
+    // 'mouseleave [data-action=play]': function () {
+    //   publishNote('stop', this);
+    // }
   });
   
   template.onRendered(function () {
@@ -61,38 +57,27 @@ Components.Keyboard = function () {
         return;
       }
       keys[e.keyCode] = true;
-      postal.publish({
-        channel: 'notes',
-        topic: 'note.start',
-        data: {
-          note: e.keyCode,
-        }
-      });
+      publishNote('start', { note: e.keyCode });
     });
     
     $(window).on('keyup', function (e) {
       keys[e.keyCode] = false;
-      postal.publish({
-        channel: 'notes',
-        topic: 'note.stop',
-        data: {
-          note: e.keyCode,
-        }
-      });
+      publishNote('stop', { note: e.keyCode });
     });
     
     this.listenNotes = postal.subscribe({
       channel: 'notes',
-      topic: 'note.*',
+      topic: '*',
       callback: function (data, envelope) {
         var $key = el.find('[data-note=' + data.note + ']');
-        if (envelope.topic === 'note.start') {
+        if (envelope.topic === 'start') {
           $key.addClass('active');
-        } else if (envelope.topic === 'note.stop') {
+        } else if (envelope.topic === 'stop') {
           $key.removeClass('active');
         }
       }
     });
+  
   });
   
   template.onDestroyed(function () {

@@ -8,14 +8,14 @@ Components.MIDINotesEmitter = function () {
   template.onCreated(function () {
     this.notesListener = postal.subscribe({
       channel: 'notes',
-      topic: 'note.*',
+      topic: '*',
       callback: function (data, envelope) {
         if (!MIDIPluginLoaded.get()) {
           return;
         }
-        if (envelope.topic === 'note.stop') {
+        if (envelope.topic === 'stop') {
           MIDI.noteOff(0, data.note);
-        } else if (envelope.topic === 'note.start') {
+        } else if (envelope.topic === 'start') {
           MIDI.setVolume(0, 127);
           MIDI.noteOn(0, data.note, 127, 0);
         }
