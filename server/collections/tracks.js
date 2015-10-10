@@ -1,4 +1,4 @@
-Stems.allow({
+Tracks.allow({
 
   insert: function(userId, doc) {
     return true,
