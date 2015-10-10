@@ -1,15 +1,15 @@
 Tracks.allow({
 
   insert: function(userId, doc) {
-    return true,
+    return true;
   },
 
   update: function(userId, doc) {
-    return true,
+    return true;
   },
 
   remove: function(userId, doc) {
-    return true,
+    return true;
   },
 
 });
