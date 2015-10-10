@@ -44,6 +44,7 @@ launch-screen@1.0.4
 less@2.5.0_3
 livedata@1.0.15
 logging@1.0.8
+matb33:collection-hooks@0.8.1
 meteor@1.1.9
 meteor-base@1.0.1
 minifiers@1.1.7
