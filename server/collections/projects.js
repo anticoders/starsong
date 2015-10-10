@@ -26,10 +26,10 @@ Meteor.publish('project.one', function(projectId) {
   if(!project) return this.ready();
 
   return [
-    Projects.find(project._id),
-    Tracks.find({projectId: project._id}),
-    Stems.find({projectId: project._id}),
-    Invitations.find({projectId: project._id}),
+    Projects.find(projectId),
+    Tracks.find({projectId: projectId}),
+    Stems.find({projectId: projectId}),
+    Invitations.find({projectId: projectId}),
 
   ];
 });

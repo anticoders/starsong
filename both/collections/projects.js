@@ -28,11 +28,6 @@ _.extend(Project.prototype, {
 
 });
 
-Projects.before.insert(function (userId, doc) {
-  doc.userId = userId;
-  doc.users = [userId];
-  doc.createdAt = Date.now();
-});
 
 
 
@@ -48,7 +43,7 @@ Projects.before.insert(function (userId, doc) {
   doc.length = 60;
   doc.userId = userId;
   doc.users  = [userId];
-
+  doc.createdAt = Date.now();
 
 });
 
