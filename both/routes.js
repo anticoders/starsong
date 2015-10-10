@@ -5,7 +5,6 @@ Router.configure({
   routeControllerNameConverter:       'upperCamelCase',
   notFoundTemplate:                   'notFound',
   loadingTemplate:                    'loading',
-  layoutTemplate:                     'applicationLayout',
 });
 
 Router.map(function() {
@@ -16,8 +15,10 @@ Router.map(function() {
 
   this.route('project.timeline',      {path: '/timeline/:_id'});
   this.route('project.settings',      {path: '/settings/:_id'});
+  this.route('project.creator',           {path: '/creator'});
 
-
+  this.route('signin',           {path: '/signin'}); 
+  this.route('signup',           {path: '/signup'}); 
   
   // sandbox 
   this.route('sandbox.midi',          {path: '/sandbox/midi'});
@@ -25,8 +26,6 @@ Router.map(function() {
   this.route('sandbox.player',        {path: '/sandbox/player'});
   this.route('sandbox.recorder',      {path: '/sandbox/recorder'}); 
 
-  this.route('signin',           {path: '/signin'}); 
-  this.route('signup',           {path: '/signup'}); 
 });
 
 

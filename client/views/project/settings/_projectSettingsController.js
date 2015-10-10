@@ -1,4 +1,4 @@
-ProjectSettingsController = RouteController.extend({
+ProjectSettingsController = ApplicationController.extend({
   waitOn: function() {
     return [
       Meteor.subscribe('project', {_id: this.params._id}),
