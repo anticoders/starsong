@@ -4,12 +4,14 @@ navigator.webkitGetUserMedia ||
 navigator.mozGetUserMedia ||
 navigator.msGetUserMedia;
 
+fakeBlobURL = new ReactiveVar(null); 
+
 SoundRecorder  = function(){
   this.recording = false; 
   this.currentData = []; 
 }
 
-SoundRecorder._bufferSize = 4096; 
+SoundRecorder._bufferSize = 2048; 
 
 _.extend(SoundRecorder.prototype,{
   startRecording : function(){
@@ -19,26 +21,28 @@ _.extend(SoundRecorder.prototype,{
     window.webkitAudioContext || 
     window.mozAudioContext;
     var context = new audioContext();
+    SoundRecorder.sampleRate = context.sampleRate;
     navigator.getUserMedia({audio : true, video : false}, function (stream) {
       var streamSource = context.createMediaStreamSource(stream);
       var recorder = context.createScriptProcessor(SoundRecorder._bufferSize, 1, 1);
       recorder.onaudioprocess = function(e){
         if(!self.recording) return ; 
         var data = e.inputBuffer.getChannelData(0);
-        self.currentData.push(data); 
+        self.currentData.push(data);
       }
       streamSource.connect(recorder);
       recorder.connect(context.destination);
     },function(){
-      console.log("no access to mickrophones"); 
+      console.log("no access to mickrophone"); 
     });
   }, 
   stopRecording : function(){
     this.recording = false ; 
-    console.log("stopped"); 
+    this.currentData = []; 
     parseToWAV(this.currentData); 
   }
 }); 
+
 
 
 var flatBuffers = function(arrayOfBuffers){
@@ -62,24 +66,22 @@ function writeUTFBytes(view, offset, string){
 }
 
 function parseToWAV(Float32Array){
-
   var flatten = flatBuffers(Float32Array); 
    
-  // create the buffer and view to create the .WAV file
   var buffer = new ArrayBuffer(44 + flatten.length * 2);
   var view = new DataView(buffer);
-   
-  // write the WAV container, check spec at: https://ccrma.stanford.edu/courses/422/projects/WaveFormat/
-  // RIFF chunk descriptor
+
   writeUTFBytes(view, 0, 'RIFF');
   view.setUint32(4, 44 + buffer.length * 2, true);
   writeUTFBytes(view, 8, 'WAVE');
-  // FMT sub-chunk
   writeUTFBytes(view, 12, 'fmt ');
   view.setUint32(16, 16, true);
   view.setUint16(20, 1, true);
-
-  // data sub-chunk
+  view.setUint16(22, 2, true);
+  view.setUint32(24, SoundRecorder.sampleRate, true);
+  view.setUint32(28, SoundRecorder.sampleRate * 4, true);
+  view.setUint16(32, 4, true);
+  view.setUint16(34, 16, true);
   writeUTFBytes(view, 36, 'data');
   view.setUint32(40, flatten.length * 2, true);
    
@@ -92,9 +94,13 @@ function parseToWAV(Float32Array){
       index += 2;
   }
    
-  // our final binary blob that we can hand off
   var blob = new Blob ( [ view ], { type : 'audio/wav' } );
   var blobURL = window.URL.createObjectURL(blob); 
-  console.log("blobURL",blobURL); 
-
+  fakeBlobURL.set(blobUrl); 
 }
+
+Template.sandboxRecorder.helpers({
+  'blobUrl' : function(){
+    return fakeBlobURL.get(); 
+  }
+}); 
