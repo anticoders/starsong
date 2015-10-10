@@ -1,25 +1,28 @@
 Meteor.startup(function() {
 
-  if((!process.env.FAKE) || Projects.findOne({_label: 'FAKE'})) {
-    console.log(Utils.Term.RED + "PROJECT ALREADY FAKED" + Utils.Term.NONE);
+  if((!process.env.FAKE)) {
+    console.log(Utils.term.RED + "NO FAKE HERE" + Utils.term.NONE);
     return;
   }
 
-  console.log(Utils.Term.YELLOW + "FAKING A PROJECT" + Utils.Term.NONE);
+  Projects.remove({});
+  Tracks.remove({});
+  Stems.remove({});
+
+  console.log(Utils.term.YELLOW + "FAKING A PROJECT" + Utils.term.NONE);
 
 
   var pid = Projects.insert({
-    name: 'Fake project',
-    _label: 'FAKE',
+    name:       'Fake project',
+    _label:     'FAKE',
+    length:     30,
   });
-
-  // var tids = [];
-
 
   _.times(8, function(idx) {
     var tid = Tracks.insert({
-      projectId:  pid,
-      order:      idx,
+      projectId:      pid,
+      order:          idx,
+      name:           'Track ' + idx,
     });
 
     var x0 = 0;
@@ -27,14 +30,15 @@ Meteor.startup(function() {
 
     _.times(3, function() {
 
-      x0 = x1 + Math.floor(Math.random() * 5000);
-      x1 = x0 + Math.floor(Math.random() * 5000);
+      x0 = x1 + (1 + Math.floor(Math.random() * 3 * 4)) * (Utils.music.second / 4);
+      x1 = x0 + (2 + Math.floor(Math.random() * 5 * 4)) * (Utils.music.second / 4);
 
       Stems.insert({
-        trackId:  tid,
-        x0:       x0,
-        x1:       x1,
-        type:     'MIDI',
+        projectId:    pid,
+        trackId:      tid,
+        x0:           x0,
+        x1:           x1,
+        type:         'MIDI',
       });
 
     });
