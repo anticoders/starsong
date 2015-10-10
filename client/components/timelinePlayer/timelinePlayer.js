@@ -1,11 +1,16 @@
 'use strict';
 
-Components.TimelinePlayer = function () {
+Components.TimelinePlayer = function (options) {
   var template = new Template('timelinePlayer', Template.timelinePlayer.renderFunction);
-
-  template.onCreated({
+  var events = [];
+  
+  template.play = function (timeline) {
     
-  });
-
+  };
+  
+  template.stop = function () {
+    
+  };
+  
   return template;
 };
