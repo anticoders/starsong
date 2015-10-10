@@ -1,0 +1,3 @@
+OnboardingController = ApplicationController.extend({
+});
+

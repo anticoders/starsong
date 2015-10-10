@@ -9,7 +9,7 @@ Router.map(function() {
 
   this.route('home',              {path: '/'});
   this.route('sandbox.midi',      {path: '/sandbox/midi'});
-
+  this.route('onboarding'),       {path: '/onboarding'};
 
 
 
