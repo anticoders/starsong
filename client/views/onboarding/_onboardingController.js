@@ -1,3 +1,3 @@
-OnboardingController = ApplicationController.extend({
-});
+OnboardingController = RouteController.extend({
 
+});
