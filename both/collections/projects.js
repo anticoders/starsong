@@ -32,6 +32,7 @@ _.extend(Project.prototype, {
 /*
 
   name:         String
+  description:  String
   userId:       UserId (owner)
   users:        [UserId]
 
