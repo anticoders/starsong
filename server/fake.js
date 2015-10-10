@@ -19,8 +19,10 @@ Meteor.startup(function() {
     length:     30,
   });
 
+  var tid;
+
   _.times(8, function(idx) {
-    var tid = Tracks.insert({
+    tid = Tracks.insert({
       projectId:      pid,
       order:          idx,
       name:           'Track ' + idx,
@@ -43,6 +45,15 @@ Meteor.startup(function() {
       });
 
     });
+  });
+
+  Stems.insert({
+    projectId:    pid,
+    trackId:      tid,
+    x0:           0,
+    x1:           Utils.music.second,
+    type:         'MIDI',
+    _label:       'FAKE',
   });
 
 

@@ -1,4 +1,4 @@
-Template.sandboxTracker.rendered = function() {
+Template.mTrackerView.rendered = function() {
   var self = this;
 
   this.autorun(function() {
@@ -8,7 +8,7 @@ Template.sandboxTracker.rendered = function() {
 };
 
 
-Template.sandboxTracker.events({
+Template.mTrackerView.events({
 
   'input [data-action=zoom]': function(e, t) {
     Utils.music.pxInSecond.set($(e.currentTarget).val());

@@ -1,4 +1,19 @@
-Template.sandboxMidi.rendered = function() {
+var pianoNotes = ['A', null, 'B', 'C', null, 'D', null, 'E', 'F', null, 'G', null];
+var pianoKeys = [];
+
+
+
+for(var i = 0; i < 60; ++i) {
+  pianoKeys.splice(0, 0, {
+    midiNote:   i,
+    noteName:   pianoNotes[i % 12],
+    octaveName: Math.floor( (i + 9) / 12),
+    black:      !pianoNotes[i % 12],
+  });
+}
+
+
+Template.mMidiView.rendered = function() {
   var self = this;
 
   this.autorun(function() {
@@ -8,7 +23,17 @@ Template.sandboxMidi.rendered = function() {
 };
 
 
-Template.sandboxMidi.events({
+Template.mMidiView.helpers({
+
+  pianoKeys: function() {
+    return pianoKeys;
+  },
+
+
+});
+
+
+Template.mMidiView.events({
 
   'input [data-action=zoom]': function(e, t) {
     Utils.music.pxInSecond.set($(e.currentTarget).val());
