@@ -12,3 +12,29 @@ Tracks = new Mongo.Collection('tracks', {
   },
 });
 
+
+
+_.extend(Track.prototype, {
+
+  stems: function() {
+    return Stems.find({
+      trackId: this._id,
+    }, {
+      sort: {x0: 1},
+    });
+  },
+
+});
+
+
+/*
+
+  projectId:        String / id in Projects
+  order:            String
+
+  lockedUserId:     UserId
+
+*/
+
+
+

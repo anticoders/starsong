@@ -12,3 +12,20 @@ Stems = new Mongo.Collection('stems', {
   },
 });
 
+
+
+/*
+
+  trackId:        TrackId
+  x0:             Number
+  x1:             Number
+
+  lockedUserId:   UserId
+  type:           'MIDI' | 'AUDIO'
+  audioFileId:    FileId
+
+
+
+*/
+
+

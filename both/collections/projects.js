@@ -15,9 +15,25 @@ Projects = new Mongo.Collection('projects', {
 });
 
 
+_.extend(Project.prototype, {
+
+  tracks: function() {
+    return Tracks.find({
+      projectId: this._id,
+    }, {
+      sort: {order: 1},
+    });
+  },
+
+
+});
+
+
 /*
 
-  tracks: Array
+  name:         String
+  userId:       UserId (owner)
+  users:        [UserId]
 
 
 
