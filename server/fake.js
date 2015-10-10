@@ -15,6 +15,7 @@ Meteor.startup(function() {
   var pid = Projects.insert({
     name:       'Fake project',
     _label:     'FAKE',
+    length:     30,
   });
 
   _.times(8, function(idx) {
@@ -29,8 +30,8 @@ Meteor.startup(function() {
 
     _.times(3, function() {
 
-      x0 = x1 + Math.floor(Math.random() * 5 * Utils.music.second);
-      x1 = x0 + Math.floor(Math.random() * 6 * Utils.music.second);
+      x0 = x1 + (1 + Math.floor(Math.random() * 3 * 4)) * (Utils.music.second / 4);
+      x1 = x0 + (2 + Math.floor(Math.random() * 5 * 4)) * (Utils.music.second / 4);
 
       Stems.insert({
         projectId:    pid,

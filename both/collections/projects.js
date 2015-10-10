@@ -35,7 +35,7 @@ _.extend(Project.prototype, {
   userId:       UserId (owner)
   users:        [UserId]
 
-
+  length:       Number (length in seconds)
 
 
   _label:       DEVELOPMENT ONLY
