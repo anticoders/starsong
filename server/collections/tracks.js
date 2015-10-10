@@ -1,15 +1,24 @@
 Tracks.allow({
 
   insert: function(userId, doc) {
-    return true;
+    var project = Projects.findOne(doc.projectId);
+    if(project){
+      return _.contains(project.users, userId);;
+    }
   },
 
   update: function(userId, doc) {
-    return true;
+    var project = Projects.findOne(doc.projectId);
+    if(project){
+      return _.contains(project.users, userId);;
+    }
   },
 
   remove: function(userId, doc) {
-    return true;
+    var project = Projects.findOne(doc.projectId);
+    if(project){
+      return _.contains(project.users, userId);;
+    }
   },
 
 });

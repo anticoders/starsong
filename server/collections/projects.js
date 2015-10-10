@@ -1,15 +1,15 @@
 Projects.allow({
 
   insert: function(userId, doc) {
-    return true;
+    return doc.userId == userId;
   },
 
   update: function(userId, doc) {
-    return true;
+    return _.contains(doc.users, userId);
   },
 
   remove: function(userId, doc) {
-    return true;
+    return doc.userId == userId;
   },
 
 });

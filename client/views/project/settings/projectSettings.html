@@ -1,7 +1,17 @@
 <template name="projectSettings">
-  <div class="project-settings">
-    <div class="ui grid">
-      <div class="eight wide column">
+  <div class="ui two column centered grid">
+    <div class="column">
+      <div class="project-settings">
+        {{#if error}}
+          <div class="ui inverted red segment">
+            Error
+          </div>
+        {{/if}}
+        {{#if success}}
+          <div class="ui inverted green segment">
+            Success
+          </div>
+        {{/if}}
         <h2>Project settings</h2>
         <form class="ui form" data-action="projectSettings">
           <div class="field">
@@ -10,11 +20,8 @@
           <div class="field">
             <textarea name="description" placeholder="Description" value="{{project.description}}"></textarea>
           </div>
-          <button class="ui button" type="submit">Submit</button>
+          <button class="ui button" type="submit">Edit</button>
         </form>
-      </div>
-      <div class="eight wide column">
-        <h2>Contributors</h2>
       </div>
     </div>
   </div>

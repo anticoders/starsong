@@ -15,7 +15,7 @@ Stems = new Mongo.Collection('stems', {
 
 
 /*
-
+  projectId:      String / id in Projects
   trackId:        TrackId
   x0:             Number
   x1:             Number

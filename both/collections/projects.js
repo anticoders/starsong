@@ -28,6 +28,12 @@ _.extend(Project.prototype, {
 
 });
 
+Projects.before.insert(function (userId, doc) {
+  doc.userId = userId;
+  doc.users = [userId];
+  doc.createdAt = Date.now();
+});
+
 
 /*
 
