@@ -12,7 +12,7 @@ Helpers.define('equals', function (a, b) {
 });
 
 Helpers.define('formatElapsedTime', function (ms) {
-  var seconds = Math.floor(ms / 1000);
+  var seconds = Math.floor(ms / 1000) % 60;
   var minutes = Math.floor(ms / 60000);
   return (minutes <= 9 ? '0' : '') + minutes + ':' + (seconds <= 9 ? '0' : '') + seconds;
 });
