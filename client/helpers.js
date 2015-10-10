@@ -1,3 +1,5 @@
+'use strict';
+
 Helpers.registerAs('$');
 
 Helpers.define('asset', function (path) {
