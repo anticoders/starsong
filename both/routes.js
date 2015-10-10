@@ -22,6 +22,7 @@ Router.map(function() {
   this.route('onboarding'),       {path: '/onboarding'};
 
   this.route('project.timeline', {path: '/timeline/:_id'});
+  this.route('project.settings', {path: '/settings/:_id'});
 
 
 });
