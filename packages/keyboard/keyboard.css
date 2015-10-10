@@ -1,0 +1,7 @@
+.__custom_keyboard_key {
+  display: inline-block;
+  width: 32px;
+  height: 128px;
+  border: 2px solid black;
+  background-color: white;
+}
