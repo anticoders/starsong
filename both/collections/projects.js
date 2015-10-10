@@ -30,7 +30,6 @@ _.extend(Project.prototype, {
 
 
 
-
 Projects.before.insert(function (userId, doc) {
 
   doc.length = 60;
@@ -40,19 +39,20 @@ Projects.before.insert(function (userId, doc) {
 
 });
 
+if(Meteor.isServer) {
 
-Projects.after.insert(function(userId, doc) {
-  
-  _.times(4, function(idx) {
-    Tracks.insert({
-      projectId:      doc._id,
-      order:          idx,
-      name:           'Track ' + idx,
+  Projects.after.insert(function(userId, doc) {
+    _.times(4, function(idx) {
+      Tracks.insert({
+        projectId:      doc._id,
+        order:          idx,
+        name:           'Track ' + idx,
+      });
     });
+
   });
 
-});
-
+}
 
 
 
