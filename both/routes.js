@@ -18,6 +18,7 @@ Router.map(function() {
   this.route('project.stem',            {path: '/project/:projectId/stem/:stemId'});
   this.route('project.settings',        {path: '/settings/:_id'});
   this.route('project.creator',         {path: '/creator'});
+  this.route('project.invite',          {path: '/invite/:_id'});
 
   this.route('signin',                  {path: '/signin'}); 
   this.route('signup',                  {path: '/signup'}); 

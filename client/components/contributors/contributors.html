@@ -1,8 +1,39 @@
 <template name="contributors">
-  <div class="ui search">
-    <div class="ui left icon input">
-      <input class="prompt" type="text" placeholder="User email">
-      <i class="user icon"></i>
+  {{#if errors}}
+    <div class="ui inverted red segment">
+      {{#each errors}}
+        <p>{{this}}</p>
+      {{/each}}
     </div>
+  {{/if}}
+  <form data-action="invite">  
+    <div class="ui category fluid search">
+      <div class="ui right action left icon fluid input">
+        <input class="prompt" type="text" name="email" placeholder="User email">
+        <i class="user icon"></i>
+        <button class="ui floating button" type="submit">Invite</button>
+      </div>
+    </div>
+  </form>
+  <h4>Users</h4>
+  <div class="ui middle aligned divided list">
+    {{#each invitations}}
+      <div class="item">
+        <div class="right floated content">
+          {{#if accepted}}
+            <a href="#" class="ui green basic button">
+              <i class="fa fa-check"></i> Accepted
+            </a>
+          {{else}}
+            <a href="#" class="ui red basic button" data-action="remove">
+            <i class="fa fa-trash"></i> Remove
+            </a>
+          {{/if}}
+        </div>
+        <div class="content">
+          {{email}}
+        </div>
+      </div>
+    {{/each}}
   </div>
 </template>
