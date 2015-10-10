@@ -9,7 +9,6 @@ ProjectSettingsController = RouteController.extend({
     var data = {
       project: Projects.findOne(this.params._id),
     };
-    
     return data;
   },
 });

@@ -1,15 +1,15 @@
 <template name="sidebar">
   <div class="ui left visible vertical inverted sidebar icon menu overlay">
     <a class="item">
-      STAR 
+      <i class="fa fa-star fa-2x"></i>
       <br>
       SONG
     </a>
-    <a class="item">
+    <a class="item" href="{{pathFor route='project.timeline' _id=projectId}}">
       <i class="fa fa-play-circle-o fa-2x"></i><br>
-      Editor
+      Timeline
     </a>
-    <a class="item">
+    <a class="item" href="{{pathFor route='project.settings' _id=projectId}}">
       <i class="fa fa-cogs fa-2x"></i><br>
       Settings
     </a>
