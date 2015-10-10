@@ -47,13 +47,12 @@ Template.mTrackerStemView.helpers({
 
 
 
-Template.mTrackerStemView.events({
+// Template.mTrackerStemView.events({
 
-  'click [data-action=edit]': function() {
-    console.log('EDIT');
-    Router.go('sandbox.midi');
-  },
+//   'click [data-action=edit]': function() {
 
-});
+//   },
+
+// });
 
 
