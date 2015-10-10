@@ -1,7 +1,7 @@
 'use strict';
 
 Components.MIDIRecorder = function (options) {
-  var template = new Template('recorder', Template['MIDIRecorder'].renderFunction);
+  var template = new Template('MIDIRecorder', Template['MIDIRecorder'].renderFunction);
   var timeline = [];
   var notes = {};
   

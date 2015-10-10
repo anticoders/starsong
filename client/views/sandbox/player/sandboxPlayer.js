@@ -4,7 +4,7 @@ Template.sandboxPlayer.onCreated(function () {
   this.keyboard = new Components.Keyboard({
     
   });
-  this.player = new Components.MIDINotesEmitter({
+  this.emitter = new Components.MIDINotesEmitter({
     
   });
   this.recorder = new Components.MIDIRecorder({
@@ -12,6 +12,7 @@ Template.sandboxPlayer.onCreated(function () {
       console.log('recorderd sound:', timeline);
     }
   });
+  this.player = new Components.TimelinePlayer({});
 });
 
 Template.sandboxPlayer.helpers({
@@ -20,6 +21,9 @@ Template.sandboxPlayer.helpers({
   },
   myPlayer: function () {
     return Template.instance().player;
+  },
+  myEmitter: function () {
+    return Template.instance().emitter;
   },
   myRecorder: function () {
     return Template.instance().recorder;

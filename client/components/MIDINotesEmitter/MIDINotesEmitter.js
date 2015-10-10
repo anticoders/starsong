@@ -3,7 +3,7 @@
 var MIDIPluginLoaded = new ReactiveVar(false);
 
 Components.MIDINotesEmitter = function () {
-  var template = new Template('player', Template.MIDINotesEmitter.renderFunction);
+  var template = new Template('MIDINotesEmitter', Template.MIDINotesEmitter.renderFunction);
   
   template.onCreated(function () {
     this.notesListener = postal.subscribe({
