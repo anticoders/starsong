@@ -1,3 +1,5 @@
+
+
 /*globals Projects: true, Project: true*/
 
 Project = function(doc) {
@@ -8,6 +10,16 @@ Project = function(doc) {
 Projects = new Mongo.Collection('projects', {
   transform: function(doc) {
     'use strict';
-    return new Projects(doc);
+    return new Project(doc);
   },
 });
+
+
+/*
+
+  tracks: Array
+
+
+
+
+*/
