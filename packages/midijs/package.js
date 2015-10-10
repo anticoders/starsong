@@ -16,7 +16,10 @@ Package.onUse(function (api) {
   ], 'client');
   
   api.addAssets([
+    'acoustic_grand_piano-mp3.js',
+
     'electric_grand_piano-ogg.js',
+    'electric_grand_piano-mp3.js',
     
   ], 'client');
   
