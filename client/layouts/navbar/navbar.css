@@ -8,3 +8,7 @@
 .navbar-menu{
   line-height: 54px;
 }
+
+.navbar a{
+  color: #263238 !important;
+}

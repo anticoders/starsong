@@ -1,0 +1,8 @@
+body{
+  background-color: rgb(27, 28, 29);
+}
+.application-window{
+  background-color: #263238;
+  color: white;
+  height: 100vh;
+}

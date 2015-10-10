@@ -1,13 +1,15 @@
 <template name="applicationLayout">
-  {{> sidebar}}
-  {{> navbar}}
-  <div class="pusher">
-    <div class="ui grid">
-      <div class="row">
-        <div class="one wide column">
-        </div>
-        <div class="fifteen wide column">
-        {{> yield}}
+  <div class="application-window">
+    {{> sidebar}}
+    {{> navbar}}
+    <div class="pusher">
+      <div class="ui grid">
+        <div class="row">
+          <div class="one wide column">
+          </div>
+          <div class="fifteen wide column">
+            {{> yield}}
+          </div>
         </div>
       </div>
     </div>
