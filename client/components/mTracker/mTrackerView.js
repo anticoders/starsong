@@ -35,6 +35,8 @@ Template.mTrackerView.events({
 
   'click [data-action=insert]': function(e, t) {
     // console.log("INSERT", e.offsetX);
+    if(e.target !== e.currentTarget) return;
+    
     var x0 = Utils.music.pxToTime(e.offsetX - 20);
 
     Stems.insert({

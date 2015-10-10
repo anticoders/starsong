@@ -4,7 +4,7 @@ Template.projectCreator.events({
     e.preventDefault();
     var project = $(e.target).serializeObject();
     var projectId = Projects.insert(project);
-    Router.go('project.timeline', {_id: projectId});
+    Router.go('project.timeline', {projectId: projectId});
   },
 
 });
