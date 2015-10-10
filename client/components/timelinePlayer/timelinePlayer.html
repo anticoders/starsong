@@ -8,4 +8,7 @@
     Play
     {{/if}}
   </button>
+  {{#each audioFiles}}
+    <audio src="{{$.fileUrl ./fileId}}" preload="auto" data-index="{{./index}}"></audio>
+  {{/each}}
 </template>

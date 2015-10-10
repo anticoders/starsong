@@ -25,3 +25,7 @@ Helpers.define('isIn', function (what) {
   }
   return false;
 });
+
+Helpers.define('fileUrl', function (fileId) {
+  return 'https://s3-us-west-2.amazonaws.com/' + Meteor.settings.public.bucketName + '/' + fileId; 
+});

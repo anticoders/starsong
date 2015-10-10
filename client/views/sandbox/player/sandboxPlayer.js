@@ -32,5 +32,9 @@ Template.sandboxPlayer.helpers({
 
 Template.sandboxPlayer.onRendered(function() {
 
+  this.player.play([
+    { type: 'AUDIO', fileId: 'a-team_intro.wav', x0: 0, x1: 5000, t0: 5000 },
+    { type: 'AUDIO', fileId: 'a-team_intro.wav', x0: 6000, x1: 10000, t0: 5000 },
+  ]);
 
 });

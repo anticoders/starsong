@@ -1,8 +1,11 @@
 {
-	"S3" : {
-	    "accessKeyId": "AKIAI7JBDH6XQMVJ5OEQ", 
-	    "secretAccessKey": "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", 
-	    "region": "us-west-2", 
-	    "bucketName" : "meteor-tracker"
-	}
+  "S3": {
+    "accessKeyId": "AKIAI7JBDH6XQMVJ5OEQ",
+    "secretAccessKey": "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",
+    "region": "us-west-2",
+    "bucketName": "meteor-tracker"
+  },
+  "public": {
+    "bucketName": "meteor-tracker"
+  }
 }
