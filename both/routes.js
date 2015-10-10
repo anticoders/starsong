@@ -15,7 +15,7 @@ Router.map(function() {
   // sandbox 
   this.route('sandbox.midi',      {path: '/sandbox/midi'});
 
-  this.route('sandbox.player',    {path: '/sandbox/player'});
+  this.route('sandbox.player',    {path: '/sandbox/player', layoutTemplate: 'emptyLayout'});
 
   this.route('sandbox.recorder',  {path: '/sandbox/recorder'}); 
 
