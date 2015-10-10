@@ -1,23 +1,41 @@
 <template name="sandboxMidi">
   
 
+  <div class="ui segment">
+    {{#with project}}
+      <div class="mArea">
 
-  {{#with project}}
-    <div class="mArea">
-      <div class="mTimeline">
 
-      </div>
-      <div class="mTracks">
-        {{#each tracks}}
-          <div class="mTrack">
-            TRACK!
+        <div class="mSidebar">
+          <div class="mTimelineHeader">
           </div>
-        {{/each}}
+          {{#each tracks}}
+            <div class="mTrackHeader">
+              <i class="fa fa-music"></i> &nbsp; {{name}}
+            </div>
+          {{/each}}
+        </div>
+
+
+        <div class="mScroll">
+          <div class="mTimeline">
+
+          </div>
+          <div class="mTracks">
+            {{#each tracks}}
+              <div class="mTrack">
+                {{#each stems}}
+                  {{> trackViewStem}}
+                {{/each}}
+              </div>
+            {{/each}}
+          </div>
+        </div>
+
+
       </div>
-
-    </div>
-  {{/with}}
-
+    {{/with}}
+  </div>
 
 </template>
 
