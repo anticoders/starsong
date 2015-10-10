@@ -14,6 +14,7 @@ Meteor.startup(function() {
 
   var pid = Projects.insert({
     name:       'Fake project',
+    dscriptiom: 'Fake decsription',
     _label:     'FAKE',
     length:     30,
   });
