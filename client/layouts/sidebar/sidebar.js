@@ -1,6 +1,8 @@
 Template.sidebar.helpers({
   projectId: function() {
-    var project = Router.current().data().project;
-    if(project) return project._id;
+    if(Router.current().data){
+      var project = Router.current().data().project;
+      if(project) return project._id;
+    }
   }
 });
