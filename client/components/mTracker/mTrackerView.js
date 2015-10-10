@@ -10,7 +10,7 @@ Template.mTrackerView.rendered = function() {
 Template.mTrackerView.helpers({
   
   posW: function() {
-    console.log("PROJECT?", this);
+    // console.log("PROJECT?", this);
     return Utils.music.timeToPx(this.length * Utils.music.second) + 40;
   },
 
@@ -32,6 +32,20 @@ Template.mTrackerView.events({
   'input [data-action=zoom]': function(e, t) {
     Utils.music.pxInSecond.set($(e.currentTarget).val());
   },
+
+  'click [data-action=insert]': function(e, t) {
+    // console.log("INSERT", e.offsetX);
+    var x0 = Utils.music.pxToTime(e.offsetX - 20);
+
+    Stems.insert({
+      projectId:    this.projectId,
+      trackId:      this._id,
+      x0:           x0,
+      x1:           x0 + 10 * Utils.music.second,
+      type:         'MIDI',
+    });
+  },
+
 
 });
 

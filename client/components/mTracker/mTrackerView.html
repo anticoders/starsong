@@ -2,7 +2,7 @@
   {{#with project}}
     <div class="mTrackerMenu">
       <span class="mMenuLabel">Time Zoom</span>
-      <input type="range" value="100" min="25" max="400" data-action="zoom"/>
+      <input type="range" value="100" min="10" max="400" data-action="zoom"/>
     </div>
 
     <div class="mTrackArea">
@@ -30,7 +30,7 @@
           </div>
           <div class="mTracks">
             {{#each tracks}}
-              <div class="mTrack">
+              <div class="mTrack" data-action="insert">
                 {{#each stems}}
                   {{> mTrackerStemView}}
                 {{/each}}

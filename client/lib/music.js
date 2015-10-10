@@ -1,6 +1,6 @@
 _.extend(Utils.music, {
 
-  pxInSecond: new ReactiveVar(100),
+  pxInSecond: new ReactiveVar(50),
 
   timeToPx: function(time) {
     return Math.floor(time * Utils.music.pxInSecond.get() / Utils.music.second);
