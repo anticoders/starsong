@@ -1,10 +1,7 @@
 Template.projectCreator.rendered = function () {
   $('.ui.search').search({
     apiSettings: {
-      url: '/users?email={query}',
-      onSuccess: function(res, element, xhr){
-        console.log(res);
-      }
+      url: '/users?email={query}'
     },
     fields: {
       results : 'users',
