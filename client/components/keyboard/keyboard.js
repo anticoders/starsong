@@ -6,6 +6,8 @@ Components.Keyboard = function () {
   
   template.helpers({
     keys: [
+      { note: 45 },
+      { note: 46 },
       { note: 47 },
       { note: 48 },
       { note: 49 },
@@ -20,9 +22,10 @@ Components.Keyboard = function () {
       { note: 58 },
       { note: 59 },
       { note: 60 },
+      { note: 61 },
     ],
     isHalftone: function () {
-      var note = this.note % 12;
+      var note = (this.note - MIDI.keyToNote.A0) % 12;
       return note === 1 || note === 3 || note === 6 || note === 8 || note === 10;
     }
   });
