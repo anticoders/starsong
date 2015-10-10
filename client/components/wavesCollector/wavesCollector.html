@@ -1,7 +1,17 @@
 <template name="__custom_collector"> 
-  <button class="ui button" data-action="chooseFile"> Choose file from disc </button>
-  <button class="ui button" data-action="recordFile"> Record wave </button> 
-  <input type="file" accept="audio/wav" style="display:none"> 
+  {{#if isReady}}
+    <button class="ui button" data-action="chooseFile"> Choose file from disc </button>
+    <button class="ui button" data-action="recordFile"> Record wave </button> 
+    <input type="file" style="display:none">     
+  {{/if}}
+  {{#if isInProgress}}
+    <div class="ui progress" data-percent="{{progress}}">
+      <div class="bar" style="transition-duration: 300ms; width: {{progress}}%;">
+        <div class="progress">{{progress}}%</div>
+      </div>
+      <div class="label">Uploading Files</div>
+    </div>
+  {{/if}}
 </template>
 
 

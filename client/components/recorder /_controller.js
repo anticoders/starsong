@@ -1,5 +1,0 @@
-SandboxRecorderController = RouteController.extend({
-
-});
-
-
