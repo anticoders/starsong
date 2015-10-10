@@ -9,7 +9,8 @@ Meteor.startup(function(){
 
 Meteor.methods({
 
-  generateSignedUrl : function(fileId){
+  StoreFile : function(data){
+    var fileId = S3Files.insert(data); 
     var s3Client = new AWS.S3();
     var params = {Bucket: "meteor-tracker", Key: fileId };
     var url = s3Client.getSignedUrl('putObject', params);
