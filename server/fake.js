@@ -9,17 +9,14 @@ Meteor.startup(function() {
 
 
   var pid = Projects.insert({
-    name: 'Fake project',
-    _label: 'FAKE',
+    name:       'Fake project',
+    _label:     'FAKE',
   });
-
-  // var tids = [];
-
 
   _.times(8, function(idx) {
     var tid = Tracks.insert({
-      projectId:  pid,
-      order:      idx,
+      projectId:      pid,
+      order:          idx,
     });
 
     var x0 = 0;
@@ -31,10 +28,11 @@ Meteor.startup(function() {
       x1 = x0 + Math.floor(Math.random() * 5000);
 
       Stems.insert({
-        trackId:  tid,
-        x0:       x0,
-        x1:       x1,
-        type:     'MIDI',
+        projectId:    pid,
+        trackId:      tid,
+        x0:           x0,
+        x1:           x1,
+        type:         'MIDI',
       });
 
     });
