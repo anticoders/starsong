@@ -18,9 +18,6 @@ Projects.allow({
 
 
 
-
-
-
 Meteor.publish('project.one', function(projectId) {
   var project = Projects.findOne(projectId);
   if(!project) return this.ready();

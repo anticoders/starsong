@@ -19,6 +19,17 @@ Invitations.before.insert(function (userId, doc) {
   doc.accepted = false;
 });
 
+
+Invitations.after.insert(function(userId, doc){
+  sendEmail(doc);
+});
+
+var sendEmail = function(doc){
+  console.log("###########SEND EMAIL#############");
+  console.log("TO: " + doc.email);
+  console.log("URL: " + Meteor.absoluteUrl() + "timeline/" + doc.projectId + "?invitation_token=" + doc.token);
+  console.log("###########END#############");
+}
 /*
 
   email:        String

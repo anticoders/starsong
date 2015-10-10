@@ -1,7 +1,7 @@
 ProjectSettingsController = ApplicationController.extend({
   waitOn: function() {
     return [
-      Meteor.subscribe('project', {_id: this.params._id}),
+      Meteor.subscribe('project.one', {_id: this.params._id}),
     ];
   },
 
