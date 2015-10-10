@@ -3,7 +3,9 @@ Template.trackViewStem.rendered = function() {
   var self = this;
 
   self.$('.mRightDrag').pep({
-    axis: 'x',
+    axis:                 'x',
+    place:                false,
+    useCSSTranslation:    false,
     start: function(ev, obj) {
       var stem = obj.$el.closest('.mStem');
       stem.addClass('pepActive');
@@ -20,6 +22,8 @@ Template.trackViewStem.rendered = function() {
       Stems.update(self.data._id, {$set: {
         x1: self.data.x0 + Utils.music.pxToTime(stem.width()),
       }});
+
+      // obj.$el.css('translation', 'none');
     },
   });
 };
