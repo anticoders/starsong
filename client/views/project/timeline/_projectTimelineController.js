@@ -12,7 +12,26 @@ ProjectTimelineController = ApplicationController.extend({
     return data;
   },
   onBeforeAction: function(){
-    
+    var token = this.params.query.invitationToken;
+    var invitation = Invitations.findOne({token: token});
+    if(token && invitation){
+      if (!Meteor.userId()) {
+        //dodaj do projektu :)
+      } else {
+        var user = Meteor.users.findOne({'emails.address': invitation.email});
+        if(user){
+          Router.go('signup',{},{query: {invitationToken: token}});
+        }else{
+          Router.go('signup',{},{query: {invitationToken: token}});
+        }
+      }
+    }else{
+      if (!Meteor.userId()) {
+        Router.go('signin');
+      } else {
+        this.next();
+      }
+    }
   },
 });
 
