@@ -29,8 +29,26 @@ Keyboard = function () {
   });
   
   template.events({
-    'click [data-action=play]': function (e) {
-      playNote(e.target, this);
+    'mousedown [data-action=play]': function () {
+      postal.publish({
+        channel: 'notes',
+        topic: 'note.start',
+        data: this
+      });
+    },
+    'mouseup [data-action=play]': function () {
+      postal.publish({
+        channel: 'notes',
+        topic: 'note.stop',
+        data: this
+      });
+    },
+    'mouseleave [data-action=play]': function () {
+      postal.publish({
+        channel: 'notes',
+        topic: 'note.stop',
+        data: this
+      });
     }
   });
   
@@ -44,33 +62,43 @@ Keyboard = function () {
         return;
       }
       keys[e.keyCode] = true;
-      playNote(el.find('[data-note=' + e.keyCode + ']').get(0), {
-        note: e.keyCode
+      postal.publish({
+        channel: 'notes',
+        topic: 'note.start',
+        data: {
+          note: e.keyCode,
+        }
       });
     });
+    
     $(window).on('keyup', function (e) {
       keys[e.keyCode] = false;
+      postal.publish({
+        channel: 'notes',
+        topic: 'note.stop',
+        data: {
+          note: e.keyCode,
+        }
+      });
+    });
+    
+    this.listenNotes = postal.subscribe({
+      channel: 'notes',
+      topic: 'note.*',
+      callback: function (data, envelope) {
+        var $key = el.find('[data-note=' + data.note + ']');
+        if (envelope.topic === 'note.start') {
+          $key.addClass('active');
+        } else if (envelope.topic === 'note.stop') {
+          $key.removeClass('active');
+        }
+      }
     });
   });
   
   template.onDestroyed(function () {
-    
+    this.listenNotes.unsubscribe();
   });
   
   return template;
 };
-
-
-function playNote (el, options) {
-  $(el).addClass('active');
-  
-  setTimeout(function () {
-    $(el).removeClass('active');
-    MIDI.noteOff(0, options.note);
-  }, 750);
-  
-  MIDI.setVolume(0, 127);
-  MIDI.noteOn(0, options.note, 127, 0);
-}
-
-

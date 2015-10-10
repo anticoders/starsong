@@ -131,6 +131,10 @@
         "MIDI": false,
         "Router": false,
         "AntiHelpers": false,
+        "postal": false,
+        "Keyboard": false,
+        "Player": false,
+        "Recorder": false,
 
         // model layer
         

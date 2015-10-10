@@ -10,7 +10,9 @@ Package.onUse(function (api) {
   api.versionsFrom('METEOR@1.2');
   
   api.use([
+    'custom:postal@0.0.0',
     'custom:midijs@0.0.0',
+    'reactive-var',
     'templating',
     'less',
     
@@ -21,9 +23,19 @@ Package.onUse(function (api) {
     'keyboard.less',
     'keyboard.html',
     'keyboard.js',
+
+    'player.html',
+    'player.js',
+    
+    'recorder.html',
+    'recorder.js',
     
   ], 'client');
   
-  api.export('Keyboard');
+  api.export([
+    'Recorder',
+    'Keyboard',
+    'Player',
+  ]);
 });
 
