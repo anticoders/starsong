@@ -7,7 +7,7 @@ Package.describe({
 Package.onUse(function (api) {
   'use strict';
   
-  api.versionsFrom('METEOR@1.0');
+  api.versionsFrom('METEOR@1.2');
 
   api.addFiles([
     'Base64Binary.js',
