@@ -23,14 +23,13 @@ semantic:ui-css
 anti:helpers
 anti:modals
 
-
-
+custom:postal
+custom:keyboard
 custom:midijs
+
 fortawesome:fontawesome
 matb33:collection-hooks
 meteorhacks:npm
-
-
 npm-container
 accounts-password
 accounts-facebook

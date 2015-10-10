@@ -13,7 +13,7 @@ echo "$(tput setaf 2)$(tput bold)==============================================$
 case "$THE_ENV" in
   "development" )
     export ROOT_URL='http://localhost:3000'
-    FAKE=true meteor run --port 3000
+    FAKE=true meteor run --port 3000 --settings settings.json
     ;;
 esac
 

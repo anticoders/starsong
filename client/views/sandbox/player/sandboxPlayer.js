@@ -1,23 +1,32 @@
 'use strict';
 
-Template.sandboxPlayer.onRendered(function() {
-  MIDI.loadPlugin({
+Template.sandboxPlayer.onCreated(function () {
+  this.keyboard = new Keyboard({
     
-    soundfontUrl: '/packages/custom_midijs/',
-    targetFormat: 'mp3',
-    instrument: 'acoustic_grand_piano',
-    onprogress: function(state, progress) {
-      console.log(state, progress);
-    },
-    onsuccess: function() {
-      var delay = 0; // play one note every quarter second
-      var note = 50; // the MIDI note
-      var velocity = 127; // how hard the note hits
-      // play the note
-      MIDI.setVolume(0, 127);
-      MIDI.noteOn(0, note, velocity, delay);
-      MIDI.noteOff(0, note, delay + 0.75);
+  });
+  this.player = new Player({
+    
+  });
+  this.recorder = new Recorder({
+    onStop: function (timeline) {
+      console.log('recorderd sound:', timeline);
     }
   });
+});
+
+Template.sandboxPlayer.helpers({
+  myKeyboard: function () {
+    return Template.instance().keyboard;
+  },
+  myPlayer: function () {
+    return Template.instance().player;
+  },
+  myRecorder: function () {
+    return Template.instance().recorder;
+  },
+});
+
+Template.sandboxPlayer.onRendered(function() {
+
 
 });

@@ -1,0 +1,51 @@
+
+.__custom_keyboard {
+  position: relative;
+  font-size: 0;
+  box-sizing: border-box;
+  
+  .__custom_keyboard_key {
+    display: inline-block;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    width: 32px;
+    height: 128px;
+
+    &.__custom_keyboard_halftone {
+      width: 0;
+      z-index: 1;
+      
+      .__custom_keyboard_key_inner {
+        position: relative;
+        vertical-align: top;
+        left: -10px;
+        width: 16px;
+        height: 80px;
+        background-color: black;
+        
+        &.active {
+          background-color: red;
+        }
+      }
+    }
+
+    .__custom_keyboard_key_inner {
+      margin: 0;
+      padding: 0;
+      width: 32px;
+      height: 128px;
+      background-color: white;
+      border: 2px solid black;
+      cursor: pointer;
+      z-index: 1;
+      
+      &.active {
+        background-color: rgb(255, 200, 200);
+      }
+    }
+
+  }
+
+}
+
