@@ -1,8 +1,7 @@
-/*globals Recorder: true*/
 'use strict';
 
-Recorder = function (options) {
-  var template = new Template('recorder', Template['__custom_recorder'].renderFunction);
+Components.MIDIRecorder = function (options) {
+  var template = new Template('recorder', Template['MIDIRecorder'].renderFunction);
   var timeline = [];
   var notes = {};
   

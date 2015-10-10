@@ -145,6 +145,7 @@
         
         "Utils": false,
         "Helpers": false,
-        "Settings": false
+        "Settings": false,
+        "Components": false
     }
 }

@@ -1,10 +1,9 @@
-/*globals Player: true*/
 'use strict';
 
 var MIDIPluginLoaded = new ReactiveVar(false);
 
-Player = function () {
-  var template = new Template('player', Template['__custom_player'].renderFunction);
+Components.MIDINotesEmitter = function () {
+  var template = new Template('player', Template.MIDINotesEmitter.renderFunction);
   
   template.onCreated(function () {
     this.notesListener = postal.subscribe({

@@ -1,8 +1,7 @@
-/*globals Keyboard: true*/
 'use strict';
 
-Keyboard = function () {
-  var template = new Template('keyboard', Template['__custom_keyboard'].renderFunction);
+Components.Keyboard = function () {
+  var template = new Template('keyboard', Template.keyboard.renderFunction);
   var keys = {};
   
   template.helpers({
@@ -54,7 +53,7 @@ Keyboard = function () {
   
   template.onRendered(function () {
     
-    var el = this.$('.__custom_keyboard');
+    var el = this.$('.keyboard');
     
     $(window).on('keydown', function (e) {
       if (keys[e.keyCode]) {

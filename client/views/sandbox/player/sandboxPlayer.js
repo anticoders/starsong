@@ -1,13 +1,13 @@
 'use strict';
 
 Template.sandboxPlayer.onCreated(function () {
-  this.keyboard = new Keyboard({
+  this.keyboard = new Components.Keyboard({
     
   });
-  this.player = new Player({
+  this.player = new Components.MIDINotesEmitter({
     
   });
-  this.recorder = new Recorder({
+  this.recorder = new Components.MIDIRecorder({
     onStop: function (timeline) {
       console.log('recorderd sound:', timeline);
     }
