@@ -5,7 +5,6 @@ Router.configure({
   routeControllerNameConverter:       'upperCamelCase',
   notFoundTemplate:                   'notFound',
   loadingTemplate:                    'loading',
-  layoutTemplate:                     'applicationLayout',
 });
 
 Router.map(function() {

@@ -1,11 +1,18 @@
 <template name="signin">
+  {{#if errors}}
+    <div class="ui inverted red segment">
+      {{#each errors}}
+        <p>{{this}}</p>
+      {{/each}}
+    </div>
+  {{/if}}
   <h2>Sign In</h2>
-  <form class="ui form" data-action="projectSettings">
+  <form class="ui form" data-action="signin">
     <div class="field">
       <input type="text" name="email" placeholder="Email">
     </div>
     <div class="field">
-      <input type="text" name="password" placeholder="Password">
+      <input type="password" name="password" placeholder="Password">
     </div>
     <button class="ui button" type="submit">Sign In</button>
     or <a href="{{pathFor 'signup'}}">Sign Up</a>
