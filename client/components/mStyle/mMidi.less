@@ -84,6 +84,8 @@
     padding:          0px 20px;
   }
 }
+
+
 .mMidiArea {
 
   position:           relative;
@@ -104,7 +106,7 @@
   .mSidebar {
     position:         absolute;
     left:             0px;
-    width:            120px;
+    width:            40px;
     top:              0px;
     bottom:           0px;
   }
@@ -112,7 +114,7 @@
 
   .mScrollBox {
     position:         absolute;
-    left:             120px;
+    left:             40px;
     right:            0px;
     top:              0px;
     bottom:           0px;
@@ -125,35 +127,41 @@
     width:            6000px;
   }
 
-
   .mTimeline, .mTimelineHeader {
     height:           25px;
     /*background:       #666;*/
   }
 
-  .mTrack, .mTrackHeader {
-    height:           40px; 
-  }
-
   .mTimelineHeader {
     text-align:       center;
   }
-
-  .mTrackHeader {
-    line-height:      40px;
-    text-align:       center;
-  }
-
+ 
   .mTimeline {
     width:            100%;
     background:       linear-gradient(to bottom, #111, rgba(16, 16, 16, 0));
   }
 
-  .mTrack {
-    border-bottom:    1px solid rgba(255,255,255,0.125);
+  .mPanoKeyboard {
+    background:       #555;
+  }
 
-    position:         relative;
+  .mPianoKeyHeader {
     width:            100%;
+    height:           10px;
+    line-height:      10px;
+    font-size:        6px;
+    background:       #555;
+    border-right:     1px solid black;
+    text-align:       center;
+
+    &.mBordered {
+      border-bottom:  1px solid #484848;
+    }
+  }
+
+  .mBlackPianoKeyHeader {
+    background:       #484848;
+    border-left:      30px solid #383838;
   }
 }
 

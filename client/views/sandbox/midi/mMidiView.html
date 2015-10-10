@@ -12,9 +12,18 @@
       <div class="mSidebar">
         <div class="mTimelineHeader">
         </div>
-        {{#each keys}}
-          
-        {{/each}}
+        <div class="mPanoKeyboard">
+          {{#each pianoKeys}}
+            <div class="mPianoKeyHeader {{#if black}} mBlackPianoKeyHeader {{/if}} {{#if $.isIn noteName 'C' 'F'}} mBordered {{/if}}">
+              {{#unless black}}
+                {{noteName}}
+                {{#if $.equals noteName 'C'}}
+                  {{octaveName}}
+                {{/if}}
+              {{/unless}}
+            </div>
+          {{/each}}
+        </div>
       </div>
 
 
@@ -24,7 +33,7 @@
 
           </div>
           <div class="mTracks">
-            {{#each keys}}
+            {{#each pianoKeys}}
               <div class="mTrack">
                 {{#each notes}}
                   {{> mMidiNoteView}}
