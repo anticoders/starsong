@@ -10,7 +10,7 @@ Meteor.methods({
     var fileId = S3Files.insert(data); 
     var s3Client = new AWS.S3();
     var params = {
-      Bucket: "meteor-tracker", 
+      Bucket: Meteor.settings.S3.bucketName, 
       Key: fileId, 
       Expires: 600, 
       ContentType: 'audio/wav',
