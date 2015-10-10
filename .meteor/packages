@@ -24,7 +24,6 @@ anti:helpers
 anti:modals
 
 custom:postal
-custom:keyboard
 custom:midijs
 
 fortawesome:fontawesome
