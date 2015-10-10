@@ -1,8 +1,8 @@
 <template name="projectSettings">
   <div class="project-settings">
-    <h2>Project settings</h2>
-    <div class="ui two column centered grid">
-      <div class="column">
+    <div class="ui grid">
+      <div class="eight wide column">
+        <h2>Project settings</h2>
         <form class="ui form" data-action="projectSettings">
           <div class="field">
             <input type="text" name="name" placeholder="Name" value="{{project.name}}">
@@ -12,6 +12,9 @@
           </div>
           <button class="ui button" type="submit">Submit</button>
         </form>
+      </div>
+      <div class="eight wide column">
+        <h2>Contributors</h2>
       </div>
     </div>
   </div>
