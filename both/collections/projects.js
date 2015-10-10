@@ -35,6 +35,28 @@ Projects.before.insert(function (userId, doc) {
 });
 
 
+
+Projects.before.insert(function (userId, doc) {
+  _.times(4, function(idx) {
+    Tracks.insert({
+      projectId:      doc._id,
+      order:          idx,
+      name:           'Track ' + idx,
+    });
+  });
+
+  doc.length = 60;
+  doc.userId = userId;
+  doc.users  = [userId];
+
+
+});
+
+
+
+
+
+
 /*
 
   name:         String

@@ -1,8 +1,11 @@
 <template name="navbar">
   <div class="navbar">
     <div class="ui grid">
-      <div class="eight column row">
-        <div class="right floated column">
+      <div class="row">
+        <div class="ten wide column">
+          {{> yield 'title'}}
+        </div>
+        <div class="six wide right floated column">
           <div class="ui dropdown">        
             <div class="text navbar-menu">{{email}}</div>
             <i class="dropdown icon"></i>
@@ -30,3 +33,5 @@
     </div>
   </div>
 </template>
+
+
