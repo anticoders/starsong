@@ -2,7 +2,7 @@ Tracks.allow({
 
   insert: function(userId, doc) {
     var project = Projects.findOne(doc.projectId);
-    if(project){
+    if(project) {
       return _.contains(project.users, userId);;
     }
   },

@@ -32,13 +32,6 @@ _.extend(Project.prototype, {
 
 
 Projects.before.insert(function (userId, doc) {
-  _.times(4, function(idx) {
-    Tracks.insert({
-      projectId:      doc._id,
-      order:          idx,
-      name:           'Track ' + idx,
-    });
-  });
 
   doc.length = 60;
   doc.userId = userId;
@@ -47,6 +40,18 @@ Projects.before.insert(function (userId, doc) {
 
 });
 
+
+Projects.after.insert(function(userId, doc) {
+  
+  _.times(4, function(idx) {
+    Tracks.insert({
+      projectId:      doc._id,
+      order:          idx,
+      name:           'Track ' + idx,
+    });
+  });
+
+});
 
 
 
