@@ -1,4 +1,4 @@
-ProjectTimelineController = RouteController.extend({
+ProjectTimelineController = ApplicationController.extend({
   waitOn: function() {
     return [
       Meteor.subscribe('project', {_id: this.params._id}),
