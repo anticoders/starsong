@@ -11,3 +11,14 @@ Template.trackViewStem.helpers({
 });
 
 
+
+
+Template.trackViewStem.events({
+
+  'click [data-action=edit]': function() {
+    console.log('EDIT');
+  },
+
+});
+
+
