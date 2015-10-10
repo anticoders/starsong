@@ -1,11 +1,11 @@
-S3Files = new Meteor.Collection('s3Files');
+
 
 S3File = function(doc) {
   'use strict';
   _.extend(this, doc);
 };
 
-S3Files = new Mongo.Collection('projects', {
+S3Files = new Mongo.Collection('s3Files', {
   transform: function(doc) {
     'use strict';
     return new S3File(doc);
@@ -24,3 +24,6 @@ S3Files.before.insert(function (userId, doc) {
   doc.createdAt  = Date.now();
   doc.uploadedBy = userId; 
 });
+
+
+
