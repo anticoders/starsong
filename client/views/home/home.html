@@ -1,6 +1,26 @@
 <template name="home">
 
-  HOME
+  <br/>
+
+  <div class="ui three stacking cards">
+
+    <div class="card">
+      <a class="ui top bottom attached massive blue button"
+         href="{{pathFor 'project.creator'}}">
+        <i class="fa fa-plus"></i> &nbsp; NEW PROJECT
+      </a>
+    </div>
+
+    {{#each projects}}
+      <div class="card">
+        <a class="ui top bottom attached massive orange button"
+           href="{{pathFor 'project.timeline' projectId=_id}}">
+          {{name}}
+        </a>
+      </div>
+    {{/each}}
+
+  </div>
 
 </template>
 

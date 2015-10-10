@@ -32,16 +32,24 @@ Meteor.publish('project.one', function(projectId) {
   ];
 });
 
-
-Meteor.publish('projects.fake', function() {
-  var project = Projects.findOne({_label: 'FAKE'});
-  if(!project) return this.ready();
+Meteor.publish('projects.mine', function() {
+  if(!this.userId) return this.ready();
 
   return [
-    Projects.find(project._id),
-    Tracks.find({projectId: project._id}),
-    Stems.find({projectId: project._id}),
+    Projects.find({users: this.userId}),
   ];
 });
+
+
+// Meteor.publish('projects.fake', function() {
+//   var project = Projects.findOne({_label: 'FAKE'});
+//   if(!project) return this.ready();
+
+//   return [
+//     Projects.find(project._id),
+//     Tracks.find({projectId: project._id}),
+//     Stems.find({projectId: project._id}),
+//   ];
+// });
 
 
