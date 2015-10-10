@@ -1,0 +1,5 @@
+Meteor.publish('projects', function() {
+
+});
+
+
