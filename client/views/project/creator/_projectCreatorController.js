@@ -1,0 +1,4 @@
+ProjectCreatorController = ApplicationController.extend({
+
+});
+

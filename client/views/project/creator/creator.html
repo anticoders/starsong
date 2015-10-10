@@ -1,0 +1,21 @@
+<template name="projectCreator">
+  <div class="project-settings">
+    <div class="ui grid">
+      <div class="eight wide column">
+        <h2>Create project</h2>
+        <form class="ui form" data-action="projectSettings">
+          <div class="field">
+            <input type="text" name="name" placeholder="Name" value="{{project.name}}">
+          </div>
+          <div class="field">
+            <textarea name="description" placeholder="Description" value="{{project.description}}"></textarea>
+          </div>
+          <button class="ui button" type="submit">Submit</button>
+        </form>
+      </div>
+      <div class="eight wide column">
+        <h2>Contributors</h2>
+      </div>
+    </div>
+  </div>
+</template>
