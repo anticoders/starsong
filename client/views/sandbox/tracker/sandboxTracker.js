@@ -1,4 +1,4 @@
-Template.sandboxMidi.rendered = function() {
+Template.sandboxTracker.rendered = function() {
   var self = this;
 
   this.autorun(function() {
@@ -8,7 +8,7 @@ Template.sandboxMidi.rendered = function() {
 };
 
 
-Template.sandboxMidi.events({
+Template.sandboxTracker.events({
 
   'input [data-action=zoom]': function(e, t) {
     Utils.music.pxInSecond.set($(e.currentTarget).val());

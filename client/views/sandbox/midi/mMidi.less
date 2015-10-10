@@ -24,7 +24,7 @@
   }
 
 
-  .mScroll {
+  .mScrollBox {
     position:         absolute;
     left:             120px;
     right:            0px;
@@ -32,18 +32,25 @@
     bottom:           0px;
     overflow-x:       scroll;
     overflow-y:       visible;
+  }
 
-    background:       #111;
+  .mScroll {
+    background-color: #111;
+    width:            6000px;
   }
 
 
   .mTimeline, .mTimelineHeader {
     height:           25px;
-    background:       #666;
+    /*background:       #666;*/
   }
 
   .mTrack, .mTrackHeader {
     height:           40px; 
+  }
+
+  .mTimelineHeader {
+    text-align:       center;
   }
 
   .mTrackHeader {
@@ -52,14 +59,15 @@
   }
 
   .mTimeline {
-    width:            6000px;
+    width:            100%;
+    background:       linear-gradient(to bottom, #111, rgba(16, 16, 16, 0));
   }
 
   .mTrack {
     border-bottom:    1px solid rgba(255,255,255,0.125);
 
     position:         relative;
-    width:            6000px;
+    width:            100%;
   }
 }
 
