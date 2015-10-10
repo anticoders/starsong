@@ -35,7 +35,7 @@ Template.mTrackerStemView.rendered = function() {
 Template.mTrackerStemView.helpers({
 
   posX0: function() {
-    return Utils.music.timeToPx(this.x0);
+    return Utils.music.timeToPx(this.x0) + 20;
   },
 
   posW: function() {
@@ -51,6 +51,7 @@ Template.mTrackerStemView.events({
 
   'click [data-action=edit]': function() {
     console.log('EDIT');
+    Router.go('sandbox.midi');
   },
 
 });
