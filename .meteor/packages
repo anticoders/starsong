@@ -23,8 +23,10 @@ semantic:ui-css
 anti:helpers
 anti:modals
 
-
-
-custom:midijs
-fortawesome:fontawesome
 custom:keyboard
+custom:midijs
+
+fortawesome:fontawesome
+matb33:collection-hooks
+meteorhacks:npm
+npm-container

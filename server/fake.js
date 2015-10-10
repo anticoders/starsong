@@ -14,6 +14,7 @@ Meteor.startup(function() {
 
   var pid = Projects.insert({
     name:       'Fake project',
+    dscriptiom: 'Fake decsription',
     _label:     'FAKE',
     length:     30,
   });
@@ -38,7 +39,7 @@ Meteor.startup(function() {
         trackId:      tid,
         x0:           x0,
         x1:           x1,
-        type:         'MIDI',
+        type:         (Math.random() > 0.1) ? 'MIDI' : 'AUDIO',
       });
 
     });
