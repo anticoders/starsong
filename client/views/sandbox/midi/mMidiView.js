@@ -30,8 +30,14 @@ Template.mMidiView.helpers({
   },
 
   notesInKey: function() {
-    // var stem = Template.closestData('thisIs')
-    return [];
+    var stem = Template.closestData('stem');
+    if(!stem) return [];
+    stem = stem.stem;
+    var self = this;
+
+    return _.filter(stem.midi, function(note) {
+      return note.n === self.midiNote;
+    });
   },
 
 });
