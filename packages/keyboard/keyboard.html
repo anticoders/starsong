@@ -2,7 +2,7 @@
   <div class="__custom_keyboard">
   {{#each keys}}
     <div class="__custom_keyboard_key {{#if isHalftone}}__custom_keyboard_halftone{{/if}}">
-      <div class="__custom_keyboard_key_inner" data-action="play"></div>
+      <div class="__custom_keyboard_key_inner" data-action="play" data-note="{{./note}}"></div>
     </div>
   {{/each}}
   </div>

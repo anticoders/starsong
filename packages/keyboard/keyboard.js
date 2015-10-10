@@ -30,22 +30,21 @@ Keyboard = function () {
   
   template.events({
     'click [data-action=play]': function (e) {
-      playNote(this);
-      $(e.target).addClass('active');
-      setTimeout(function () {
-        $(e.target).removeClass('active');
-      }, 750);
+      playNote(e.target, this);
     }
   });
   
   template.onRendered(function () {
+    
+    var el = this.$('.__custom_keyboard');
+    
     $(window).on('keydown', function (e) {
       if (keys[e.keyCode]) {
         // already down ...
         return;
       }
       keys[e.keyCode] = true;
-      playNote({
+      playNote(el.find('[data-note=' + e.keyCode + ']').get(0), {
         note: e.keyCode
       });
     });
@@ -62,10 +61,16 @@ Keyboard = function () {
 };
 
 
-function playNote (options) {
+function playNote (el, options) {
+  $(el).addClass('active');
+  
+  setTimeout(function () {
+    $(el).removeClass('active');
+    MIDI.noteOff(0, options.note);
+  }, 750);
+  
   MIDI.setVolume(0, 127);
   MIDI.noteOn(0, options.note, 127, 0);
-  MIDI.noteOff(0, options.note, 0.75);
 }
 
 
