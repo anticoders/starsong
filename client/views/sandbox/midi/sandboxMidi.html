@@ -1,7 +1,7 @@
 <template name="sandboxMidi">
   
 
-  <div class="ui segment">
+  <div class="">
     {{#with project}}
       <div class="mArea">
 
@@ -17,18 +17,20 @@
         </div>
 
 
-        <div class="mScroll">
-          <div class="mTimeline">
+        <div class="mScrollBox">
+          <div class="mScroll">
+            <div class="mTimeline">
 
-          </div>
-          <div class="mTracks">
-            {{#each tracks}}
-              <div class="mTrack">
-                {{#each stems}}
-                  {{> trackViewStem}}
-                {{/each}}
-              </div>
-            {{/each}}
+            </div>
+            <div class="mTracks">
+              {{#each tracks}}
+                <div class="mTrack">
+                  {{#each stems}}
+                    {{> trackViewStem}}
+                  {{/each}}
+                </div>
+              {{/each}}
+            </div>
           </div>
         </div>
 

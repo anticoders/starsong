@@ -1,6 +1,9 @@
 Template.sandboxMidi.rendered = function() {
+  var self = this;
 
-  setBackground(this.$('.mScroll'));
+  this.autorun(function() {
+    setBackground(self.$('.mScroll'));
+  });
   
 };
 
