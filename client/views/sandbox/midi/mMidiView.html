@@ -34,8 +34,8 @@
           </div>
           <div class="mTracks">
             {{#each pianoKeys}}
-              <div class="mTrack">
-                {{#each notes}}
+              <div class="mTrack {{#if black}} mBlackTrack {{/if}} {{#if $.isIn noteName 'C' 'F'}} mBordered {{/if}}">
+                {{#each notesInKey}}
                   {{> mMidiNoteView}}
                 {{/each}}
               </div>

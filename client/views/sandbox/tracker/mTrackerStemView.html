@@ -1,10 +1,8 @@
 <template name="mTrackerStemView">
   <div class="mStem {{#if $.equals type 'AUDIO'}} mAudioStem {{/if}}" style="left: {{posX0}}px; width: {{posW}}px;">
+    <div class="mEdit" data-action="edit">EDIT</div>
     <div class="mLeftDrag"><i class="fa fa-arrows"></i></div>
     <div class="mRightDrag" style="left: {{posW}}px;"><i class="fa fa-arrows-h"></i></div>
-    <div class="mEdit" data-action="edit">EDIT</div>
-    
-
   </div>
 
 </template>
