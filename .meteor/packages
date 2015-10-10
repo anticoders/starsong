@@ -17,6 +17,7 @@ standard-minifiers      # JS/CSS minifiers run for production mode
 iron:router
 semantic:ui-css
 anti:helpers
+anti:modals
 
 
 
