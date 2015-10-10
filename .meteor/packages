@@ -14,6 +14,7 @@ tracker                 # Meteor's client-side reactive programming library
 
 random
 reactive-var
+less
 
 standard-minifiers      # JS/CSS minifiers run for production mode
 
