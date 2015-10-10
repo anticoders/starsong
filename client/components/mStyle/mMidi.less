@@ -133,6 +133,7 @@
   }
 
   .mTimelineHeader {
+    background:       #181818;
     text-align:       center;
   }
  
@@ -162,6 +163,20 @@
   .mBlackPianoKeyHeader {
     background:       #484848;
     border-left:      30px solid #383838;
+  }
+
+  .mTrack {
+    height:           10px;
+    width:            100%;
+    background:       rgba(255, 255, 255, 0.032);
+
+    &.mBlackTrack {
+      background:     none;
+    }
+
+    &.mBordered {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+    }
   }
 }
 
