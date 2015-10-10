@@ -5,3 +5,7 @@ Template.projectSettings.events({
     Projects.update(projectId, {$set: $(e.target).serializeObject()});
   }
 });
+
+
+
+
