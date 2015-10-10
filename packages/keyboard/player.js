@@ -1,3 +1,4 @@
+/*globals Player: true*/
 'use strict';
 
 var MIDIPluginLoaded = new ReactiveVar(false);
@@ -10,6 +11,9 @@ Player = function () {
       channel: 'notes',
       topic: 'note.*',
       callback: function (data, envelope) {
+        if (!MIDIPluginLoaded.get()) {
+          return;
+        }
         if (envelope.topic === 'note.stop') {
           MIDI.noteOff(0, data.note);
         } else if (envelope.topic === 'note.start') {
