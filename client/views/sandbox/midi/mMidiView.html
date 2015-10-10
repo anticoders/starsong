@@ -1,0 +1,39 @@
+<template name="mMidiView">
+  {{#with stem}}
+    <div class="mMidiArea">
+
+
+      <div class="mSidebar">
+        <div class="mTimelineHeader">
+          <input type="range" value="100" min="25" max="400" data-action="zoom"/>
+        </div>
+        {{#each keys}}
+          
+        {{/each}}
+      </div>
+
+
+      <div class="mScrollBox">
+        <div class="mScroll">
+          <div class="mTimeline">
+
+          </div>
+          <div class="mTracks">
+            {{#each keys}}
+              <div class="mTrack">
+                {{#each notes}}
+                  {{> mMidiNoteView}}
+                {{/each}}
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  {{/with}}
+
+</template>
+
+

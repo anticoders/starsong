@@ -2,42 +2,7 @@
   
 
   <div class="">
-    {{#with project}}
-      <div class="mArea">
-
-
-        <div class="mSidebar">
-          <div class="mTimelineHeader">
-            <input type="range" value="100" min="25" max="400" data-action="zoom"/>
-          </div>
-          {{#each tracks}}
-            <div class="mTrackHeader">
-              <i class="fa fa-music"></i> &nbsp; {{name}}
-            </div>
-          {{/each}}
-        </div>
-
-
-        <div class="mScrollBox">
-          <div class="mScroll">
-            <div class="mTimeline">
-
-            </div>
-            <div class="mTracks">
-              {{#each tracks}}
-                <div class="mTrack">
-                  {{#each stems}}
-                    {{> trackViewStem}}
-                  {{/each}}
-                </div>
-              {{/each}}
-            </div>
-          </div>
-        </div>
-
-
-      </div>
-    {{/with}}
+    {{> mTrackerView}}
   </div>
 
 </template>

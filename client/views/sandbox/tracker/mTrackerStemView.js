@@ -1,5 +1,7 @@
 
-Template.trackViewStem.rendered = function() {
+
+
+Template.mTrackerStemView.rendered = function() {
   var self = this;
 
   self.$('.mRightDrag').pep({
@@ -30,7 +32,7 @@ Template.trackViewStem.rendered = function() {
 
 
 
-Template.trackViewStem.helpers({
+Template.mTrackerStemView.helpers({
 
   posX0: function() {
     return Utils.music.timeToPx(this.x0);
@@ -45,7 +47,7 @@ Template.trackViewStem.helpers({
 
 
 
-Template.trackViewStem.events({
+Template.mTrackerStemView.events({
 
   'click [data-action=edit]': function() {
     console.log('EDIT');

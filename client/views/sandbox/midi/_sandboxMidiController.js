@@ -8,7 +8,7 @@ SandboxMidiController = RouteController.extend({
 
   data: function() {
     var data = {
-      project: Projects.findOne(),
+      stem: Stems.findOne({_label: 'FAKE'}),
     };
 
     __data = data;
