@@ -1,11 +1,15 @@
 <template name="mTrackerView">
   {{#with project}}
+    <div class="mTrackerMenu">
+      <span class="mMenuLabel">Time Zoom</span>
+      <input type="range" value="100" min="25" max="400" data-action="zoom"/>
+    </div>
+
     <div class="mTrackArea">
 
 
       <div class="mSidebar">
         <div class="mTimelineHeader">
-          <input type="range" value="100" min="25" max="400" data-action="zoom"/>
         </div>
         {{#each tracks}}
           <div class="mTrackHeader">

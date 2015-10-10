@@ -1,11 +1,16 @@
 <template name="mMidiView">
   {{#with stem}}
-    <div class="mMidiArea">
 
+    <div class="mMidiMenu">
+      <span class="mMenuLabel">Time Zoom</span>
+      <input type="range" value="100" min="25" max="400" data-action="zoom"/>
+    </div>
+
+
+    <div class="mMidiArea">
 
       <div class="mSidebar">
         <div class="mTimelineHeader">
-          <input type="range" value="100" min="25" max="400" data-action="zoom"/>
         </div>
         {{#each keys}}
           
