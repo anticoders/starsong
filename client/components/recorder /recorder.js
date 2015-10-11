@@ -111,6 +111,7 @@ _.extend(SoundRecorder.prototype,{
         streamSource,
         {
           callback : function(blob){
+            console.log("inside callback"); 
             self.url = window.URL.createObjectURL(blob); 
             self.currentData.set(blob); 
             self.currentUrl.set(window.URL.createObjectURL(blob)); 
@@ -125,9 +126,9 @@ _.extend(SoundRecorder.prototype,{
     });
   }, 
   stopRecording : function(){
+    this.recorder.exportWAV(); 
     this.recording.set(false) ; 
     this.recorder.stop(); 
-    this.recorder.exportWAV(); 
   }, 
   reset : function(){
     this.currentData.set(null); 
