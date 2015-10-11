@@ -22,17 +22,15 @@ Template.mMidiNoteView.rendered = function() {
     stop: function(ev, obj) {
       var note = obj.$el.closest('.mNote');
       note.removeClass('pepActive');
-
-      // console.log("UPDATE", _.object(
-      //   ['midi.' + noteOb.idx + '.t1'],
-      //   [noteOb.t0 + Utils.music.pxToTime(note.width())]
-      // ));
-
       
       Stems.update(stemOb._id, {$set: _.object(
         ['midi.' + noteOb.idx + '.t1'],
         [Utils.music.pxToTime(note.left() + note.width() - 20)]
       )});
+
+      obj.$el.css({
+        'transition': 'none',
+      });
     },
   });
 
@@ -47,7 +45,7 @@ Template.mMidiNoteView.rendered = function() {
       note.data('pepinitwidth', note.width() + ev.screenX);
 
       note.find('.mRightDrag').css({
-        'transform': 'none',
+        'transition': 'none',
       });
     },
     drag: function(ev, obj) {
@@ -66,18 +64,11 @@ Template.mMidiNoteView.rendered = function() {
     stop: function(ev, obj) {
       var note = obj.$el.closest('.mNote');
       note.removeClass('pepActive');
-      console.log(" -- delta!", noteOb.t0);
 
       Stems.update(stemOb._id, {$set: _.object(
-        ['midi.' + noteOb.idx + '.t0',
-         // 'midi.' + noteOb.idx + '.t1',
-        ],
-        [Utils.music.pxToTime(note.left() - 20),
-         // noteOb.t1 - delta,
-        ]
+        ['midi.' + noteOb.idx + '.t0'],
+        [Utils.music.pxToTime(note.left() - 20)]
       )});
-
-      // obj.$el.css('translation', 'none');
     },
   });
 
@@ -90,12 +81,12 @@ Template.mMidiNoteView.rendered = function() {
       note.addClass('pepActive');
       note.data('pepinitleft', note.left() - ev.screenX);
 
-      note.find('.mLeftDrag').css({
-        'transform': 'none',
-      });
-      note.find('.mRightDrag').css({
-        'transform': 'none',
-      });
+      // note.find('.mLeftDrag').css({
+      //   'transform': 'none',
+      // });
+      // note.find('.mRightDrag').css({
+      //   'transform': 'none',
+      // });
     },
     drag: function(ev, obj) {
       var note = obj.$el.closest('.mNote');
@@ -120,7 +111,6 @@ Template.mMidiNoteView.rendered = function() {
         ]
       )});
 
-      // obj.$el.css('translation', 'none');
     },
   });
 
