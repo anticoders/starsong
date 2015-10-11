@@ -114,6 +114,7 @@ _.extend(SoundRecorder.prototype,{
             self.url = window.URL.createObjectURL(blob); 
             self.currentData.set(blob); 
             self.currentUrl.set(window.URL.createObjectURL(blob)); 
+
           }
         }
       ); 
@@ -127,6 +128,22 @@ _.extend(SoundRecorder.prototype,{
     this.recording.set(false) ; 
     this.recorder.stop(); 
     this.recorder.exportWAV(); 
+  }, 
+  reset : function(){
+    this.currentData.set(null); 
+    this.currentUrl.set(null); 
+  }, 
+  getMetadata : function(callback){
+    var req = new XMLHttpRequest();
+    req.open('GET', this.currentUrl.get(), true);
+    req.responseType = 'arraybuffer';
+    req.onload = function() {
+      var ctx = new AudioContext();
+      ctx.decodeAudioData(req.response, function(buffer) {
+        callback({duration : Math.round(buffer.duration*1000)}); 
+      })
+    };
+    req.send();
   }
 }); 
 

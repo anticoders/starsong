@@ -39,7 +39,7 @@ _.extend(S3uploader.prototype,{
       req.open('GET', url, true);
       req.responseType = 'arraybuffer';
       req.onload = function() {
-        var ctx = new webkitAudioContext();
+        var ctx = new AudioContext();
         ctx.decodeAudioData(req.response, function(buffer) {
           callback({duration : Math.round(buffer.duration*1000)}); 
         })
