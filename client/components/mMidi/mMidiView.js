@@ -12,11 +12,14 @@ var pianoKeys = _.map(_.range(72, 47, -1), function(i) {
 
 
 
+var midiTime = new ReactiveVar(0);
 
 
 
 Template.mMidiView.rendered = function() {
   var self = this;
+
+  midiTime.set(0);
 
   this.autorun(function() {
     setBackground(self.$('.mScroll'));
@@ -24,11 +27,64 @@ Template.mMidiView.rendered = function() {
   
 };
 
+Template.mMidiView.onCreated(function() {
+
+  console.log("ON CREATED");
+
+  this.notesListener = postal.subscribe({
+    channel: 'notes',
+    topic: '*',
+    callback: function (data, envelope) {
+      console.log("callback");
+      midiTime.set( midiTime.get() + 0.25 * Utils.music.second );
+    },
+  });
+
+  this.notesListener.unsubscribe();
+
+});
+
+Template.mMidiView.destroyed = function() {
+
+};
+
+
+  //   this.notesListener = postal.subscribe({
+  //     channel: 'notes',
+  //     topic: '*',
+  //     callback: function (data, envelope) {
+  //       if (!isRecording) {
+  //         return;
+  //       }
+  //       if (envelope.topic === 'start') {
+  //         notes[data.note] = Date.now();
+  //       } else if (envelope.topic === 'stop') {
+  //         if (!notes[data.note]) {
+  //           // strange ... this should not happen ...
+  //         } else {
+  //           timeline.push({
+  //             note: data.note,
+  //             startTime: notes[data.note] - recordingStartTime,
+  //             stopTime: Date.now() - recordingStartTime,
+  //           });
+  //         }
+  //       }
+  //     }
+  //   });
+  // });
+
+
+
+
 
 Template.mMidiView.helpers({
 
   posW: function() {
     return Utils.music.timeToPx(this.x1 - this.x0) + 40;
+  },
+
+  posMidi: function() {
+    return Utils.music.timeToPx(midiTime.get()) + 20;
   },
 
   seconds: function() {
