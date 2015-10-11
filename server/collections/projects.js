@@ -30,7 +30,7 @@ Meteor.publish('project.token', function(token) {
 
 
 Meteor.publish('project.one', function(projectId) {
-  var project = Projects.findOne(projectId);
+  var project = Projects.findOne({$and: [{_id:projectId}, {users: this.userId}]});
   if(!project) return this.ready();
 
   return [
