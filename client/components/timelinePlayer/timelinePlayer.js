@@ -18,6 +18,8 @@ Components.TimelinePlayer = function (options) {
   var currentEventIndex = 0;
   var currentPlaybackTime = 0;
   
+  options = options || {};
+  
   function triggerEvent (e) {
     var el;
     if (e.type === 'AUDIO') {
@@ -240,7 +242,6 @@ Components.TimelinePlayer = function (options) {
           audioElements[staveId] = el;
           
           el.onloadeddata = function () {
-            console.log('STAVE', stave);
             el.currentTime = (stave.t0 || 0) / 1000;
             // TODO: this should be configurable
             el.volume = 0.3;
@@ -285,6 +286,9 @@ Components.TimelinePlayer = function (options) {
   };
   
   template.pause = function () {
+    if (!isPlaying.get()) {
+        return;
+    }
     isPlaying.set(false);
     pauseEventQueue();
   };
@@ -293,6 +297,14 @@ Components.TimelinePlayer = function (options) {
     seekEventQueue(toPosition);
   };
   
+  template.isPlaying = function () {
+    return isPlaying.get();
+  };
+ 
+  template.isReady = function () {
+    return isReady();
+  };
+ 
   template.helpers({
     isReady: function () {
       return isReady();

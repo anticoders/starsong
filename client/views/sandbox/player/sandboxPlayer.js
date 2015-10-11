@@ -12,7 +12,12 @@ Template.sandboxPlayer.onCreated(function () {
       console.log('recorderd sound:', timeline);
     }
   });
-  this.player = new Components.TimelinePlayer({});
+  
+  this.player = new Components.TimelinePlayer({
+      onProgress: function (progress) {
+          console.log('PROGRESS', progress);
+      }
+  });
   
   this.timeline = new ReactiveVar([
     {       type: 'AUDIO',
