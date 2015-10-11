@@ -12,16 +12,16 @@ Template.projectStem.onCreated(function() {
   //     console.log('recorderd sound:', timeline);
   //   }
   // });
-  // this.player = new Components.TimelinePlayer({});
+  this.player = new Components.TimelinePlayer({});
 });
 
 Template.projectStem.helpers({
   myKeyboard: function () {
     return Template.instance().keyboard;
   },
-  // myPlayer: function () {
-  //   return Template.instance().player;
-  // },
+  myPlayer: function () {
+    return Template.instance().player;
+  },
   myEmitter: function () {
     return Template.instance().emitter;
   },
