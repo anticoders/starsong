@@ -62,7 +62,7 @@ Template.mTrackerView.events({
         x0:           x0,
         x1:           x0+res.duration || x0 + 2 * Utils.music.second,
         type:         type,
-        fileId:       res._id, 
+        fileId:       res.id, 
       });
       
     });
