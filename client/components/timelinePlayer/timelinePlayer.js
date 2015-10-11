@@ -55,7 +55,7 @@ Components.TimelinePlayer = function (options) {
         eventQueue.push({
           what: 'start',
           when: stave.x0,
-          seek: stave.t0,
+          seek: (stave.t0 || 0),
           type: stave.type,
           staveId: index,
         });
@@ -235,7 +235,7 @@ Components.TimelinePlayer = function (options) {
           
           el.onloadeddata = function () {
             console.log('STAVE', stave);
-            el.currentTime = stave.t0 / 1000;
+            el.currentTime = (stave.t0 || 0) / 1000;
             // TODO: this should be configurable
             el.volume = 0.3;
           };

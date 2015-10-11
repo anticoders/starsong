@@ -1,4 +1,6 @@
-signinErrors = new ReactiveVar();
+'use strict';
+
+var signinErrors = new ReactiveVar();
 
 Template.signin.rendered = function () {
   signinErrors.set(null);
