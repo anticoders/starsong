@@ -1,5 +1,5 @@
 Template.navbar.rendered = function () {
-  $('.ui.dropdown').dropdown();
+  this.$('.ui.dropdown').dropdown();
 };
 
 Template.navbar.helpers({
@@ -20,3 +20,5 @@ Template.navbar.events({
     Accounts.logout();
   }
 });
+
+

@@ -30,7 +30,6 @@ Template.mMidiView.rendered = function() {
 
 Template.mMidiView.onCreated(function() {
 
-  console.log("ON CREATED", this);
   var stemId = this.data.stem._id;
 
 
@@ -38,7 +37,6 @@ Template.mMidiView.onCreated(function() {
     channel: 'notes',
     topic: '*',
     callback: function (data, envelope) {
-      console.log("callback");
       if (envelope.topic === 'start') {
         recording.set(true);
         return;
@@ -46,7 +44,6 @@ Template.mMidiView.onCreated(function() {
       if (envelope.topic === 'stop') {
         if(!recording.get()) return;
         recording.set(false);
-
         Stems.update(stemId, {$push: { midi: {
           _id:  Random.id(),
           n:    data.note,
@@ -55,7 +52,9 @@ Template.mMidiView.onCreated(function() {
           ch:   0,
           vol:  127,
           vel:  127,
-        }}})
+        }},$inc : {
+          x1 : Utils.music.second * 0.25, 
+        }})
 
 
         midiTime.set( midiTime.get() + 0.25 * Utils.music.second );
@@ -113,8 +112,7 @@ Template.mMidiView.helpers({
   seconds: function() {
     var seconds = [];
     var length = (this.x1 - this.x0) / Utils.music.second;
-
-    for(var i = 1; i < length; ++i) {
+    for(var i = 1; i < 1000; ++i) {
       seconds.push({
         label: i,
         posX: Utils.music.timeToPx(i * Utils.music.second),
@@ -149,6 +147,7 @@ Template.mMidiView.events({
   },
 
   'click [data-action=addnote]': function(e, t) {
+    console.log("click");
     if(e.target !== e.currentTarget) return;
     
     var x0 = Utils.music.pxToTime(e.offsetX - 20);
@@ -162,7 +161,7 @@ Template.mMidiView.events({
       ch:   0,
       vol:  127,
       vel:  127,
-    }}})
+    }}}); 
   },
 
 });

@@ -1,7 +1,6 @@
 
 
 Template.mMidiNoteView.rendered = function() {
-
   var self = this;
   var noteOb = self.data;
   var stemOb = Template.closestData('stem').stem;

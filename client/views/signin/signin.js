@@ -33,7 +33,7 @@ Template.signin.events({
         if(err){
           signinErrors.set([err.reason]);
         }else{
-          Router.go('project.list', {});
+          Router.go('project.list');
         }
       });
     }
