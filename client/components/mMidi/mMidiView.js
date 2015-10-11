@@ -22,6 +22,8 @@ Template.mMidiView.rendered = function() {
   Utils.midiTime.set(0);
   recording.set(false);
 
+  var x0 = self.data.stem.x0;
+
   this.autorun(function() {
     setBackground(self.$('.mScroll'));
   });
@@ -41,7 +43,7 @@ Template.mMidiView.rendered = function() {
     var time = Utils.midiTime.get();
     if(Utils.timelinePlayer) {
       if(!Utils.timelinePlayer.isPlaying())
-        Utils.timelinePlayer.seek(time);
+        Utils.timelinePlayer.seek(time + x0);
     }
   });
 };
