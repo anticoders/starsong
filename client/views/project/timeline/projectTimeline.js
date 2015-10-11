@@ -1,11 +1,16 @@
+
+
+
 Template.projectTimeline.onCreated(function() {
   this.emitter = new Components.MIDINotesEmitter({});
   this.player = new Components.TimelinePlayer({});
+
+  Utils.timelinePlayer = this.player;
 });
 
 
 Template.projectTimeline.onDestroyed(function() {
-
+  delete Utils.timelinePlayer;
 });
 
 

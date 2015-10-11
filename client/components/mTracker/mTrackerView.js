@@ -1,10 +1,49 @@
+var midiTime = new ReactiveVar(0);
+
 Template.mTrackerView.rendered = function() {
   var self = this;
+
+  midiTime.set(0);
 
   this.autorun(function() {
     setBackground(self.$('.mScroll'));
   });
   
+
+
+  self.$('.mMomentHandle').pep({
+    axis:                 'x',
+    // place:                false,
+    removeMargins:        false,
+    useCSSTranslation:    false,
+    start: function(ev, obj) {
+    //   var rect = obj.$el.closest('.mStem');
+    //   rect.addClass('pepActive');
+    //   rect.data('pepinitwidth', rect.width() - ev.screenX);
+    },
+    // drag: function(ev, obj) {
+    //   var rect = obj.$el.closest('.mStem');
+    //   rect.css('width', rect.data('pepinitwidth') + ev.screenX + 'px');
+    // },
+    stop: function(ev, obj) {
+      midiTime.set( Utils.music.pxToTime(obj.$el.left() -20));
+    //   var rect = obj.$el.closest('.mStem');
+    //   rect.removeClass('pepActive');
+
+    //   Stems.update(self.data._id, {$set: {
+    //     x1: Utils.music.pxToTime(rect.left() + rect.width() - 20),
+    //   }});
+
+    //   // obj.$el.css('translation', 'none');
+    },
+  });
+
+  this.autorun(function() {
+    var time = midiTime.get();
+    if(Utils.timelinePlayer) {
+      Utils.timelinePlayer.seek(time);
+    }
+  });
 };
 
 Template.mTrackerView.helpers({
@@ -12,6 +51,10 @@ Template.mTrackerView.helpers({
   posW: function() {
     // console.log("PROJECT?", this);
     return Utils.music.timeToPx(this.length * Utils.music.second) + 40;
+  },
+
+  posMidi: function() {
+    return Utils.music.timeToPx(midiTime.get()) + 20;
   },
 
   seconds: function() {
@@ -75,6 +118,12 @@ Template.mTrackerView.events({
       order:        t.data.project.tracks().count(),
       name:         'Track ' + t.data.project.tracks().count(),
     });
+  },
+
+  'click [data-action=play]': function(e, t) {
+    // conso
+    Utils.timelinePlayer.play();
+    // removeMargins
   },
 
 
