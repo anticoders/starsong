@@ -12,11 +12,15 @@ var pianoKeys = _.map(_.range(72, 47, -1), function(i) {
 
 
 
-
+var midiTime = new ReactiveVar(0);
+var recording = new ReactiveVar(false);
 
 
 Template.mMidiView.rendered = function() {
   var self = this;
+
+  midiTime.set(0);
+  recording.set(false);
 
   this.autorun(function() {
     setBackground(self.$('.mScroll'));
@@ -24,11 +28,86 @@ Template.mMidiView.rendered = function() {
   
 };
 
+Template.mMidiView.onCreated(function() {
+
+  console.log("ON CREATED", this);
+  var stemId = this.data.stem._id;
+
+
+  this.notesListener = postal.subscribe({
+    channel: 'notes',
+    topic: '*',
+    callback: function (data, envelope) {
+      console.log("callback");
+      if (envelope.topic === 'start') {
+        recording.set(true);
+        return;
+      }
+      if (envelope.topic === 'stop') {
+        if(!recording.get()) return;
+        recording.set(false);
+
+        Stems.update(stemId, {$push: { midi: {
+          _id:  Random.id(),
+          n:    data.note,
+          t0:   midiTime.get(),
+          t1:   midiTime.get() + Utils.music.second * 0.25,
+          ch:   0,
+          vol:  127,
+          vel:  127,
+        }}})
+
+
+        midiTime.set( midiTime.get() + 0.25 * Utils.music.second );
+      }
+
+      // 
+    },
+  });
+
+});
+
+Template.mMidiView.destroyed = function() {
+  this.notesListener.unsubscribe();
+};
+
+
+  //   this.notesListener = postal.subscribe({
+  //     channel: 'notes',
+  //     topic: '*',
+  //     callback: function (data, envelope) {
+  //       if (!isRecording) {
+  //         return;
+  //       }
+  //       if (envelope.topic === 'start') {
+  //         notes[data.note] = Date.now();
+  //       } else if (envelope.topic === 'stop') {
+  //         if (!notes[data.note]) {
+  //           // strange ... this should not happen ...
+  //         } else {
+  //           timeline.push({
+  //             note: data.note,
+  //             startTime: notes[data.note] - recordingStartTime,
+  //             stopTime: Date.now() - recordingStartTime,
+  //           });
+  //         }
+  //       }
+  //     }
+  //   });
+  // });
+
+
+
+
 
 Template.mMidiView.helpers({
 
   posW: function() {
     return Utils.music.timeToPx(this.x1 - this.x0) + 40;
+  },
+
+  posMidi: function() {
+    return Utils.music.timeToPx(midiTime.get()) + 20;
   },
 
   seconds: function() {

@@ -33,6 +33,16 @@ Components.TimelinePlayer = function (options) {
         }
         delete audioCurrentlyPlaying[e.staveId];
       }
+    } else if (e.type === 'NOTE') {
+      postal.publish({
+        channel: 'notes',
+        topic: e.what,
+        data: {
+          note: e.data.n,
+          velocity: e.data.v,
+          channel: e.data.ch,
+        }
+      });
     }
   }
   
@@ -50,15 +60,27 @@ Components.TimelinePlayer = function (options) {
           staveId: index,
         });
         eventQueue.push({
-          id: index,
           what: 'stop',
           when: stave.x1,
           type: stave.type,
           staveId: index,
         });
       } else if (stave.type === 'MIDI') {
-        _.each(item.midi, function () {
-          // ...
+        _.each(stave.midi, function (note) {
+          eventQueue.push({
+            what: 'start',
+            data: note,
+            when: stave.x0 + note.t0,
+            type: 'NOTE',
+            staveId: index,
+          });
+          eventQueue.push({
+            data: note,
+            what: 'stop',
+            when: stave.x0 + note.t1,
+            type: 'NOTE',
+            staveId: index,
+          });
         });
       }
     });
@@ -79,30 +101,26 @@ Components.TimelinePlayer = function (options) {
     
     (function nextTick() {
       
-      console.log('NEXT TICK');
-      
       eventsBeforeNextTick = [];
 
-      while (eventQueue[currentEventIndex].when < currentPlaybackTime + tickTimeInterval) {
+      while (currentEventIndex < eventQueue.length &&
+          eventQueue[currentEventIndex].when < currentPlaybackTime + tickTimeInterval) {
+
         eventsBeforeNextTick.push(_.extend({
           offset: eventQueue[currentEventIndex].when - currentPlaybackTime,
         }, eventQueue[currentEventIndex]));
-        
+
         currentEventIndex += 1;
-        if (currentEventIndex >= eventQueue.length) {
-          break;
-        }
       }
       
       _.each(eventsBeforeNextTick, function (e) {
-        console.log('schedule event', e);
         e.timeout = Meteor.setTimeout(function () {
           triggerEvent(e);
         }, e.offset);
       });
       
       nextTickTimeout = Meteor.setTimeout(function () {
-        console.log('timeprogress', currentPlaybackTime);
+        // console.log('timeprogress', currentPlaybackTime);
         currentPlaybackTime += tickTimeInterval;
         
         if (currentEventIndex < eventQueue.length) {
@@ -127,10 +145,6 @@ Components.TimelinePlayer = function (options) {
     Meteor.clearTimeout(nextTickTimeout);
   }
   
-  function stopEventQueue () {
-    // do we need this one?
-  }
-  
   function seekEventQueue (toPosition) {
     var e;
     
@@ -144,8 +158,6 @@ Components.TimelinePlayer = function (options) {
     audioCurrentlyPlaying = {};
     currentEventIndex = 0;
     
-    console.log('seek to', toPosition, eventQueue);
-    
     while (currentEventIndex < eventQueue.length && eventQueue[currentEventIndex].when < toPosition) {
       
       e = eventQueue[currentEventIndex];
@@ -157,7 +169,6 @@ Components.TimelinePlayer = function (options) {
         }
       }
       currentEventIndex += 1;
-      console.log('seek index', currentEventIndex);
     }
     
     currentPlaybackTime = toPosition;
@@ -186,24 +197,47 @@ Components.TimelinePlayer = function (options) {
       
       timeline = data.toPlay || [];
       playFrom = data.playFrom || 0;
+      
       waitList = [];
       audioElements = {};
-      
       prepareEventQueue(timeline);
       
+      allAudio.find('audio').attr('data-stave-id', 'toRemove');
+
       _.each(timeline, function (stave, i) {
         var ready = new ReactiveVar(false);
         var staveId = i;
         var el;
+        var fileUrl = stave.fileId && Helpers.fileUrl(stave.fileId);
         
         waitList.push(ready);
         
         if (stave.type === 'AUDIO') {
-          el = document.createElement('audio');
-          el.setAttribute('src', Helpers.fileUrl(stave.fileId));
-          el.setAttribute('controls', 'controls');
+          el = allAudio.find('[data-stave-id=toRemove][src="' + fileUrl + '"]').get(0);
+
+          if (!el) {
+            el = allAudio.find('[src="' + fileUrl + '"]').get(0);
+            if (el) {
+              el = el.cloneNode();
+              allAudio.append(el);
+            } else {
+              el = document.createElement('audio');
+              el.setAttribute('src', fileUrl);
+              // el.setAttribute('controls', 'controls');
+              allAudio.append(el);
+            }
+          } else {
+            ready.set(true);
+          }
+          
+          el.setAttribute('data-stave-id', staveId);
+          audioElements[staveId] = el;
+          
           el.onloadeddata = function () {
+            console.log('STAVE', stave);
             el.currentTime = stave.t0 / 1000;
+            // TODO: this should be configurable
+            el.volume = 0.3;
           };
           el.oncanplay = function () {
             console.log('loaded file', stave.fileId);
@@ -215,8 +249,6 @@ Components.TimelinePlayer = function (options) {
           el.onseeked = function () {
             console.log('seeking done');
           };
-          audioElements[staveId] = el;
-          allAudio.append(el);
         } else {
           ready.set(true);
         }
@@ -224,6 +256,7 @@ Components.TimelinePlayer = function (options) {
       waitListDependency.changed();
     });
     
+    allAudio.remove('audio[data-stave-id=toRemove]');
   });
   
   template.events({
