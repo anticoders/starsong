@@ -28,18 +28,24 @@
 
 
       <div class="mScrollBox">
-        <div class="mScroll">
+        <div class="mScroll" style="width: {{posW}}px;">
           <div class="mTimeline">
-
+            {{#each seconds}}
+              <div class="mTimeLabel" style="left: {{posX}}px;">
+                {{label}}
+              </div>
+            {{/each}}
           </div>
           <div class="mTracks">
             {{#each pianoKeys}}
-              <div class="mTrack {{#if black}} mBlackTrack {{/if}} {{#if $.isIn noteName 'C' 'F'}} mBordered {{/if}}">
+              <div class="mTrack {{#if black}} mBlackTrack {{/if}} {{#if $.isIn noteName 'C' 'F'}} mBordered {{/if}}" data-action="addnote">
                 {{#each notesInKey}}
                   {{> mMidiNoteView}}
                 {{/each}}
               </div>
             {{/each}}
+          </div>
+          <div class="mRuler">
           </div>
         </div>
       </div>

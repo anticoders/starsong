@@ -3,7 +3,7 @@ var pianoKeys = [];
 
 
 
-for(var i = 0; i < 60; ++i) {
+for(var i = 27; i < 52; ++i) {
   pianoKeys.splice(0, 0, {
     midiNote:   i,
     noteName:   pianoNotes[i % 12],
@@ -24,6 +24,25 @@ Template.mMidiView.rendered = function() {
 
 
 Template.mMidiView.helpers({
+
+  posW: function() {
+    console.log("PROJECT?", this);
+    return Utils.music.timeToPx(this.x1 - this.x0) + 40;
+  },
+
+  seconds: function() {
+    var seconds = [];
+    var length = (this.x1 - this.x0) / Utils.music.second;
+
+    for(var i = 1; i < length; ++i) {
+      seconds.push({
+        label: i,
+        posX: Utils.music.timeToPx(i * Utils.music.second),
+      });
+    }
+    return seconds;
+  },
+
 
   pianoKeys: function() {
     return pianoKeys;
@@ -47,6 +66,23 @@ Template.mMidiView.events({
 
   'input [data-action=zoom]': function(e, t) {
     Utils.music.pxInSecond.set($(e.currentTarget).val());
+  },
+
+  'click [data-action=addnote]': function(e, t) {
+    if(e.target !== e.currentTarget) return;
+    
+    var x0 = Utils.music.pxToTime(e.offsetX - 20);
+
+    var self = this;
+    Stems.update(t.data.stem._id, {$push: { midi: {
+      _id:  Random.id(),
+      n:    self.midiNote,
+      t0:   x0,
+      t1:   x0 + Utils.music.second * 0.25,
+      ch:   0,
+      vol:  127,
+      vel:  127,
+    }}})
   },
 
 });

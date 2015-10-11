@@ -1,7 +1,7 @@
 @import '/client/lib/preamble.less';
 
 .mMidiMenu {
-  border-bottom:      1px solid #000;
+  /*border-bottom:      1px solid #000;*/
   text-align:         right;
   height:             20px;
   line-height:        20px;
@@ -122,25 +122,38 @@
 
   .mScroll {
     background-color: #111;
-    width:            6000px;
 
     background-position: 20px 0px;
-    box-shadow:       18px 0px 0px #111 inset;
+    box-shadow:       18px 0px 0px #111 inset, -18px 0px 0px #111 inset;
   }
 
-  .mTimeline, .mTimelineHeader {
+  .mTimeline, .mTimelineHeader, .mRuler {
     height:           25px;
     /*background:       #666;*/
   }
 
   .mTimelineHeader {
-    background:       #181818;
+    /*background:       #181818;*/
     text-align:       center;
   }
  
   .mTimeline {
     width:            100%;
     background:       linear-gradient(to bottom, #111, rgba(16, 16, 16, 0));
+  }
+
+  .mRuler {
+    width:            100%;
+    background:       linear-gradient(to top, #111, rgba(16, 16, 16, 0));
+  }
+
+  .mTimeLabel {
+    position:         absolute;
+    top:              0px;
+    bottom:           0px;
+    line-height:      20px;
+    width:            40px;
+    text-align:       center;
   }
 
   .mPanoKeyboard {
@@ -171,6 +184,8 @@
     width:            100%;
     background:       rgba(255, 255, 255, 0.032);
     position:         relative;
+
+    cursor:           copy;
 
     &.mBlackTrack {
       background:     none;

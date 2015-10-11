@@ -13,6 +13,11 @@ Stems = new Mongo.Collection('stems', {
 });
 
 
+Stems.before.insert(function (userId, doc) {
+
+  doc.midi = [];
+
+});
 
 /*
   projectId:      String / id in Projects
