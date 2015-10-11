@@ -21,6 +21,9 @@ Template.contributors.helpers({
   },
   invitations: function() {
     return Invitations.find();
+  }, 
+  anyInv : function(){
+    return Invitations.find().count() > 0; 
   }
 });
 
