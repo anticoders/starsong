@@ -89,7 +89,7 @@ Template.mTrackerView.events({
         projectId:    self.projectId,
         trackId:      self._id,
         x0:           x0,
-        x1:           x0+res.duration || x0 + 2 * Utils.music.second,
+        x1:           x0 + res.duration || x0 + 10 * Utils.music.second,
         type:         type,
         fileId:       res.id, 
       });
