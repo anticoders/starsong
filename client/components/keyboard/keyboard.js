@@ -5,25 +5,28 @@ Components.Keyboard = function () {
   var keys = {};
   
   template.helpers({
-    keys: [
-      { note: 48 },
-      { note: 49 },
-      { note: 50 },
-      { note: 51 },
-      { note: 52 },
-      { note: 53 },
-      { note: 54 },
-      { note: 55 },
-      { note: 56 },
-      { note: 57 },
-      { note: 58 },
-      { note: 59 },
-      { note: 60 },
-      { note: 61 },
-      { note: 62 },
-      { note: 63 },
-      { note: 64 },
-    ],
+    keys: _.map(_.range(48, 73), function(note) {
+      return {note: note};
+    }),
+    // [
+    //   { note: 48 },
+    //   { note: 49 },
+    //   { note: 50 },
+    //   { note: 51 },
+    //   { note: 52 },
+    //   { note: 53 },
+    //   { note: 54 },
+    //   { note: 55 },
+    //   { note: 56 },
+    //   { note: 57 },
+    //   { note: 58 },
+    //   { note: 59 },
+    //   { note: 60 },
+    //   { note: 61 },
+    //   { note: 62 },
+    //   { note: 63 },
+    //   { note: 64 },
+    // ],
     isHalftone: function () {
       var note = (this.note - MIDI.keyToNote.C1) % 12;
       return note === 1 || note === 3 || note === 6 || note === 8 || note === 10;

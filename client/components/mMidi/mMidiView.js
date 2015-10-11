@@ -1,16 +1,18 @@
-var pianoNotes = ['A', null, 'B', 'C', null, 'D', null, 'E', 'F', null, 'G', null];
-var pianoKeys = [];
+var pianoNotes = ['C', null, 'D', null, 'E', 'F', null, 'G', null, 'A', null, 'B'];
 
 
-
-for(var i = 27; i < 52; ++i) {
-  pianoKeys.splice(0, 0, {
+var pianoKeys = _.map(_.range(72, 47, -1), function(i) {
+  return {
     midiNote:   i,
     noteName:   pianoNotes[i % 12],
-    octaveName: Math.floor( (i + 9) / 12),
+    octaveName: Math.floor( (i + 9) / 12) - 1,
     black:      !pianoNotes[i % 12],
-  });
-}
+  };
+});
+
+
+
+
 
 
 Template.mMidiView.rendered = function() {

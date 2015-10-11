@@ -51,6 +51,8 @@ Meteor.publish('projects.mine', function() {
 });
 
 
+
+
 // Meteor.publish('projects.fake', function() {
 //   var project = Projects.findOne({_label: 'FAKE'});
 //   if(!project) return this.ready();

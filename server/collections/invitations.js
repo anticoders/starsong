@@ -31,8 +31,11 @@ Invitations.after.insert(function(userId, doc){
 });
 
 var sendEmail = function(doc){
-  console.log("###########SEND EMAIL#############");
-  console.log("TO: " + doc.email);
-  console.log("URL: " + Meteor.absoluteUrl() + "project/" + doc.projectId + "?invitationToken=" + doc.token);
-  console.log("###########END#############");
+  var url = Meteor.absoluteUrl() + "project/" + doc.projectId + "?invitationToken=" + doc.token;
+  Email.send({
+    from: 'StarSong <invitation@starsong.com>',
+    to: doc.email,
+    subject: "Invitationo to STAR SONG project",
+    html: 'Hi, you just received invitation to STAR SONG project - <a href="' + url +'">Click here</a>'
+  });
 };
