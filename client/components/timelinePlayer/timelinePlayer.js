@@ -101,6 +101,10 @@ Components.TimelinePlayer = function (options) {
     
     (function nextTick() {
       
+      if (options.onProgress) {
+          options.onProgress(currentPlaybackTime);
+      }
+      
       eventsBeforeNextTick = [];
 
       while (currentEventIndex < eventQueue.length &&
