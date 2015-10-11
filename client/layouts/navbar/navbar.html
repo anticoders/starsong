@@ -9,33 +9,34 @@
       {{> yield 'title'}}
 
 
+
     </div>
 
     <div class="rightPart">
       {{> yield 'menu'}}
       {{#if currentUser}}
-        <div class="ui dropdown">        
-          <div class="text navbar-menu">{{email}}</div>
+        <div class="ui pointing dropdown link item">        
+          <div class="text navbar-menu">Application</div>
           <i class="dropdown icon"></i>
           <div class="menu">
-
-
-            <div class="item">
-              <a href="#"><i class="fa fa-user"></i> Profil</a>
-            </div>
-            <div class="item">
-              <a href="{{pathFor 'project.creator'}}"><i class="fa fa-plus"></i> New Project</a>
-            </div>
-            <div class="item">
-              <a href="#"><i class="fa fa-list"></i> Projects list</a>
-            </div>
-            <div class="item">
-              <a href="#"><i class="fa fa-cog"></i> Settings</a>
-            </div>
+            <a href="{{pathFor 'project.creator'}}" class="item">
+              <i class="fa fa-plus"></i> Create
+            </a>
+            <a href="{{pathFor 'project.list'}}" class="item">
+              <i class="fa fa-list"></i> List
+            </a>
+            {{#if projectId}}
+              <a href="{{pathFor 'project.settings' projectId=projectId}}" class="item">
+                <i class="fa fa-cog"></i> Settings
+              </a>
+              <a href="{{pathFor 'project.invite' projectId=projectId}}" class="item">
+                <i class="fa fa-cog"></i> Invite
+              </a>
+            {{/if}}
             <div class="divider"></div>
-            <div class="item">
-              <a href="#" data-action="signout"><i class="fa fa-sign-out"></i> Sign out</a>
-            </div>  
+            <a href="#" data-action="signout" class="item">
+              <i class="fa fa-sign-out"></i> Sign out
+            </a>  
 
           </div>
         </div>

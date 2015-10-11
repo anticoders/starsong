@@ -1,0 +1,50 @@
+<template name="projectList">
+  {{#if empty}}
+    <div class="onboarding">
+      <i class="fa fa-star fa-3x"></i>
+      <h1>STAR SONG</h1>
+      <a href="{{pathFor 'project.creator'}}" class="ui basic green button">Create new project!</a>
+    </div>
+  {{else}}
+    <div class="project-list">
+      <h2>My projects</h2>
+      <div class="ui cards">
+        <div class="card">
+          <div class="content">
+            <div class="header">Create new project</div>
+            <div class="description">
+              Click here to meake your awesome composition!
+            </div>
+          </div>
+          <a href="{{pathFor 'project.creator'}}" class="ui bottom attached button">
+            <i class="add icon"></i>
+            Create
+          </a>
+        </div>
+
+        {{#each projects}}
+          <div class="card">          
+            <div class="content">
+              {{#if invited}}
+                <span class="ui red right ribbon small label">Invited</span>
+              {{else}}
+                <span class="ui green right ribbon small label">Owner</span>
+              {{/if}}
+              <div class="header">
+                {{name}}
+              </div>
+              <div class="description">
+                {{description}}            
+              </div>
+            </div>
+            <a href="{{pathFor 'project.timeline' projectId=_id}}" class="ui bottom attached button">
+              <i class="edit icon"></i>
+              Edit
+            </a>
+          </div>
+        {{/each}}
+
+      </div>
+    </div>
+  {{/if}}
+</template>

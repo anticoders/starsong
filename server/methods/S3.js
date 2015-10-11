@@ -20,6 +20,7 @@ Meteor.methods({
     return {
       url : url, 
       id  : fileId, 
+      duration : data.duration,
     };
   },
 

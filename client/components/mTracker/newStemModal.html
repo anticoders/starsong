@@ -2,26 +2,8 @@
 
 
   <div class="contextModal">
-    
-    <button class="ui big fluid olive button" data-action="select" data-value="MIDI">
-      <i class="fa fa-sliders"></i> &nbsp;
-      New MIDI track
-    </button>
-    
-    <br/>
-    
-    <button class="ui big fluid red button" data-action="select" data-value="RECORD">
-      <i class="fa fa-microphone"></i> &nbsp;
-      Record audio
-    </button>
-
-    <br/>
-
-    <button class="ui big fluid brown button" data-action="select" data-value="UPLOAD">
-      <i class="fa fa-cloud-upload"></i> &nbsp;
-      Upload audio
-    </button>
-
+        
+    {{ > wavesCollector}}
     <br/>
 
     <button class="ui basic inverted pink mini compact button" data-action="cancel">

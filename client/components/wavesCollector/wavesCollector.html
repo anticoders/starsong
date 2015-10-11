@@ -1,32 +1,49 @@
 <template name="__custom_collector"> 
+
   {{#if recordedWavBlobUrl}}
     <audio controls src="{{recordedWavBlobUrl}}" type="audio/wav"> </audio>
   {{/if}}
   {{#if isInRecordingMode}}
-    <button class="ui grey button" data-action="stopRecording"> Stop recording </button> 
+        <button class="ui big fluid red button"  data-action="stopRecording">
+          <i class="fa fa-microphone"></i> &nbsp;
+          Stop 
+        </button>
   {{else}}
-    {{#if recordedWavBlobUrl}}
-    <div class="ui action input">
-      <input type="text" value="myTrack" data-context="name">
-      <button class="ui grey right labeled icon button" data-action="save">
-        <i class="save icon"></i>
-        Save
-      </button>
-    </div>
+      {{#if recordedWavBlobUrl}}
+        <div class="ui fluid input">
+          <input class="ui big input" type="text" value="myTrack" data-context="name">
+        </div>
 
-    {{/if}}
-    {{#if isReady}}
+        <button class="ui big green fluid button" data-action="save">
+          <i class="save icon"></i>
+          Save
+        </button>
 
-      <div class="ui buttons">
-        <div class="ui grey button" data-action="chooseFile"> Choose file from disc </div>
-        <div class="or"></div>
-        <div class="ui grey button" data-action="record"> Record wave </div>
-      </div>
-       
-      <input type="file" style="display:none">     
-    {{/if}}
+      {{else}}
+        {{#if isReady}}
+          <button class="ui big fluid olive button" data-action="select" data-value="MIDI">
+            <i class="fa fa-sliders"></i> &nbsp;
+            New MIDI track
+          </button>
+          
+          <br/>
+          <button class="ui big fluid red button"  data-action="record">
+            <i class="fa fa-microphone"></i> &nbsp;
+            Record audio
+          </button>
+
+          <br/>
+
+          <button class="ui big fluid brown button" data-action="chooseFile">
+            <i class="fa fa-cloud-upload"></i> &nbsp;
+            Upload audio
+          </button>
+           
+          <input type="file" style="display:none">  
+        {{/if}}   
+      {{/if}}
     {{#if isInProgress}}
-      <div class="ui progress" data-percent="{{progress}}">
+      <div class="ui large green progress" data-percent="{{progress}}">
         <div class="bar" style="transition-duration: 300ms; width: {{progress}}%;">
           <div class="progress">{{progress}}%</div>
         </div>

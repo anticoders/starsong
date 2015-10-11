@@ -8,6 +8,9 @@ Template.navbar.helpers({
     if(user){
       return user.emails[0].address
     }
+  }, 
+  projectId: function(){
+    return Router.current().params.projectId;
   }
 });
 

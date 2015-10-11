@@ -1,2 +1,0 @@
-OnboardingController = ApplicationController.extend({
-});

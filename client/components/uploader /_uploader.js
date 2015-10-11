@@ -78,6 +78,9 @@ _.extend(S3uploader.prototype,{
         var percentLoaded;
         if (e.lengthComputable) {
           percentLoaded = Math.round((e.loaded / e.total) * 100);
+          if(percentLoaded === 100){
+            this_s3upload.state.set(S3uploader.MODES.FINISHED); 
+          }
           return this_s3upload.progress.set(percentLoaded); 
         }
       };

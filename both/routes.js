@@ -12,12 +12,11 @@ Router.map(function() {
   this.route('home',                    {path: '/'});
   this.route('landing',                 {path: '/landing'});
 
-  this.route('onboarding'),             {path: '/onboarding'};
-
+  this.route('project.list',         {path: '/projects'});
   this.route('project.creator',         {path: '/project/creator'});
   this.route('project.timeline',        {path: '/project/:projectId'});
   this.route('project.stem',            {path: '/project/:projectId/stem/:stemId'});
-  this.route('project.settings',        {path: '/project/:_id/settings'});
+  this.route('project.settings',        {path: '/project/:projectId/settings'});
   this.route('project.invite',          {path: '/project/:projectId/invite'});
 
   this.route('signin',                  {path: '/signin'}); 
