@@ -102,7 +102,9 @@ Components.TimelinePlayer = function (options) {
     (function nextTick() {
       
       if (options.onProgress) {
+        // console.log("BT");
           options.onProgress(currentPlaybackTime);
+          // console.log("AT");
       }
       
       eventsBeforeNextTick = [];
