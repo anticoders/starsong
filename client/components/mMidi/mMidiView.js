@@ -131,8 +131,9 @@ Template.mMidiView.helpers({
 
   seconds: function() {
     var seconds = [];
+    console.log("LENGTH", this.x1, this.x0);
     var length = (this.x1 - this.x0) / Utils.music.second;
-    for(var i = 1; i < 1000; ++i) {
+    for(var i = 1; i < length; ++i) {
       seconds.push({
         label: i,
         posX: Utils.music.timeToPx(i * Utils.music.second),
