@@ -10,14 +10,18 @@ Components.MIDINotesEmitter = function () {
       channel: 'notes',
       topic: '*',
       callback: function (data, envelope) {
+        var note = data.note;
+        var channel = data.channel || 0;
+        var velocity = data.velocity || 127;
+        
         if (!MIDIPluginLoaded.get()) {
           return;
         }
         if (envelope.topic === 'stop') {
-          MIDI.noteOff(0, data.note);
+          MIDI.noteOff(channel, note);
         } else if (envelope.topic === 'start') {
-          MIDI.setVolume(0, 127);
-          MIDI.noteOn(0, data.note, 127, 0);
+          // MIDI.setVolume(0, 127);
+          MIDI.noteOn(channel, note, velocity, 0);
         }
       }
     });
