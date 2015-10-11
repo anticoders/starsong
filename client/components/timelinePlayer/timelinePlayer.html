@@ -1,5 +1,7 @@
 <template name="timelinePlayer">
-  <button class="ui labeled icon button">
+  <button class="ui labeled icon {{#unless isReady}}loading{{/unless}} button"
+      data-action="{{#if isPlaying}}pause{{else}}play{{/if}}">
+
     {{#if isPlaying}}
     <i class="pause icon"></i>
     Pause
@@ -8,7 +10,5 @@
     Play
     {{/if}}
   </button>
-  {{#each audioFiles}}
-    <audio src="{{$.fileUrl ./fileId}}" preload="auto" data-index="{{./index}}"></audio>
-  {{/each}}
+  <div class="allAudio"></div>
 </template>

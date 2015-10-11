@@ -1,112 +1,210 @@
 'use strict';
 
 Components.TimelinePlayer = function (options) {
+
   var template = new Template('timelinePlayer', Template.timelinePlayer.renderFunction);
-  var audioFiles = new ReactiveVar([]);
-  var timelineEvents = [];
-  var timelineEventsDependency = new Tracker.Dependency();
+  var waitList = [];
+  var waitListDependency = new Tracker.Dependency();
+  var isPlaying = new ReactiveVar(false);
+  var audioElements = [];
+  var timeline = [];
+  var playFrom = 0;
   
-  template.play = function (timeline, startTime) {
+  var eventQueue = [];
+  var eventsBeforeNextTick = [];
+  var audioCurrentlyPlaying = {};
+  var nextTickTimeout;
+  var tickTimeInterval = 200;
+  var currentEventIndex = 0;
+  var currentPlaybackTime = 0;
+  
+  function triggerEvent (e) {
+    if (e.type === 'AUDIO' && e.el) {
+      if (e.what === 'start') {
+        e.el.play();
+        audioCurrentlyPlaying[e.staveId] = e;
+      } else if (e.what === 'stop') {
+        e.el.pause();
+        delete audioCurrentlyPlaying[e.staveId];
+      }
+    }
+  }
+  
+  function playEventQueue () {
+
+    _.each(audioCurrentlyPlaying, function (e) {
+      e.el.play();
+    });
     
-    var newAudioFiles = [];
+    (function nextTick() {
+      
+      eventsBeforeNextTick = [];
+
+      while (eventQueue[currentEventIndex].when < currentPlaybackTime + tickTimeInterval) {
+        eventsBeforeNextTick.push(_.extend({
+          offset: eventQueue[currentEventIndex].when - currentPlaybackTime,
+        }, eventQueue[currentEventIndex]));
+        
+        currentEventIndex += 1;
+        if (currentEventIndex >= eventQueue.length) {
+          break;
+        }
+      }
+      
+      _.each(eventsBeforeNextTick, function (e) {
+        e.timeout = Meteor.setTimeout(function () {
+          triggerEvent(e);
+        }, e.offset);
+      });
+      
+      nextTickTimeout = Meteor.setTimeout(function () {
+        // console.log('timeprogress', currentPlaybackTime);
+        currentPlaybackTime += tickTimeInterval;
+        
+        if (currentEventIndex < eventQueue.length) {
+          nextTick();
+        }
+        
+      }, tickTimeInterval);
+    }());
+  }
+  
+  function pauseEventQueue () {
+    _.each(audioCurrentlyPlaying, function (e) {
+      e.el.pause();
+      e.el.currentTime = (currentPlaybackTime - e.when) / 1000;
+    });
+    _.each(eventsBeforeNextTick, function (e) {
+      Meteor.clearTimeout(e.timeout);
+    });
+    Meteor.clearTimeout(nextTickTimeout);
+  }
+  
+  function stopEventQueue () {
     
-    startTime = startTime || 0;
+  }
+  
+  function seekEventQueue (toPosition) {
     
-    _.each(timeline, function (item, index) {
-      // TODO: handle the case, when startTime > item.x0
-      if (item.type === 'AUDIO') {
-        newAudioFiles.push({
-          index: index,
-          fileId: item.fileId,
-        });
-        timelineEvents.push({
+  }
+  
+  function isReady () {
+    waitListDependency.depend();
+    var allReady = _.all(waitList, function (ready) {
+      return ready.get();
+    });
+    return allReady;
+  }
+  
+  template.onRendered(function () {
+    var allAudio = this.$('.allAudio');
+    
+    this.autorun(function () {
+      var data = Template.currentData();
+      
+      timeline = data.toPlay || [];
+      playFrom = data.playFrom || 0;
+      waitList = [];
+      audioElements = [];
+      
+      _.each(timeline, function (stave, i) {
+        var ready = new ReactiveVar(false);
+        var el;
+        
+        waitList.push(ready);
+        
+        if (stave.type === 'AUDIO') {
+          el = document.createElement('audio');
+          el.setAttribute('src', Helpers.fileUrl(stave.fileId));
+          el.setAttribute('controls', 'controls');
+          el.onloadeddata = function () {
+            el.currentTime = stave.t0 / 1000;
+          };
+          el.oncanplay = function () {
+            console.log('loaded file', stave.fileId);
+            ready.set(true);
+          };
+          el.onseeking = function () {
+            console.log('seeking started');
+          };
+          el.onseeked = function () {
+            console.log('seeking done');
+          };
+          audioElements[i] = el;
+          allAudio.append(el);
+        } else {
+          ready.set(true);
+        }
+      });
+      waitListDependency.changed();
+    });
+    
+  });
+  
+  template.events({
+    'click [data-action=play]': function () {
+      template.play();
+    },
+    'click [data-action=pause]': function () {
+      template.pause();
+    },
+  });
+  
+  template.play = function () {
+    // only play when ready ...
+    if (!isReady()) {
+      return;
+    }
+    
+    isPlaying.set(true);
+    
+    _.each(timeline, function (stave, index) {
+      // TODO: handle the case, when startTime > stave.x0
+      if (stave.type === 'AUDIO') {
+        eventQueue.push({
+          el: audioElements[index],
           what: 'start',
-          when: item.x0 - startTime,
-          seek: item.t0,
-          type: item.type,
-          index: index,
+          when: stave.x0,
+          seek: stave.t0,
+          type: stave.type,
+          staveId: index,
         });
-        timelineEvents.push({
+        eventQueue.push({
+          el: audioElements[index],
+          id: index,
           what: 'stop',
-          when: item.x1,
-          type: item.type,
-          index: index,
+          when: stave.x1,
+          type: stave.type,
+          staveId: index,
         });
-      } else if (item.type === 'MIDI') {
+      } else if (stave.type === 'MIDI') {
         _.each(item.midi, function () {
           // ...
         });
       }
-      audioFiles.set(newAudioFiles);
     });
     
-    timelineEvents.sort(function (a, b) {
+    eventQueue.sort(function (a, b) {
       return a.when - b.when;
     });
     
-    timelineEventsDependency.changed();
-    
-    console.log(timelineEvents);
-    
-    // _.each(timeline, function (item) {
-    //   if (item.type === 'AUDIO') {
-    //     files.push(new Audio(Helpers.fileUrl(item.fileId)));
-    //   }
-    // });
+    playEventQueue();
   };
   
-  template.stop = function () {
-    audioFiles.set([]);
+  template.pause = function () {
+    isPlaying.set(false);
+    pauseEventQueue();
   };
   
   template.helpers({
-    audioFiles: function () {
-      return audioFiles.get();
-    }
+    isReady: function () {
+      return isReady();
+    },
+    isPlaying: function () {
+      return isPlaying.get();
+    },
   });
-  
-  template.onRendered(function () {
-    
-    var that = this;
-    
-    that.autorun(function () {
-      timelineEventsDependency.depend();
-      
-      Tracker.afterFlush(function () {
-        // TODO: use queue rather than creating a ton of timeouts
-        _.each(timelineEvents, function (event) {
-          var el = that.$('[data-index=' + event.index + ']').get(0);
-          if (el && event.seek) {
-            console.log('setting seek to', event.seek);
-            el.currentTime = event.seek;
-          }
-          console.log('parse event', el, event);
-          Meteor.setTimeout(function () {
-            console.log('trigger event', event);
-            if (event.type === 'AUDIO') {
-              if (event.what === 'start') {
-                // TODO: set the current time right after the elements are rendered ...
-                console.log('playing element', el);
-                el.play();
-              } else if (event.what === 'stop') {
-                console.log('pause element', el);
-                el.pause();
-              }
-            }
-          }, event.when);
-        }); 
-      });
-    });
-   
-    
-    // var audio = new Audio(Helpers.asset('/a-team_intro.wav'));
-    // audio.currentTime = 5;
-    // audio.play();
-    // setTimeout(function () {
-    //   audio.pause();
-    // }, 10 * 1000);
-  });
-  
+
   return template;
 };
 
