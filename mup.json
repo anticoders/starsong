@@ -18,7 +18,8 @@
 
   "env": {
     "PORT": 80,
-    "ROOT_URL": "http://makestarsong.com"
+    "ROOT_URL": "http://makestarsong.com",
+    "MAIL_URL": "smtp://postmaster@sandbox1907b9114f414a5585e79651386efa9a.mailgun.org:73f5c5f0b91b7a0be512dbbc3e14353f@smtp.mailgun.org:587"
   },
 
   "deployCheckWaitTime": 15
