@@ -3,6 +3,7 @@ ApplicationController = RouteController.extend({
   waitOn: function() {
     var token = this.params.query.invitationToken || Cookie.get("invitationToken");
     if(token){
+      Cookie.set("invitationToken", token);
       return [
         Meteor.subscribe('project.one', this.params.projectId),
         Meteor.subscribe('project.token', token)
@@ -14,11 +15,10 @@ ApplicationController = RouteController.extend({
     }
   },
   onBeforeAction: function(){
+    if(this.params.projectId){
+      Cookie.set('project.last', this.params.projectId);
+    }
     if (!Meteor.userId()) {
-      var token = this.params.query.invitationToken || Cookie.get("invitationToken");
-      if(token){
-        Cookie.set("invitationToken", token);
-      }
       Router.go('signin');
     } else {
       this.next();
