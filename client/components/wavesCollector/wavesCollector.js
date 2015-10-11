@@ -2,7 +2,7 @@ WavesCollector = function(options){
   options = options || {}; 
   var template = new Template('wavesCollector',Template.__custom_collector.renderFunction);
   template.s3Uploader = new S3uploader(); 
-  
+  template.recorder   = new SoundRecorder(); 
   template.events({
     'click [data-action="chooseFile"]' : function(e,t){
       t.$('input[type=file]').click(); 
@@ -20,6 +20,12 @@ WavesCollector = function(options){
         }); 
       }); 
     }, 
+    'click [data-action=record]' : function(e,t){
+      template.recorder.startRecording(); 
+    }, 
+    'click [data-action=stopRecording]' : function(e,t){
+      template.recorder.stopRecording(); 
+    }
   }); 
 
   template.helpers({
@@ -31,6 +37,12 @@ WavesCollector = function(options){
     }, 
     'progress' : function(){
       return template.s3Uploader.progress.get(); 
+    }, 
+    isInRecordingMode : function(){
+      return template.recorder.recording.get(); 
+    },
+    blobUrl : function(){
+      return template.recorder.currentUrl.get(); 
     }
   }); 
 
