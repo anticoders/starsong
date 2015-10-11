@@ -20,6 +20,7 @@ WavesCollector = function(options){
       template.s3Uploader.getWavMetadata(waveFile,function(metadata){
         _.extend(wavData,metadata); 
         Meteor.call('storeFile',wavData,function(err,res){
+          template.file = res; 
           template.s3Uploader.uploadToS3(waveFile,res.url); 
         }); 
       }); 
@@ -35,6 +36,7 @@ WavesCollector = function(options){
         meta.name = t.$('[data-context=name]').val(); 
         template.s3Uploader.state.set(S3uploader.MODES.PROGRESS);
         Meteor.call('storeFile',meta,function(err,res){
+          template.file = res; 
           template.s3Uploader.uploadToS3(
             template.recorder.currentData.get(),
             res.url

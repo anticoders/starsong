@@ -23,7 +23,6 @@ _.extend(S3File.prototype, {
 S3Files.before.insert(function (userId, doc) {
   doc.createdAt  = Date.now();
   doc.uploadedBy = userId; 
-  console.log("doc",doc); 
 });
 
 
