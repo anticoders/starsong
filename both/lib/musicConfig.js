@@ -1,7 +1,7 @@
 Utils.music = {
 
-  second: 60000,
-  milisecond: 60,
+  second: 1000,
+  milisecond: 1,
 
 };
 
