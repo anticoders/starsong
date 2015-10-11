@@ -14,9 +14,10 @@
 
     <div class="rightPart">
       {{> yield 'menu'}}
-      {{#if currentUser}}
-        <div class="ui pointing dropdown link item">        
-          <div class="text navbar-menu">Application</div>
+
+        <div class="ui pointing dropdown link item">
+          <div class="text navbar-menu">{{currentUser.emails.[0].address}}</div>
+
           <i class="dropdown icon"></i>
           <div class="menu">
             <a href="{{pathFor 'project.creator'}}" class="item">
@@ -36,13 +37,10 @@
             <div class="divider"></div>
             <a href="#" data-action="signout" class="item">
               <i class="fa fa-sign-out"></i> Sign out
-            </a>  
-
+            </a>
           </div>
         </div>
-      {{/if}}
+
     </div>
   </div>
 </template>
-
-

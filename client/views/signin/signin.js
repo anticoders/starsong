@@ -1,4 +1,6 @@
-signinErrors = new ReactiveVar();
+'use strict';
+
+var signinErrors = new ReactiveVar();
 
 Template.signin.rendered = function () {
   signinErrors.set(null);
@@ -31,7 +33,7 @@ Template.signin.events({
         if(err){
           signinErrors.set([err.reason]);
         }else{
-          Router.go('project.list', {}, params);
+          Router.go('project.list');
         }
       });
     }
