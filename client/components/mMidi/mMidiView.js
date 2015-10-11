@@ -147,7 +147,6 @@ Template.mMidiView.events({
   },
 
   'click [data-action=addnote]': function(e, t) {
-    console.log("click");
     if(e.target !== e.currentTarget) return;
     
     var x0 = Utils.music.pxToTime(e.offsetX - 20);

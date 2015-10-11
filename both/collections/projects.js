@@ -33,7 +33,6 @@ _.extend(Project.prototype, {
       projectId: this._id,
     }).count();
 
-    // console.log("CS", count);
     return stems;
   },
 
