@@ -33,6 +33,16 @@ Components.TimelinePlayer = function (options) {
         }
         delete audioCurrentlyPlaying[e.staveId];
       }
+    } else if (e.type === 'NOTE') {
+      postal.publish({
+        channel: 'notes',
+        topic: e.what,
+        data: {
+          note: e.data.n,
+          velocity: e.data.v,
+          channel: e.data.ch,
+        }
+      });
     }
   }
   
@@ -50,15 +60,27 @@ Components.TimelinePlayer = function (options) {
           staveId: index,
         });
         eventQueue.push({
-          id: index,
           what: 'stop',
           when: stave.x1,
           type: stave.type,
           staveId: index,
         });
       } else if (stave.type === 'MIDI') {
-        _.each(item.midi, function () {
-          // ...
+        _.each(stave.midi, function (note) {
+          eventQueue.push({
+            what: 'start',
+            data: note,
+            when: stave.x0 + note.t0,
+            type: 'NOTE',
+            staveId: index,
+          });
+          eventQueue.push({
+            data: note,
+            what: 'stop',
+            when: stave.x0 + note.t1,
+            type: 'NOTE',
+            staveId: index,
+          });
         });
       }
     });
@@ -79,8 +101,6 @@ Components.TimelinePlayer = function (options) {
     
     (function nextTick() {
       
-      console.log('NEXT TICK');
-      
       eventsBeforeNextTick = [];
 
       while (currentEventIndex < eventQueue.length &&
@@ -100,7 +120,7 @@ Components.TimelinePlayer = function (options) {
       });
       
       nextTickTimeout = Meteor.setTimeout(function () {
-        console.log('timeprogress', currentPlaybackTime);
+        // console.log('timeprogress', currentPlaybackTime);
         currentPlaybackTime += tickTimeInterval;
         
         if (currentEventIndex < eventQueue.length) {
@@ -216,6 +236,8 @@ Components.TimelinePlayer = function (options) {
           el.onloadeddata = function () {
             console.log('STAVE', stave);
             el.currentTime = stave.t0 / 1000;
+            // TODO: this should be configurable
+            el.volume = 0.3;
           };
           el.oncanplay = function () {
             console.log('loaded file', stave.fileId);
