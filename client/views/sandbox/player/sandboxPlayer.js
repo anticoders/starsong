@@ -28,13 +28,18 @@ Template.sandboxPlayer.helpers({
   myRecorder: function () {
     return Template.instance().recorder;
   },
+  timeline: function () {
+    return [
+      { type: 'AUDIO', fileId: 'bright-leady-guitar.mp3', x0: 0, x1: 3000, t0: 3000 },
+      { type: 'AUDIO', fileId: 'bright-leady-guitar.mp3', x0: 3000, x1: 9000, t0: 0 },
+      { type: 'AUDIO', fileId: 'bright-leady-guitar.mp3', x0: 6000, x1: 12000, t0: 0 },
+    //  { type: 'AUDIO', fileId: 'a-team_intro.wav', x0: 6000, x1: 10000, t0: 5000 },
+    ];
+  },
 });
 
 Template.sandboxPlayer.onRendered(function() {
 
-  this.player.play([
-    { type: 'AUDIO', fileId: 'a-team_intro.wav', x0: 0, x1: 5000, t0: 5000 },
-    { type: 'AUDIO', fileId: 'a-team_intro.wav', x0: 6000, x1: 10000, t0: 5000 },
-  ]);
+  //this.player.play();
 
 });
