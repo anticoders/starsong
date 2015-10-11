@@ -12,7 +12,11 @@ Template.projectStem.onCreated(function() {
   //     console.log('recorderd sound:', timeline);
   //   }
   // });
-  this.player = new Components.TimelinePlayer({});
+  this.player = new Components.TimelinePlayer({
+    onProgress: function(progress) {
+      Utils.midiTime.set(progress);
+    },
+  });
 });
 
 Template.projectStem.helpers({
