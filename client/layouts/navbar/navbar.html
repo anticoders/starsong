@@ -16,7 +16,7 @@
       {{> yield 'menu'}}
       {{#if currentUser}}
         <div class="ui pointing dropdown link item">        
-          <div class="text navbar-menu">Application</div>
+          <div class="text navbar-menu">{{currentUser.emails.[0].address}}</div>
           <i class="dropdown icon"></i>
           <div class="menu">
             <a href="{{pathFor 'project.creator'}}" class="item">
