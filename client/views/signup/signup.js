@@ -1,7 +1,12 @@
 signupErrors = new ReactiveVar();
 
 Template.signup.rendered = function () {
+  $('body').addClass('homeBody');
   signupErrors.set(null);
+};
+
+Template.signup.destroyed = function () {
+  $('body').removeClass('homeBody');
 };
 
 Template.signup.helpers({

@@ -35,7 +35,7 @@ var sendEmail = function(doc){
   Email.send({
     from: 'StarSong <invitation@starsong.com>',
     to: doc.email,
-    subject: "Invitationo to STAR SONG project",
+    subject: "Invitation to STAR SONG project",
     html: 'Hi, you just received invitation to STAR SONG project - <a href="' + url +'">Click here</a>'
   });
 };

@@ -3,8 +3,15 @@
 var signinErrors = new ReactiveVar();
 
 Template.signin.rendered = function () {
+  $('body').addClass('homeBody');
   signinErrors.set(null);
 };
+
+Template.signup.rendered = function () {
+  $('body').addClass('homeBody');
+  signinErrors.set(null);
+};
+
 
 Template.signin.helpers({
   errors: function () {
