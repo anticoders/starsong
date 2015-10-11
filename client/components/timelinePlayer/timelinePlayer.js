@@ -37,7 +37,7 @@ Components.TimelinePlayer = function (options) {
       }
     } else if (e.type === 'NOTE') {
       postal.publish({
-        channel: 'notes',
+        channel: 'replayNotes',
         topic: e.what,
         data: {
           note: e.data.n,

@@ -9,23 +9,34 @@ Components.MIDINotesEmitter = function () {
     this.notesListener = postal.subscribe({
       channel: 'notes',
       topic: '*',
-      callback: function (data, envelope) {
-        var note = data.note;
-        var channel = data.channel || 0;
-        var velocity = data.velocity || 127;
-        
-        if (!MIDIPluginLoaded.get()) {
-          return;
-        }
-        if (envelope.topic === 'stop') {
-          MIDI.noteOff(channel, note);
-        } else if (envelope.topic === 'start') {
-          // MIDI.setVolume(0, 127);
-          MIDI.noteOn(channel, note, velocity, 0);
-        }
-      }
+      callback: onNote,
     });
   });
+
+  template.onCreated(function () {
+    this.notesListener = postal.subscribe({
+      channel: 'replayNotes',
+      topic: '*',
+      callback: onNote,
+    });
+  });
+  
+  function onNote (data, envelope) {
+    console.log('onNote', data);
+    var note = data.note;
+    var channel = data.channel || 0;
+    var velocity = data.velocity || 127;
+    
+    if (!MIDIPluginLoaded.get()) {
+      return;
+    }
+    if (envelope.topic === 'stop') {
+      MIDI.noteOff(channel, note);
+    } else if (envelope.topic === 'start') {
+      // MIDI.setVolume(0, 127);
+      MIDI.noteOn(channel, note, velocity, 0);
+    }
+  }
   
   template.onRendered(function () {
     if (MIDIPluginLoaded.get()) {

@@ -48,9 +48,10 @@ Components.Keyboard = function () {
     'mouseup [data-action=play]': function () {
       publishNote('stop', this);
     },
-    'mouseleave [data-action=play]': function () {
-      publishNote('stop', this);
-    }
+    // TODO: this is strange ...
+    // 'mouseleave [data-action=play]': function () {
+    //   publishNote('stop', this);
+    // }
   });
   
   template.onRendered(function () {
