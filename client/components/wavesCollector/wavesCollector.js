@@ -1,8 +1,12 @@
+
+//TODO : add metadata editor 
+
 WavesCollector = function(options){
   options = options || {}; 
   var template = new Template('wavesCollector',Template.__custom_collector.renderFunction);
   template.s3Uploader = new S3uploader(); 
   template.recorder   = new SoundRecorder(); 
+
   template.events({
     'click [data-action="chooseFile"]' : function(e,t){
       t.$('input[type=file]').click(); 
@@ -25,6 +29,19 @@ WavesCollector = function(options){
     }, 
     'click [data-action=stopRecording]' : function(e,t){
       template.recorder.stopRecording(); 
+    }, 
+    'click [data-action=save]' : function(e,t){
+      template.recorder.getMetadata(function(meta){
+        meta.name = t.$('[data-context=name]').val(); 
+        template.s3Uploader.state.set(S3uploader.MODES.PROGRESS);
+        Meteor.call('storeFile',meta,function(err,res){
+          template.s3Uploader.uploadToS3(
+            template.recorder.currentData.get(),
+            res.url
+          ); 
+          template.recorder.reset(); 
+        }); 
+      }); 
     }
   }); 
 
@@ -41,7 +58,7 @@ WavesCollector = function(options){
     isInRecordingMode : function(){
       return template.recorder.recording.get(); 
     },
-    blobUrl : function(){
+    recordedWavBlobUrl : function(){
       return template.recorder.currentUrl.get(); 
     }
   }); 
