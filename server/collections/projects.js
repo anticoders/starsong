@@ -15,14 +15,22 @@ Projects.allow({
 });
 
 
-
-
-
-
+Meteor.publish('project.token', function(token) {
+  if(token && this.userId){
+    var invitation = Invitations.findOne({token: token});
+    var user = Meteor.users.findOne(this.userId);
+    if(invitation && !invitation.accepted && user.emails[0].address == invitation.email){
+      Invitations.update(invitation._id, {$set: {accepted: true}});
+      var project = Projects.findOne(invitation.projectId);
+      Projects.update(project._id, {$addToSet: {users: this.userId}});
+    }
+  }
+  return this.ready();
+});
 
 
 Meteor.publish('project.one', function(projectId) {
-  var project = Projects.findOne(projectId);
+  var project = Projects.findOne({$and: [{_id:projectId}, {users: this.userId}]});
   if(!project) return this.ready();
 
   return [

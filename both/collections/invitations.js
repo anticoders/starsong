@@ -19,6 +19,7 @@ Invitations.before.insert(function (userId, doc) {
   doc.accepted = false;
 });
 
+
 /*
 
   email:        String

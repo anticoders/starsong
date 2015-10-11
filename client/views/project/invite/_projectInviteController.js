@@ -1,13 +1,7 @@
 ProjectInviteController = ApplicationController.extend({
-  waitOn: function() {
-    return [
-      Meteor.subscribe('project', {_id: this.params._id}),
-    ];
-  },
-
   data: function() {
     var data = {
-      project: Projects.findOne(this.params._id),
+      project: Projects.findOne(this.params.projectId),
     };
     return data;
   },
