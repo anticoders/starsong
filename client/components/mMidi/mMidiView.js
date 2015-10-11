@@ -12,20 +12,38 @@ var pianoKeys = _.map(_.range(72, 47, -1), function(i) {
 
 
 
-var midiTime = new ReactiveVar(0);
+
 var recording = new ReactiveVar(false);
 
 
 Template.mMidiView.rendered = function() {
   var self = this;
 
-  midiTime.set(0);
+  Utils.midiTime.set(0);
   recording.set(false);
 
   this.autorun(function() {
     setBackground(self.$('.mScroll'));
   });
+
   
+  self.$('.mMomentHandle').pep({
+    axis:                 'x',
+    place:                false,
+    removeMargins:        false,
+    useCSSTranslation:    false,
+    stop: function(ev, obj) {
+      Utils.midiTime.set( Utils.music.pxToTime(obj.$el.left() -20));
+    },
+  });
+
+  this.autorun(function() {
+    var time = Utils.midiTime.get();
+    if(Utils.timelinePlayer) {
+      if(!Utils.timelinePlayer.isPlaying())
+        Utils.timelinePlayer.seek(time);
+    }
+  });
 };
 
 Template.mMidiView.onCreated(function() {
@@ -47,8 +65,8 @@ Template.mMidiView.onCreated(function() {
         Stems.update(stemId, {$push: { midi: {
           _id:  Random.id(),
           n:    data.note,
-          t0:   midiTime.get(),
-          t1:   midiTime.get() + Utils.music.second * 0.25,
+          t0:   Utils.midiTime.get(),
+          t1:   Utils.midiTime.get() + Utils.music.second * 0.25,
           ch:   0,
           vol:  127,
           vel:  127,
@@ -57,7 +75,7 @@ Template.mMidiView.onCreated(function() {
         }})
 
 
-        midiTime.set( midiTime.get() + 0.25 * Utils.music.second );
+        Utils.midiTime.set( Utils.midiTime.get() + 0.25 * Utils.music.second );
       }
 
       // 
@@ -106,7 +124,7 @@ Template.mMidiView.helpers({
   },
 
   posMidi: function() {
-    return Utils.music.timeToPx(midiTime.get()) + 20;
+    return Utils.music.timeToPx(Utils.midiTime.get()) + 20;
   },
 
   seconds: function() {
