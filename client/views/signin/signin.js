@@ -26,15 +26,15 @@ Template.signin.events({
     }
     if(errors.length > 0){
       signinErrors.set(errors);
-    }else{  
+    }else{
       Meteor.loginWithPassword(user.email, user.password, function(err){
         if(err){
           signinErrors.set([err.reason]);
         }else{
-          Router.go('onboarding', {}, params);
+          Router.go('project.list', {}, params);
         }
       });
     }
-    
+
   }
 });

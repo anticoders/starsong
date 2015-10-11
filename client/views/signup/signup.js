@@ -29,15 +29,15 @@ Template.signup.events({
     }
     if(errors.length > 0){
       signupErrors.set(errors);
-    }else{  
+    }else{
       Accounts.createUser(user, function(err){
         if(err){
           signupErrors.set([err.reason]);
         }else{
-          Router.go('onboarding');
+          Router.go('project.list');
         }
       });
     }
-    
+
   }
 });
