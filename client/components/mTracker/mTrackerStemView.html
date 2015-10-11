@@ -1,6 +1,10 @@
 <template name="mTrackerStemView">
   <div class="mStem {{#if $.equals type 'AUDIO'}} mAudioStem {{/if}}" style="left: {{posX0}}px; width: {{posW}}px;">
-    <a href="{{pathFor 'project.stem' projectId=projectId stemId=_id}}" class="mEdit" data-action="edit">EDIT</a>
+    {{#if $.equals type 'MIDI'}}
+      <a href="{{pathFor 'project.stem' projectId=projectId stemId=_id}}" class="mEdit" data-action="edit">EDIT</a>
+    {{else}}
+
+    {{/if}}
     <div class="mLeftDrag"><i class="fa fa-arrows"></i></div>
     <div class="mRightDrag" style="left: {{posW}}px;"><i class="fa fa-arrows-h"></i></div>
   </div>

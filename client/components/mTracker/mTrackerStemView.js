@@ -35,7 +35,8 @@ Template.mTrackerStemView.rendered = function() {
     axis:                 'x',
     place:                false,
     useCSSTranslation:    false,
-    droppable:            '.mTrack',
+    // droppable:            '.mTrack',
+    cssEaseDuration:      0,
     start: function(ev, obj) {
       var rect = obj.$el.closest('.mStem');
       rect.addClass('pepActive');
@@ -97,6 +98,12 @@ Template.mTrackerStemView.rendered = function() {
       // note.css({
       //   top: '1px',
       // });
+    },
+    rest: function(ev, obj) {
+      obj.$el.css({
+        left: '-20px',
+        // top:  '0px',
+      });
     },
   });
 };

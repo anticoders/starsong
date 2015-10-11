@@ -38,6 +38,7 @@ Template.mMidiNoteView.rendered = function() {
     axis:                 'x',
     place:                false,
     useCSSTranslation:    false,
+    cssEaseDuration:      0,
     start: function(ev, obj) {
       var note = obj.$el.closest('.mNote');
       note.addClass('pepActive');
@@ -69,6 +70,12 @@ Template.mMidiNoteView.rendered = function() {
         ['midi.' + noteOb.idx + '.t0'],
         [Utils.music.pxToTime(note.left() - 20)]
       )});
+    },
+    rest: function(ev, obj) {
+      obj.$el.css({
+        left: '-20px',
+        // top:  '0px',
+      });
     },
   });
 
