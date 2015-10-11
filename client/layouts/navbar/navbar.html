@@ -14,8 +14,8 @@
 
     <div class="rightPart">
       {{> yield 'menu'}}
-      {{#if currentUser}}
-        <div class="ui pointing dropdown link item">        
+
+        <div class="ui pointing dropdown link item">
           <div class="text navbar-menu">Application</div>
           <i class="dropdown icon"></i>
           <div class="menu">
@@ -36,13 +36,10 @@
             <div class="divider"></div>
             <a href="#" data-action="signout" class="item">
               <i class="fa fa-sign-out"></i> Sign out
-            </a>  
-
+            </a>
           </div>
         </div>
-      {{/if}}
+
     </div>
   </div>
 </template>
-
-
