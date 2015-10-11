@@ -6,7 +6,7 @@ Components.TimelinePlayer = function (options) {
   var waitList = [];
   var waitListDependency = new Tracker.Dependency();
   var isPlaying = new ReactiveVar(false);
-  var audioElements = [];
+  var audioElements = {};
   var timeline = [];
   var playFrom = 0;
   
@@ -19,24 +19,67 @@ Components.TimelinePlayer = function (options) {
   var currentPlaybackTime = 0;
   
   function triggerEvent (e) {
-    if (e.type === 'AUDIO' && e.el) {
+    var el;
+    if (e.type === 'AUDIO') {
+      el = audioElements[e.staveId];
       if (e.what === 'start') {
-        e.el.play();
+        if (el) {
+          el.play();
+        }
         audioCurrentlyPlaying[e.staveId] = e;
       } else if (e.what === 'stop') {
-        e.el.pause();
+        if (el) {
+          el.pause();
+        }
         delete audioCurrentlyPlaying[e.staveId];
       }
     }
   }
   
+  function prepareEventQueue (fromTimeline) {
+    eventQueue = [];
+    
+    _.each(fromTimeline, function (stave, index) {
+      // TODO: handle the case, when startTime > stave.x0
+      if (stave.type === 'AUDIO') {
+        eventQueue.push({
+          what: 'start',
+          when: stave.x0,
+          seek: stave.t0,
+          type: stave.type,
+          staveId: index,
+        });
+        eventQueue.push({
+          id: index,
+          what: 'stop',
+          when: stave.x1,
+          type: stave.type,
+          staveId: index,
+        });
+      } else if (stave.type === 'MIDI') {
+        _.each(item.midi, function () {
+          // ...
+        });
+      }
+    });
+    
+    eventQueue.sort(function (a, b) {
+      return a.when - b.when;
+    });
+  }
+  
   function playEventQueue () {
 
     _.each(audioCurrentlyPlaying, function (e) {
-      e.el.play();
+      var el = audioElements[e.staveId];
+      if (el) {
+        el.play();
+      }
     });
     
     (function nextTick() {
+      
+      console.log('NEXT TICK');
       
       eventsBeforeNextTick = [];
 
@@ -52,13 +95,14 @@ Components.TimelinePlayer = function (options) {
       }
       
       _.each(eventsBeforeNextTick, function (e) {
+        console.log('schedule event', e);
         e.timeout = Meteor.setTimeout(function () {
           triggerEvent(e);
         }, e.offset);
       });
       
       nextTickTimeout = Meteor.setTimeout(function () {
-        // console.log('timeprogress', currentPlaybackTime);
+        console.log('timeprogress', currentPlaybackTime);
         currentPlaybackTime += tickTimeInterval;
         
         if (currentEventIndex < eventQueue.length) {
@@ -71,8 +115,11 @@ Components.TimelinePlayer = function (options) {
   
   function pauseEventQueue () {
     _.each(audioCurrentlyPlaying, function (e) {
-      e.el.pause();
-      e.el.currentTime = (currentPlaybackTime - e.when) / 1000;
+      var el = audioElements[e.staveId];
+      if (el) {
+        el.pause();
+        el.currentTime = (currentPlaybackTime - e.when + e.seek) / 1000;
+      }
     });
     _.each(eventsBeforeNextTick, function (e) {
       Meteor.clearTimeout(e.timeout);
@@ -81,11 +128,46 @@ Components.TimelinePlayer = function (options) {
   }
   
   function stopEventQueue () {
-    
+    // do we need this one?
   }
   
   function seekEventQueue (toPosition) {
+    var e;
     
+    // stop all timeouts ...
+    _.each(eventsBeforeNextTick, function (e) {
+      Meteor.clearTimeout(e.timeout);
+    });
+    Meteor.clearTimeout(nextTickTimeout);
+    
+    eventsBeforeNextTick = [];
+    audioCurrentlyPlaying = {};
+    currentEventIndex = 0;
+    
+    console.log('seek to', toPosition, eventQueue);
+    
+    while (currentEventIndex < eventQueue.length && eventQueue[currentEventIndex].when < toPosition) {
+      
+      e = eventQueue[currentEventIndex];
+      if (e.type === 'AUDIO') {
+        if (e.what === 'start') {
+          audioCurrentlyPlaying[e.staveId] = e;
+        } else if (e.what === 'stop') {
+          delete audioCurrentlyPlaying[e.staveId];
+        }
+      }
+      currentEventIndex += 1;
+      console.log('seek index', currentEventIndex);
+    }
+    
+    currentPlaybackTime = toPosition;
+    
+    _.each(audioCurrentlyPlaying, function (e) {
+      var el = audioElements[e.staveId];
+      if (el) {
+        el.currentTime = (toPosition - e.when) / 1000;
+      }
+    });
   }
   
   function isReady () {
@@ -105,10 +187,13 @@ Components.TimelinePlayer = function (options) {
       timeline = data.toPlay || [];
       playFrom = data.playFrom || 0;
       waitList = [];
-      audioElements = [];
+      audioElements = {};
+      
+      prepareEventQueue(timeline);
       
       _.each(timeline, function (stave, i) {
         var ready = new ReactiveVar(false);
+        var staveId = i;
         var el;
         
         waitList.push(ready);
@@ -130,7 +215,7 @@ Components.TimelinePlayer = function (options) {
           el.onseeked = function () {
             console.log('seeking done');
           };
-          audioElements[i] = el;
+          audioElements[staveId] = el;
           allAudio.append(el);
         } else {
           ready.set(true);
@@ -153,47 +238,20 @@ Components.TimelinePlayer = function (options) {
   template.play = function () {
     // only play when ready ...
     if (!isReady()) {
+      console.warn('not ready! cannot play');
       return;
     }
-    
     isPlaying.set(true);
-    
-    _.each(timeline, function (stave, index) {
-      // TODO: handle the case, when startTime > stave.x0
-      if (stave.type === 'AUDIO') {
-        eventQueue.push({
-          el: audioElements[index],
-          what: 'start',
-          when: stave.x0,
-          seek: stave.t0,
-          type: stave.type,
-          staveId: index,
-        });
-        eventQueue.push({
-          el: audioElements[index],
-          id: index,
-          what: 'stop',
-          when: stave.x1,
-          type: stave.type,
-          staveId: index,
-        });
-      } else if (stave.type === 'MIDI') {
-        _.each(item.midi, function () {
-          // ...
-        });
-      }
-    });
-    
-    eventQueue.sort(function (a, b) {
-      return a.when - b.when;
-    });
-    
     playEventQueue();
   };
   
   template.pause = function () {
     isPlaying.set(false);
     pauseEventQueue();
+  };
+  
+  template.seek = function (toPosition) {
+    seekEventQueue(toPosition);
   };
   
   template.helpers({

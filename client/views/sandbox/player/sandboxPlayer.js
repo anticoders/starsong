@@ -40,6 +40,8 @@ Template.sandboxPlayer.helpers({
 
 Template.sandboxPlayer.onRendered(function() {
 
-  //this.player.play();
+  // setTimeout(function () {
+  //   this.player.seek(5000);
+  // }.bind(this), 5000);
 
 });
