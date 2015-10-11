@@ -99,7 +99,6 @@ Template.mMidiNoteView.rendered = function() {
       note.removeClass('pepActive');
 
       var drop = this.activeDropRegions[0];
-      console.log("DROP?", drop);
 
       if(!drop) {
         // Stems.update(stemOb._id, {$set: _.object(
