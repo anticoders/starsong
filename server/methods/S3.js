@@ -13,7 +13,7 @@ Meteor.methods({
       Bucket: Meteor.settings.S3.bucketName, 
       Key: fileId, 
       Expires: 600, 
-      ContentType: data.type,
+      ContentType: data.type || 'audio/wav',
       ACL: 'public-read',
     };
     var url = s3Client.getSignedUrl('putObject', params);
