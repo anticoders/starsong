@@ -15,11 +15,11 @@
     <div class="rightPart">
       {{> yield 'menu'}}
 
-        <div class="ui pointing dropdown link item">
-          <div class="text navbar-menu">{{currentUser.emails.[0].address}}</div>
+        <div class="ui  dropdown link item">
+         {{currentUser.emails.[0].address}}
 
           <i class="dropdown icon"></i>
-          <div class="menu">
+          <div class="menu" style="right : 0px">
             <a href="{{pathFor 'project.creator'}}" class="item">
               <i class="fa fa-plus"></i> Create
             </a>

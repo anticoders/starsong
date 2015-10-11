@@ -56,6 +56,7 @@ Template.mTrackerView.events({
       //   x1:           x0 + 10 * Utils.music.second,
       //   type:         type,
       // });
+
       Stems.insert({
         projectId:    self.projectId,
         trackId:      self._id,

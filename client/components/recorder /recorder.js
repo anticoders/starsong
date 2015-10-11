@@ -125,9 +125,10 @@ _.extend(SoundRecorder.prototype,{
     });
   }, 
   stopRecording : function(){
-    this.recorder.exportWAV(); 
     this.recording.set(false) ; 
     this.recorder.stop(); 
+    this.recorder.exportWAV(); 
+
   }, 
   reset : function(){
     this.currentData.set(null); 
