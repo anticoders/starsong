@@ -125,6 +125,11 @@ Template.mTrackerView.events({
     Utils.timelinePlayer.play();
     // removeMargins
   },
+  'click [data-action=pause]': function(e, t) {
+    // conso
+    Utils.timelinePlayer.pause();
+    // removeMargins
+  },
 
 
 });
