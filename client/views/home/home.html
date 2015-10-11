@@ -1,27 +1,73 @@
 <template name="home">
-
-  <br/>
-
-  <div class="ui three stacking cards">
-
-    <div class="card">
-      <a class="ui top bottom attached massive blue button"
-         href="{{pathFor 'project.creator'}}">
-        <i class="fa fa-plus"></i> &nbsp; NEW PROJECT
-      </a>
-    </div>
-
-    {{#each projects}}
-      <div class="card">
-        <a class="ui top bottom attached massive orange button"
-           href="{{pathFor 'project.timeline' projectId=_id}}">
-          {{name}}
-        </a>
-      </div>
-    {{/each}}
-
+<div class="hero">
+  <i class="fa fa-star fa-2x"></i><br>
+  STAR SONG  
+  <div class="small">
+    CREATE AWESOME COMPOSITION
   </div>
-
+</div>
+<div class="home-login">
+  <div class="ui two column centered grid">
+    <div class="column">
+      <div class="ui center aligned basic segment">
+        <a href="{{pathFor 'signup'}}" class="ui blue basic button">CREATE ACCOUNT</a>
+        <div class="ui horizontal divider">
+          Or
+        </div>
+        <a href="{{pathFor 'signin'}}">Sign In</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="story">
+  <div class="ui equal width  center aligned grid">
+    <div class="column">
+      <div class="ui card">
+        <div class="content">
+          <div class="meta">
+            <i class="fa fa-music fa-5x"></i>
+          </div>
+          <div class="header">
+            Create awesome composition
+          </div>
+          <div class="description">
+            <p>Create like profesional compositors.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+    <div class="ui card">
+      <div class="content">
+        <div class="meta">
+          <i class="fa fa-users fa-5x"></i>
+        </div>
+        <div class="header">
+          Colaborate with friends
+        </div>
+        <div class="description">
+          <p>invite frind and enjoy colaborative work.</p>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="column">
+    <div class="ui card">
+      <div class="content">
+        <div class="meta">
+          <i class="fa fa-upload fa-5x"></i>
+        </div>
+        <div class="header">
+          Share your work
+        </div>
+        <div class="description">
+          <p>Use our player to share your music with world.</p>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
 </template>
 
 

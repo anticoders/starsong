@@ -10,9 +10,7 @@ Router.configure({
 Router.map(function() {
 
   this.route('home',                    {path: '/'});
-  this.route('landing',                 {path: '/landing'});
-
-  this.route('project.list',         {path: '/projects'});
+  this.route('project.list',            {path: '/projects'});
   this.route('project.creator',         {path: '/project/creator'});
   this.route('project.timeline',        {path: '/project/:projectId'});
   this.route('project.stem',            {path: '/project/:projectId/stem/:stemId'});

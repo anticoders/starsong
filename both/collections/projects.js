@@ -25,6 +25,18 @@ _.extend(Project.prototype, {
     });
   },
 
+  timeline: function() {
+    var stems = Stems.find({
+      projectId: this._id,
+    }).fetch();
+    var count = Stems.find({
+      projectId: this._id,
+    }).count();
+
+    // console.log("CS", count);
+    return stems;
+  },
+
 
 });
 
