@@ -16,7 +16,9 @@ WavesCollector = function(options){
       var wavData = {
         name : waveFile.name, 
         projectId : options.projectId, 
+        type : wavFile.type, 
       }; 
+      i
       template.s3Uploader.getWavMetadata(waveFile,function(metadata){
         _.extend(wavData,metadata); 
         Meteor.call('storeFile',wavData,function(err,res){
