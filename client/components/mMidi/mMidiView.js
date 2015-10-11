@@ -26,7 +26,6 @@ Template.mMidiView.rendered = function() {
 Template.mMidiView.helpers({
 
   posW: function() {
-    console.log("PROJECT?", this);
     return Utils.music.timeToPx(this.x1 - this.x0) + 40;
   },
 
@@ -75,7 +74,7 @@ Template.mMidiView.events({
 
     var self = this;
     Stems.update(t.data.stem._id, {$push: { midi: {
-      _id:  Random.id(),
+      // _id:  Random.id(),
       n:    self.midiNote,
       t0:   x0,
       t1:   x0 + Utils.music.second * 0.25,

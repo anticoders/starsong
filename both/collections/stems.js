@@ -2,6 +2,9 @@
 
 Stem = function(doc) {
   'use strict';
+  _.each(doc.midi, function(note, idx) {
+    note.idx = idx;
+  });
   _.extend(this, doc);
 };
 
