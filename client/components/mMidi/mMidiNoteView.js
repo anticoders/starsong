@@ -73,44 +73,62 @@ Template.mMidiNoteView.rendered = function() {
   });
 
   self.$('.mDrag').pep({
-    axis:                 'x',
+    // axis:                 'x',
     place:                false,
     useCSSTranslation:    false,
+    droppable:            '.mTrack',
     start: function(ev, obj) {
       var note = obj.$el.closest('.mNote');
       note.addClass('pepActive');
       note.data('pepinitleft', note.left() - ev.screenX);
-
-      // note.find('.mLeftDrag').css({
-      //   'transform': 'none',
-      // });
-      // note.find('.mRightDrag').css({
-      //   'transform': 'none',
-      // });
+      note.data('pepinittop', note.top() - ev.screenY);
     },
     drag: function(ev, obj) {
       var note = obj.$el.closest('.mNote');
       note.css({
         left: note.data('pepinitleft') + ev.screenX + 'px',
+        top: note.data('pepinittop') + ev.screenY + 'px',
       });
       obj.$el.css({
         left: '0px',
+        top:  '0px',
       });
     },
     stop: function(ev, obj) {
       var note = obj.$el.closest('.mNote');
       note.removeClass('pepActive');
 
+      var drop = this.activeDropRegions[0];
+      console.log("DROP?", drop);
+
+      if(!drop) {
+        // Stems.update(stemOb._id, {$set: _.object(
+        //   ['midi.' + noteOb.idx + '.delete'],
+        //   [true]
+        // )});
+        Stems.update(stemOb._id, {$pull: {
+          midi: {_id: noteOb._id},
+        }});
+
+        return;
+      }
 
       Stems.update(stemOb._id, {$set: _.object(
         ['midi.' + noteOb.idx + '.t0',
          'midi.' + noteOb.idx + '.t1',
+         'midi.' + noteOb.idx + '.n',
         ],
         [Utils.music.pxToTime(note.left() - 20),
-         Utils.music.pxToTime(note.left() + note.width() - 20)
+         Utils.music.pxToTime(note.left() + note.width() - 20),
+         drop.data('note'),
         ]
       )});
 
+
+      $('.pep-dpa').removeClass('pep-dpa');
+      note.css({
+        top: '1px',
+      });
     },
   });
 
