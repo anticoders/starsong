@@ -13,6 +13,27 @@ Template.sandboxPlayer.onCreated(function () {
     }
   });
   this.player = new Components.TimelinePlayer({});
+  
+  this.timeline = new ReactiveVar([
+    {       type: 'AUDIO',
+           fileId: 'bright-leady-guitar.mp3',
+      t0: 1000, x0: 0, x1: 5000 },
+    {        type: 'AUDIO',
+           fileId: 'bright-leady-guitar.mp3', t0: 0, x0: 5000, x1: 11000 },
+  ]);
+});
+
+Template.sandboxPlayer.events({
+  'click [data-action=add]': function (e, t) {
+    var timeline = t.timeline.get();
+    timeline.push({
+       type: 'AUDIO',
+       fileId: 'bright-leady-guitar.mp3',
+       t0: 0, x0: 6000 * timeline.length, x1: 6000 * (timeline.length + 1)
+    });
+    console.log(timeline);
+    t.timeline.set(timeline);
+  }
 });
 
 Template.sandboxPlayer.helpers({
@@ -29,12 +50,7 @@ Template.sandboxPlayer.helpers({
     return Template.instance().recorder;
   },
   timeline: function () {
-    return [
-      { type: 'AUDIO', fileId: 'bright-leady-guitar.mp3', x0: 0, x1: 3000, t0: 3000 },
-      { type: 'AUDIO', fileId: 'bright-leady-guitar.mp3', x0: 3000, x1: 9000, t0: 0 },
-      { type: 'AUDIO', fileId: 'bright-leady-guitar.mp3', x0: 6000, x1: 12000, t0: 0 },
-    //  { type: 'AUDIO', fileId: 'a-team_intro.wav', x0: 6000, x1: 10000, t0: 5000 },
-    ];
+    return Template.instance().timeline.get();
   },
 });
 

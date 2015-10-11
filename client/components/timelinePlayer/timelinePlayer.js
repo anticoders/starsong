@@ -83,19 +83,17 @@ Components.TimelinePlayer = function (options) {
       
       eventsBeforeNextTick = [];
 
-      while (eventQueue[currentEventIndex].when < currentPlaybackTime + tickTimeInterval) {
+      while (currentEventIndex < eventQueue.length &&
+          eventQueue[currentEventIndex].when < currentPlaybackTime + tickTimeInterval) {
+
         eventsBeforeNextTick.push(_.extend({
           offset: eventQueue[currentEventIndex].when - currentPlaybackTime,
         }, eventQueue[currentEventIndex]));
-        
+
         currentEventIndex += 1;
-        if (currentEventIndex >= eventQueue.length) {
-          break;
-        }
       }
       
       _.each(eventsBeforeNextTick, function (e) {
-        console.log('schedule event', e);
         e.timeout = Meteor.setTimeout(function () {
           triggerEvent(e);
         }, e.offset);
@@ -127,10 +125,6 @@ Components.TimelinePlayer = function (options) {
     Meteor.clearTimeout(nextTickTimeout);
   }
   
-  function stopEventQueue () {
-    // do we need this one?
-  }
-  
   function seekEventQueue (toPosition) {
     var e;
     
@@ -144,8 +138,6 @@ Components.TimelinePlayer = function (options) {
     audioCurrentlyPlaying = {};
     currentEventIndex = 0;
     
-    console.log('seek to', toPosition, eventQueue);
-    
     while (currentEventIndex < eventQueue.length && eventQueue[currentEventIndex].when < toPosition) {
       
       e = eventQueue[currentEventIndex];
@@ -157,7 +149,6 @@ Components.TimelinePlayer = function (options) {
         }
       }
       currentEventIndex += 1;
-      console.log('seek index', currentEventIndex);
     }
     
     currentPlaybackTime = toPosition;
@@ -186,23 +177,44 @@ Components.TimelinePlayer = function (options) {
       
       timeline = data.toPlay || [];
       playFrom = data.playFrom || 0;
+      
       waitList = [];
       audioElements = {};
-      
       prepareEventQueue(timeline);
       
+      allAudio.find('audio').attr('data-stave-id', 'toRemove');
+
       _.each(timeline, function (stave, i) {
         var ready = new ReactiveVar(false);
         var staveId = i;
         var el;
+        var fileUrl = stave.fileId && Helpers.fileUrl(stave.fileId);
         
         waitList.push(ready);
         
         if (stave.type === 'AUDIO') {
-          el = document.createElement('audio');
-          el.setAttribute('src', Helpers.fileUrl(stave.fileId));
-          el.setAttribute('controls', 'controls');
+          el = allAudio.find('[data-stave-id=toRemove][src="' + fileUrl + '"]').get(0);
+
+          if (!el) {
+            el = allAudio.find('[src="' + fileUrl + '"]').get(0);
+            if (el) {
+              el = el.cloneNode();
+              allAudio.append(el);
+            } else {
+              el = document.createElement('audio');
+              el.setAttribute('src', fileUrl);
+              // el.setAttribute('controls', 'controls');
+              allAudio.append(el);
+            }
+          } else {
+            ready.set(true);
+          }
+          
+          el.setAttribute('data-stave-id', staveId);
+          audioElements[staveId] = el;
+          
           el.onloadeddata = function () {
+            console.log('STAVE', stave);
             el.currentTime = stave.t0 / 1000;
           };
           el.oncanplay = function () {
@@ -215,8 +227,6 @@ Components.TimelinePlayer = function (options) {
           el.onseeked = function () {
             console.log('seeking done');
           };
-          audioElements[staveId] = el;
-          allAudio.append(el);
         } else {
           ready.set(true);
         }
@@ -224,6 +234,7 @@ Components.TimelinePlayer = function (options) {
       waitListDependency.changed();
     });
     
+    allAudio.remove('audio[data-stave-id=toRemove]');
   });
   
   template.events({
