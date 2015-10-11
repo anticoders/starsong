@@ -22,7 +22,6 @@ Components.MIDINotesEmitter = function () {
   });
   
   function onNote (data, envelope) {
-    console.log('onNote', data);
     var note = data.note;
     var channel = data.channel || 0;
     var velocity = data.velocity || 127;
