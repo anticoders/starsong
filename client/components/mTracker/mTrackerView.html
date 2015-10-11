@@ -38,7 +38,7 @@
           </div>
           <div class="mTracks">
             {{#each tracks}}
-              <div class="mTrack" data-action="insert">
+              <div class="mTrack" data-action="insert" data-track="{{_id}}">
                 {{#each stems}}
                   {{> mTrackerStemView}}
                 {{/each}}
