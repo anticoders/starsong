@@ -4,103 +4,133 @@ navigator.webkitGetUserMedia ||
 navigator.mozGetUserMedia ||
 navigator.msGetUserMedia;
 
-fakeBlobURL = new ReactiveVar(null); 
+var Recorder = function(source, cfg){
+  var WORKER_PATH = "/recordingWorker.js"; 
+  var config = cfg || {};
+  var bufferLen = config.bufferLen || 4096;
+  var numChannels = config.numChannels || 2;
+  this.context = source.context;
+  this.node = (this.context.createScriptProcessor ||
+               this.context.createJavaScriptNode).call(this.context,
+               bufferLen, numChannels, numChannels);
+  var worker = new Worker(config.workerPath || WORKER_PATH);
+  worker.postMessage({
+    command: 'init',
+    config: {
+      sampleRate: this.context.sampleRate,
+      numChannels: numChannels
+    }
+  });
+  var recording = false,
+    currCallback;
 
-SoundRecorder  = function(){
-  this.recording = false; 
-  this.currentData = []; 
+  this.node.onaudioprocess = function(e){
+    if (!recording) return;
+    var buffer = [];
+    for (var channel = 0; channel < numChannels; channel++){
+        buffer.push(e.inputBuffer.getChannelData(channel));
+    }
+    worker.postMessage({
+      command: 'record',
+      buffer: buffer
+    });
+  }
+
+  this.configure = function(cfg){
+    for (var prop in cfg){
+      if (cfg.hasOwnProperty(prop)){
+        config[prop] = cfg[prop];
+      }
+    }
+  }
+
+  this.record = function(){
+    recording = true;
+  }
+
+  this.stop = function(){
+    recording = false;
+  }
+
+  this.clear = function(){
+    worker.postMessage({ command: 'clear' });
+  }
+
+  this.getBuffer = function(cb) {
+    currCallback = cb || config.callback;
+    worker.postMessage({ command: 'getBuffer' })
+  }
+
+  this.exportWAV = function(cb, type){
+    currCallback = cb || config.callback;
+    type = type || config.type || 'audio/wav';
+    if (!currCallback) throw new Error('Callback not set');
+    var w = worker.postMessage({
+      command: 'exportWAV',
+      type: type
+    });
+  }
+
+  worker.onmessage = function(e){
+    var blob = e.data;
+    currCallback(blob);
+  }
+
+  source.connect(this.node);
+  this.node.connect(this.context.destination);    //this should not be necessary
+
+};
+
+Recorder.forceDownload = function(blob, filename){
+  var url = (window.URL || window.webkitURL).createObjectURL(blob);
+  var link = window.document.createElement('a');
+  link.href = url;
+  link.download = filename || 'output.wav';
+  var click = document.createEvent("Event");
+  click.initEvent("click", true, true);
+  link.dispatchEvent(click);
 }
 
-SoundRecorder._bufferSize = 2048; 
+SoundRecorder = function(){
+  this.recording    = new ReactiveVar(false);  
+  this.currentUrl   = new ReactiveVar(); 
+  this.currentData  = new ReactiveVar(); 
+}; 
 
 _.extend(SoundRecorder.prototype,{
   startRecording : function(){
     var self = this; 
-    self.recording = true; 
+    self.recording.set(true); 
     var audioContext = window.AudioContext || 
-    window.webkitAudioContext || 
+    window.AudioContext || 
     window.mozAudioContext;
     var context = new audioContext();
-    SoundRecorder.sampleRate = context.sampleRate;
-    navigator.getUserMedia({audio : true, video : false}, function (stream) {
+    navigator.getUserMedia({audio : true }, function (stream) {
       var streamSource = context.createMediaStreamSource(stream);
-      var recorder = context.createScriptProcessor(SoundRecorder._bufferSize, 1, 1);
-      recorder.onaudioprocess = function(e){
-        if(!self.recording) return ; 
-        var data = e.inputBuffer.getChannelData(0);
-        self.currentData.push(data);
-      }
-      streamSource.connect(recorder);
-      recorder.connect(context.destination);
+      self.recorder = new Recorder(
+        streamSource,
+        {
+          callback : function(blob){
+            self.url = window.URL.createObjectURL(blob); 
+            self.currentData.set(blob); 
+            self.currentUrl.set(window.URL.createObjectURL(blob)); 
+          }
+        }
+      ); 
+      self.recorder.record()
+
     },function(){
       console.log("no access to mickrophone"); 
     });
   }, 
   stopRecording : function(){
-    this.recording = false ; 
-    this.currentData = []; 
-    parseToWAV(this.currentData); 
+    this.recording.set(false) ; 
+    this.recorder.stop(); 
+    this.recorder.exportWAV(); 
   }
 }); 
 
 
 
-var flatBuffers = function(arrayOfBuffers){
-  var result = new Float32Array(arrayOfBuffers.length*SoundRecorder._bufferSize);
-  var offset = 0;
-  var lng = arrayOfBuffers.length;
-  for (var i = 0; i < lng; i++){
-    var buffer = arrayOfBuffers[i];
-    result.set(buffer, offset);
-    offset += buffer.length;
-  }
-  return result;
-}
 
 
-function writeUTFBytes(view, offset, string){ 
-  var lng = string.length;
-  for (var i = 0; i < lng; i++){
-    view.setUint8(offset + i, string.charCodeAt(i));
-  }
-}
-
-function parseToWAV(Float32Array){
-  var flatten = flatBuffers(Float32Array); 
-   
-  var buffer = new ArrayBuffer(44 + flatten.length * 2);
-  var view = new DataView(buffer);
-
-  writeUTFBytes(view, 0, 'RIFF');
-  view.setUint32(4, 44 + buffer.length * 2, true);
-  writeUTFBytes(view, 8, 'WAVE');
-  writeUTFBytes(view, 12, 'fmt ');
-  view.setUint32(16, 16, true);
-  view.setUint16(20, 1, true);
-  view.setUint16(22, 2, true);
-  view.setUint32(24, SoundRecorder.sampleRate, true);
-  view.setUint32(28, SoundRecorder.sampleRate * 4, true);
-  view.setUint16(32, 4, true);
-  view.setUint16(34, 16, true);
-  writeUTFBytes(view, 36, 'data');
-  view.setUint32(40, flatten.length * 2, true);
-   
-  // write the PCM samples
-  var lng = flatten.length;
-  var index = 44;
-  var volume = 1;
-  for (var i = 0; i < lng; i++){
-      view.setInt16(index, flatten[i] * (0x7FFF * volume), true);
-      index += 2;
-  }
-   
-  var blob = new Blob ( [ view ], { type : 'audio/wav' } );
-  var blobURL = window.URL.createObjectURL(blob); 
-  fakeBlobURL.set(blobUrl); 
-}
-
-Template.sandboxRecorder.helpers({
-  'blobUrl' : function(){
-    return fakeBlobURL.get(); 
-  }
-}); 
