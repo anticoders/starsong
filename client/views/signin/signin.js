@@ -31,7 +31,7 @@ Template.signin.events({
         if(err){
           signinErrors.set([err.reason]);
         }else{
-          Router.go('onboarding');
+          Router.go('onboarding', {}, params);
         }
       });
     }

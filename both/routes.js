@@ -14,11 +14,11 @@ Router.map(function() {
 
   this.route('onboarding'),             {path: '/onboarding'};
 
+  this.route('project.creator',         {path: '/project/creator'});
   this.route('project.timeline',        {path: '/project/:projectId'});
   this.route('project.stem',            {path: '/project/:projectId/stem/:stemId'});
-  this.route('project.settings',        {path: '/settings/:_id'});
-  this.route('project.creator',         {path: '/creator'});
-  this.route('project.invite',          {path: '/invite/:_id'});
+  this.route('project.settings',        {path: '/project/:_id/settings'});
+  this.route('project.invite',          {path: '/project/:projectId/invite'});
 
   this.route('signin',                  {path: '/signin'}); 
   this.route('signup',                  {path: '/signup'}); 
