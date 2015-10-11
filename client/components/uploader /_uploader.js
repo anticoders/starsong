@@ -65,7 +65,10 @@ _.extend(S3uploader.prototype,{
       xhr.onload = function() {
         if (xhr.status === 200) {
           this_s3upload.state.set(S3uploader.MODES.FINISHED); 
-          return this_s3upload.state.set(S3uploader.MODES.READY);
+          Meteor.setTimeout(function(){
+            this_s3upload.state.set(S3uploader.MODES.READY);
+          },400); 
+          return ; 
         } else {
           return this_s3upload.onError('Upload error: ' + xhr.status);
         }
@@ -78,9 +81,6 @@ _.extend(S3uploader.prototype,{
         var percentLoaded;
         if (e.lengthComputable) {
           percentLoaded = Math.round((e.loaded / e.total) * 100);
-          if(percentLoaded === 100){
-            this_s3upload.state.set(S3uploader.MODES.FINISHED); 
-          }
           return this_s3upload.progress.set(percentLoaded); 
         }
       };
