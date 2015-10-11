@@ -1,0 +1,56 @@
+<template name="mTrackerView">
+  {{#with project}}
+    <div class="mTrackerMenu">
+      <span class="mMenuLabel">Time Zoom</span>
+      <input type="range" value="100" min="10" max="400" data-action="zoom"/>
+    </div>
+
+    <div class="mTrackArea">
+
+
+      <div class="mSidebar">
+        <div class="mTimelineHeader">
+        </div>
+        {{#each tracks}}
+          <div class="mTrackHeader">
+            <i class="fa fa-music"></i> &nbsp; {{name}}
+          </div>
+        {{/each}}
+        <div class="mTimelineHeader">
+          <button class="mHeaderButton" data-action="addtrack">
+            <i class="fa fa-plus"></i> &nbsp; Add track
+          </button>
+        </div>
+      </div>
+
+
+      <div class="mScrollBox">
+        <div class="mScroll" style="width: {{posW}}px;">
+          <div class="mTimeline">
+            {{#each seconds}}
+              <div class="mTimeLabel" style="left: {{posX}}px;">
+                {{label}}
+              </div>
+            {{/each}}
+          </div>
+          <div class="mTracks">
+            {{#each tracks}}
+              <div class="mTrack" data-action="insert">
+                {{#each stems}}
+                  {{> mTrackerStemView}}
+                {{/each}}
+              </div>
+            {{/each}}
+          </div>
+          <div class="mRuler">
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  {{/with}}
+
+</template>
+
+

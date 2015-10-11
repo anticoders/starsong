@@ -1,0 +1,13 @@
+<template name="projectTimeline">
+  
+  {{> mTrackerView}}
+  {{> myPlayer toPlay=timeline playFrom=0}}
+  {{> myEmitter}}
+  
+
+  {{#contentFor 'title'}}
+    <span class="nota bigger">
+      <i class="fa fa-music"></i> &nbsp; {{project.name}}
+    </span>
+  {{/contentFor}}
+</template>

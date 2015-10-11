@@ -1,0 +1,5 @@
+SandboxPlayerController = RouteController.extend({
+
+});
+
+

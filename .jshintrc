@@ -128,7 +128,13 @@
 
         // custom packages
 
+        "MIDI": false,
+        "Router": false,
         "AntiHelpers": false,
+        "postal": false,
+        "Keyboard": false,
+        "Player": false,
+        "Recorder": false,
 
         // model layer
         
@@ -139,6 +145,7 @@
         
         "Utils": false,
         "Helpers": false,
-        "Settings": false
+        "Settings": false,
+        "Components": false
     }
 }

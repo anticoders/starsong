@@ -7,7 +7,7 @@ Package.describe({
 Package.onUse(function (api) {
   'use strict';
   
-  api.versionsFrom('METEOR@1.0');
+  api.versionsFrom('METEOR@1.2');
 
   api.addFiles([
     'Base64Binary.js',
@@ -16,7 +16,10 @@ Package.onUse(function (api) {
   ], 'client');
   
   api.addAssets([
+    'acoustic_grand_piano-mp3.js',
+
     'electric_grand_piano-ogg.js',
+    'electric_grand_piano-mp3.js',
     
   ], 'client');
   

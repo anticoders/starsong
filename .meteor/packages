@@ -12,6 +12,10 @@ session                 # Client-side reactive dictionary for your app
 jquery                  # Helpful client-side library
 tracker                 # Meteor's client-side reactive programming library
 
+random
+reactive-var
+less
+
 standard-minifiers      # JS/CSS minifiers run for production mode
 
 iron:router
@@ -19,6 +23,14 @@ semantic:ui-css
 anti:helpers
 anti:modals
 
-
-
+custom:postal
 custom:midijs
+
+fortawesome:fontawesome
+matb33:collection-hooks
+meteorhacks:npm
+npm-container
+accounts-password
+accounts-facebook
+chuangbo:cookie
+email

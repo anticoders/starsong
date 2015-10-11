@@ -1,0 +1,183 @@
+@import '/client/lib/preamble.less';
+
+.mTrackerMenu {
+  /*background:         #333;*/
+  border-bottom:      1px solid #000;
+  text-align:         right;
+  height:             20px;
+  line-height:        20px;
+  padding:            0px 20px;
+
+  color:              #000;
+  font-size:          8px;
+  
+
+  input[type=range] {
+    -webkit-appearance:   none;
+    width:                100px;
+    border-radius:        2px;
+    height:               2px;
+    border:               none;
+    background-color:     #111;
+    vertical-align:       top;
+    margin-top:           9px;
+
+    &:focus, &:active {
+      outline:            0px none;
+      &::-moz-range-track {
+        outline:          0px none;
+      }
+    }
+
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      /*background:         rgba(220,0,0,0.2);*/
+      background:         none;
+      border:             none;
+      position:           relative;
+      width:              20px;
+      height:             20px;
+
+      cursor:             pointer;
+
+      &:before {
+        content:            ' ';
+        display:            block;
+        position:           absolute;
+        left:               4px;
+        top:                4px;
+        width:              12px;
+        height:             12px;
+        
+        background-color:   #blue;
+        box-shadow:         0px 0px 1px 1px rgba(0,0,0,1) inset;
+        border-radius:      12px;
+      }
+    }
+
+    &::-moz-focus-outer {
+      border:               0;
+    }
+
+    &::-moz-range-track {
+      width:                100px;
+      border-radius:        2px;
+      height:               2px;
+      border:               none;
+      background-color:     #111;
+      vertical-align:       top;
+      margin-top:           9px;
+    }
+
+    &::-moz-range-thumb {
+      width:              12px;
+      height:             12px;
+      
+      background-color:   @blue;
+      border:             none;
+      box-shadow:         0px 0px 1px 1px rgba(0,0,0,1) inset;
+      border-radius:      12px;
+
+      cursor:             pointer;
+    }
+  }
+
+  .mMenuLabel {
+    padding:          0px 20px;
+  }
+}
+
+.mTrackArea {
+
+  position:           relative;
+  width:              100%;
+  min-height:         320px;
+  overflow-y:         scroll;
+
+
+
+
+  /*background:         #333;*/
+  color:              rgba(255,255,255,0.5);
+  font-size:          8px;
+  
+
+  
+
+  .mSidebar {
+    position:         absolute;
+    left:             0px;
+    width:            120px;
+    top:              0px;
+    bottom:           0px;
+  }
+
+
+  .mScrollBox {
+    position:         absolute;
+    left:             120px;
+    right:            0px;
+    top:              0px;
+    bottom:           0px;
+    overflow-x:       scroll;
+    overflow-y:       visible;
+  }
+
+  .mScroll {
+    background-color: #111;
+    background-position: 20px 0px;
+    box-shadow:       18px 0px 0px #111 inset, -18px 0px 0px #111 inset;
+  }
+
+
+  .mTimeline, .mTimelineHeader, .mRuler {
+    height:           25px;
+    /*background:       #666;*/
+  }
+
+  .mTrack, .mTrackHeader {
+    height:           40px; 
+  }
+
+  .mTimelineHeader {
+    text-align:       center;
+  }
+
+  .mTrackHeader {
+    line-height:      40px;
+    text-align:       center;
+  }
+
+  .mHeaderButton {
+    .animated;
+
+    -webkit-appearance: none;
+    background:         none;
+    border:             1px solid rgba(255, 255, 255, 0);
+    padding:            1px 5px;
+    border-radius:      3px;
+
+    color:              rgba(255, 255, 255, 0.25);
+
+    &:hover {
+      border:             1px solid rgba(255, 255, 255, 0.125);
+      color:              rgba(255, 255, 255, 0.5);
+    }
+  }
+
+
+  .mTrack {
+    border-bottom:    1px solid rgba(255,255,255,0.064);
+
+    position:         relative;
+    width:            100%;
+    cursor:           copy;
+
+    &:last-child {
+      border-bottom:  none;
+    }
+  }
+}
+
+
+

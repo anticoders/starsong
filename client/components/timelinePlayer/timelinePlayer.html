@@ -1,0 +1,14 @@
+<template name="timelinePlayer">
+  <button class="ui labeled icon {{#unless isReady}}loading{{/unless}} button"
+      data-action="{{#if isPlaying}}pause{{else}}play{{/if}}">
+
+    {{#if isPlaying}}
+    <i class="pause icon"></i>
+    Pause
+    {{else}}
+    <i class="play icon"></i>
+    Play
+    {{/if}}
+  </button>
+  <div class="allAudio"></div>
+</template>

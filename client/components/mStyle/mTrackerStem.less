@@ -1,0 +1,85 @@
+@import '/client/lib/preamble.less';
+
+.mTrackArea .mStem {
+  position:           absolute;
+  top:                2px;
+  bottom:             2px;
+  background:         linear-gradient(to bottom, #10c0e0, #30c060);
+  border-radius:      3px;
+  box-shadow:         0px 0px 5px 2px #30c060 inset;
+
+  font-size:        12px;
+
+  &.mAudioStem {
+    background:       linear-gradient(to bottom, #c030c0, #6030c0);
+    box-shadow:       0px 0px 5px 2px #6030c0 inset;
+  }
+
+  .mEdit, .mRightDrag, .mLeftDrag {
+    position:         absolute;
+    display:          none;
+    cursor:           pointer;
+  }
+
+  .mEdit {
+    top:              0px;
+    bottom:           0px;
+    left:             0px;
+    right:            0px;
+
+    color:            rgba(0,0,0,0.5);
+    font-weight:      700;
+    text-align:       center;
+    line-height:      36px;
+  }
+
+  .mRightDrag {
+    position:         absolute;
+    width:            20px;
+    top:              3px;
+    bottom:           3px;
+    line-height:      30px;
+
+    border-left:      1px solid white;
+    text-align:       center;
+    color:            rgba(255,255,255, 0.75);
+
+    background:       linear-gradient(to right, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0));
+
+    &:hover {
+      background:       linear-gradient(to right, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
+    }
+  }
+
+  .mLeftDrag {
+    position:         absolute;
+    width:            20px;
+    left:             -20px;
+    top:              3px;
+    bottom:           3px;
+    line-height:      30px;
+
+    border-right:      1px solid white;
+    text-align:       center;
+    color:            rgba(255,255,255, 0.75);
+
+    background:       linear-gradient(to left, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0));
+
+    &:hover {
+      background:       linear-gradient(to left, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
+    }
+  }
+
+
+
+  &:hover, &.pepActive {
+    .mRightDrag, .mEdit, .mLeftDrag {
+      display:          block;
+    }
+  }
+}
+
+
+
+
+

@@ -1,0 +1,46 @@
+<template name="navbar">
+  <div class="navbar">
+    <div class="leftPart">
+
+
+      <a href="{{pathFor 'home'}}">
+        <i class="fa fa-star"></i> &nbsp; STAR SONG
+      </a>
+      {{> yield 'title'}}
+
+
+
+    </div>
+
+    <div class="rightPart">
+      {{> yield 'menu'}}
+
+        <div class="ui pointing dropdown link item">
+          <div class="text navbar-menu">{{currentUser.emails.[0].address}}</div>
+
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <a href="{{pathFor 'project.creator'}}" class="item">
+              <i class="fa fa-plus"></i> Create
+            </a>
+            <a href="{{pathFor 'project.list'}}" class="item">
+              <i class="fa fa-list"></i> List
+            </a>
+            {{#if projectId}}
+              <a href="{{pathFor 'project.settings' projectId=projectId}}" class="item">
+                <i class="fa fa-cog"></i> Settings
+              </a>
+              <a href="{{pathFor 'project.invite' projectId=projectId}}" class="item">
+                <i class="fa fa-cog"></i> Invite
+              </a>
+            {{/if}}
+            <div class="divider"></div>
+            <a href="#" data-action="signout" class="item">
+              <i class="fa fa-sign-out"></i> Sign out
+            </a>
+          </div>
+        </div>
+
+    </div>
+  </div>
+</template>

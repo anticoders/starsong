@@ -1,0 +1,67 @@
+<template name="mMidiView">
+  {{#with stem}}
+
+    <div class="mMidiMenu">
+      <span class="mMenuLabel">Time Zoom</span>
+      <input type="range" value="100" min="25" max="400" data-action="zoom"/>
+    </div>
+
+
+    <div class="mMidiArea">
+
+      <div class="mSidebar">
+        <div class="mTimelineHeader">
+        </div>
+        <div class="mPanoKeyboard">
+          {{#each pianoKeys}}
+            <div class="mPianoKeyHeader {{#if black}} mBlackPianoKeyHeader {{/if}} {{#if $.isIn noteName 'C' 'F'}} mBordered {{/if}}">
+              {{#unless black}}
+                {{noteName}}
+                {{#if $.equals noteName 'C'}}
+                  {{octaveName}}
+                {{/if}}
+              {{/unless}}
+            </div>
+          {{/each}}
+        </div>
+      </div>
+
+
+      <div class="mScrollBox">
+        <div class="mScroll" style="width: {{posW}}px;">
+          <div class="mTimeline">
+            {{#each seconds}}
+              <div class="mTimeLabel" style="left: {{posX}}px;">
+                {{label}}
+              </div>
+            {{/each}}
+            <div class="mMomentHandle" style="left: {{posMidi}}px;">
+              <div class="mMomentHandleColor"></div>
+            </div>
+          </div>
+          <div class="mTracks">
+            {{#each pianoKeys}}
+              <div class="mTrack {{#if black}} mBlackTrack {{/if}} {{#if $.isIn noteName 'C' 'F'}} mBordered {{/if}}" data-action="addnote" data-note="{{midiNote}}">
+                {{#each notesInKey}}
+                  {{> mMidiNoteView}}
+                {{/each}}
+              </div>
+            {{/each}}
+          </div>
+          <div class="mRuler">
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  {{/with}}
+
+  <div>
+    <button class="ui red button">Keyboard recording</button>
+  </div>
+
+
+</template>
+
+

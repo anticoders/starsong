@@ -1,0 +1,9 @@
+<template name="keyboard">
+  <div class="keyboard">
+  {{#each keys}}
+    <div class="keyboard_key {{#if isHalftone}}keyboard_halftone{{/if}}">
+      <div class="keyboard_key_inner" data-action="play" data-note="{{./note}}"></div>
+    </div>
+  {{/each}}
+  </div>
+</template>
