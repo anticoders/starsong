@@ -131,9 +131,11 @@ Components.TimelinePlayer = function (options) {
         // console.log('timeprogress', currentPlaybackTime);
         currentPlaybackTime += tickTimeInterval;
         
-        if (currentEventIndex < eventQueue.length) {
-          nextTick();
-        }
+        // if (currentEventIndex < eventQueue.length) {
+        //   nextTick();
+        // }
+        // TODO: later on this should be configurable ...
+        nextTick();
         
       }, tickTimeInterval);
     }());
@@ -260,6 +262,11 @@ Components.TimelinePlayer = function (options) {
           ready.set(true);
         }
       });
+      
+      if (playFrom !== 0) {
+        seekEventQueue(playFrom);
+      }
+      
       waitListDependency.changed();
     });
     

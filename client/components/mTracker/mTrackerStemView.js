@@ -32,45 +32,52 @@ Template.mTrackerStemView.rendered = function() {
 
 
   self.$('.mLeftDrag').pep({
-    axis:                 'x',
+    // axis:                 'x',
     place:                false,
     useCSSTranslation:    false,
-    // droppable:            '.mTrack',
+    droppable:            '.mTrack',
     cssEaseDuration:      0,
     start: function(ev, obj) {
       var rect = obj.$el.closest('.mStem');
       rect.addClass('pepActive');
       rect.data('pepinitleft', rect.left() - ev.screenX);
-      // rect.data('pepinittop', rect.top() - ev.screenY);
+      rect.data('pepinittop', rect.top() - ev.screenY);
     },
     drag: function(ev, obj) {
       var rect = obj.$el.closest('.mStem');
       rect.css({
         left: rect.data('pepinitleft') + ev.screenX + 'px',
-        // top: rect.data('pepinittop') + ev.screenY + 'px',
+        top: rect.data('pepinittop') + ev.screenY + 'px',
       });
       obj.$el.css({
         left: '-20px',
-        // top:  '0px',
+        top:  '3px',
       });
     },
     stop: function(ev, obj) {
       var rect = obj.$el.closest('.mStem');
       rect.removeClass('pepActive');
 
-      Stems.update(self.data._id, {$set: {
-        x0: Utils.music.pxToTime(rect.left() - 20),
-        x1: Utils.music.pxToTime(rect.left() + rect.width() - 20),
-      }});
+
 
       obj.$el.css({
         left: '-20px',
-        // top:  '0px',
+        top:  '3px',
       });
 
-      // var drop = this.activeDropRegions[0];
+      var drop = this.activeDropRegions[0];
 
-      // if(!drop) {
+      if(!drop) {
+        Stems.remove(self.data._id);
+        return;
+      }
+
+      Stems.update(self.data._id, {$set: {
+        x0: Utils.music.pxToTime(rect.left() - 20),
+        x1: Utils.music.pxToTime(rect.left() + rect.width() - 20),
+        trackId: drop.data('track'),
+      }});
+
       //   // Stems.update(stemOb._id, {$set: _.object(
       //   //   ['midi.' + noteOb.idx + '.delete'],
       //   //   [true]
