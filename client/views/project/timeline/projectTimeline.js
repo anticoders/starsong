@@ -1,11 +1,21 @@
+
+
+
 Template.projectTimeline.onCreated(function() {
   this.emitter = new Components.MIDINotesEmitter({});
-  this.player = new Components.TimelinePlayer({});
+  this.player = new Components.TimelinePlayer({
+    onProgress: function(progress) {
+      console.log("PRO", progress);
+      Utils.midiTime.set(progress);
+    },
+  });
+
+  Utils.timelinePlayer = this.player;
 });
 
 
 Template.projectTimeline.onDestroyed(function() {
-
+  delete Utils.timelinePlayer;
 });
 
 

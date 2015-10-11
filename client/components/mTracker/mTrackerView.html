@@ -32,6 +32,9 @@
                 {{label}}
               </div>
             {{/each}}
+            <div class="mMomentHandle" style="left: {{posMidi}}px;">
+              <div class="mMomentHandleColor"></div>
+            </div>
           </div>
           <div class="mTracks">
             {{#each tracks}}
@@ -50,6 +53,11 @@
 
     </div>
   {{/with}}
+
+  <div style="display: none;">
+    <button class="ui yellow button" data-action="play">Play</button>
+    <button class="ui yellow button" data-action="pause">Pause</button>
+  </div>
 
 </template>
 

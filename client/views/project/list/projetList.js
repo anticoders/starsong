@@ -3,6 +3,6 @@ Template.projectList.helpers({
     return Projects.find().count() == 0;
   },
   invited: function(){
-    return this.userId == Meteor.userId();
+    return this.userId != Meteor.userId();
   }
 });
